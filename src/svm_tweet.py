@@ -13,10 +13,11 @@ class Tweet:
         self.polarity = polarity
         self.length = len(text)
         self.nb_words = len(text.split())
+        self.unigrams = {}
 
     def get_features_representation(self):
         """Return a list with all the features of the tweet"""
-        return [self.length, self.nb_words]
+        return self.unigrams.values() + [self.length, self.nb_words]
 
     def get_unigrams(self):
         """Return the set of unigrams in the tweet"""
@@ -26,6 +27,13 @@ class Tweet:
             if len(w) > 2 and w[0] != "#" and not re.match(self.url_pattern, w):
                 unigrams.add(w)
         return unigrams
+
+    def set_unigrams(self, unigrams):
+        self.unigrams = dict((u,0) for u in unigrams)
+        words = self.tweet.lower().split()
+        for w in words:
+            if w in self.unigrams.keys():
+                self.unigrams[w] += 1
 
     def __str__(self):
         s = "%s\n"%(self.tweet.rstrip())
