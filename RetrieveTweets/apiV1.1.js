@@ -7,42 +7,54 @@ var twit = new twitter({
   access_token_secret: 'Md4K7FnmYuTjY5WUnoryjSfzCq23MDhpYuPOL48Kw'
 });
 
-
+twit.verifyCredentials(function (err, data) {
+});
 
 var fieldsToRemove = [
-	'from_user_id',
-	'geo',
-	'profile_image_url',
-	'profile_image_url_https',
-	'source',
-	'iso_language_code',
-	'from_user_name',
-	'id',
-	'place',
-	'to_user_id',
-	'to_user_name',
-	'in_reply_to_status_id'
+	'id'
+	,'in_reply_to_status_id'
+	,'geo'
+	,'coordinates'
+	,'place'
+	,'favorited'
+	,'retweeted'
+	,'in_reply_to_status_id'
+	,'in_reply_to_user_id'
+	,'user'
+	,'entities'
+	,'lang'
+	,'source'
+	,'metadata'
+	,'truncated'
+	,'possibly_sensitive'
+	,'in_reply_to_screen_name'
+	,'contributors'
+	,'retweeted_status'
 ];
 
 var allTweets = [];
 
 function handleResult(data, depth) {
-	for(var i in data.results) {
-		var c = data.results[i];
+	for(var i in data.statuses) {
+		var c = data.statuses[i];
+		c.user_id_str = c.user.id_str;
+		c.user_screen_name = c.user.screen_name;
+		c.user_followers_count = c.user.followers_count;
+		if(c.retweeted_status)
+			 c.retweeted_status_id_str = c.retweeted_status.id_str;
 		for(var j in fieldsToRemove) {
 			if(typeof c[fieldsToRemove[j]] != 'undefined')
 				delete c[fieldsToRemove[j]];
 		}
 		allTweets.push(c);
 	}
-	//console.log(data.results);
-	//console.log(data.next_page);
-	searchTweets(data.next_page, handleResult, depth+1);
+	console.log(data.search_metadata.next_results, depth+1);
+	searchTweets(data.search_metadata.next_results, depth+1);
 }
 
 function searchTweets(paramsString, depth) {
 	if(!depth) depth = 0;
-	if(depth < 1) { //Max pages
+	if(paramsString && paramsString != 'undefined') { //Max pages
 		(function(depth) {
 			twit.search(paramsString, function(err, data) {
 				if(err)
@@ -53,10 +65,18 @@ function searchTweets(paramsString, depth) {
 		})(depth);
 	} else { //The end
 		//console.log(allTweets);
-		for(var i in allTweets) {
+		/*for(var i in allTweets) {
 			console.log(allTweets[i]);
-		}
+		}*/
+		var fs = require('fs');
+		fs.writeFile("./tweets.json", JSON.stringify(allTweets), function(err) {
+			if(err) {
+				console.log(err);
+			} else {
+				console.log("The file was saved!");
+			}
+		});
 	}
 }
 
-searchTweets('?q=microsoft&lang=en&count=1&result_type=popular');
+searchTweets('?q=microsoft&lang=en&count=100&result_type=recent');
