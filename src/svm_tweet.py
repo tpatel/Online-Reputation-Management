@@ -1,6 +1,7 @@
 #!/usr/bin/python2.7
 
 import re
+import string
 
 class Tweet:
     """This class represents a tweet for the SVM with all its features"""
@@ -22,7 +23,7 @@ class Tweet:
     def get_unigrams(self):
         """Return the set of unigrams in the tweet"""
         unigrams = set()
-        words = self.tweet.lower().split()
+        words = self.tweet.lower().translate(None, string.punctuation).split()
         for w in words:
             if len(w) > 2 and w[0] != "#" and not re.match(self.url_pattern, w):
                 unigrams.add(w)
