@@ -22,11 +22,11 @@ if __name__ == '__main__':
         line = line.split(' ', 2)
         if 3 == len(line):
             if float(line[0]) > 0:
-                polarity = 277
+                polarity = 10.
             if float(line[0]) < 0:
-                polarity = -13
+                polarity = -10.
             if float(line[0]) == 0:
-                polarity = 0
+                polarity = 0.
             t = Tweet(line[1], line[2].rstrip(), polarity)
             print t
             tweets.append(t)

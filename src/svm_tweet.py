@@ -18,7 +18,8 @@ class Tweet:
 
     def get_features_representation(self):
         """Return a list with all the features of the tweet"""
-        return self.unigrams.values() + [self.length, self.nb_words]
+        return self.unigrams.values()
+        #return self.unigrams.values() + [self.length, self.nb_words]
 
     def get_unigrams(self):
         """Return the set of unigrams in the tweet"""
