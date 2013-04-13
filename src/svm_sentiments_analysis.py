@@ -25,12 +25,14 @@ class SVMLearner:
             t.set_unigrams(self.unigrams)
             features.append(t.get_features_representation())
             polarities.append(t.polarity)
+        print polarities
 
         self.svm.fit(features, polarities)
 
     def predict_from_tweet(self, tweet):
         """Predict the polarity of a tweet"""
         tweet.set_unigrams(self.unigrams)
+        print "Features for tweet %d: %s"%(tweet.tweet_id, tweet.get_features_representation())
         return self.svm.predict([tweet.get_features_representation()])[0]
 
 
@@ -40,7 +42,7 @@ if __name__ == '__main__':
     a = []
     i = 0
     for tweet in test:
-        polarity = -1 if (i<2) else 1 if (i==2) else 0
+        polarity = -1 if (i<1) else 1 if (i==1) else 0
         a.append(Tweet(i, tweet, polarity))
         i += 1
     l.learn_from_tweets(a)
@@ -51,5 +53,7 @@ if __name__ == '__main__':
     t = Tweet(4, "Fuck you Microsoft, you suck")
     print l.predict_from_tweet(t)
     t = Tweet(5, "Microsoft is great, I love you")
+    print l.predict_from_tweet(t)
+    t = Tweet(6, "Great offsite yesterday with the dream talent team at Microsoft. Some great presentations and ideas discussed. Roll on FY14!")
     print l.predict_from_tweet(t)
 
