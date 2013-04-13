@@ -32,6 +32,7 @@ class Tweet:
         s += "    ID: %s\n"%(self.tweet_id)
         s += "    Length: %d\n"%(self.length)
         s += "    Number of words: %d\n"%(self.nb_words)
+        s += "    Polarity: %d\n"%(self.polarity)
         return s
 
 
