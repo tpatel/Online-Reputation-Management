@@ -38,7 +38,7 @@ class LexiconSentimentsAnalysis:
         score = 0
         for word in t:
             score += self.get_weight(word)
-        return float(score)/len(t)
+        return float(score)
 
     def get_weight(self, word):
         """Return the score of a word"""
@@ -52,8 +52,7 @@ class LexiconSentimentsAnalysis:
 
 if __name__ == '__main__':
     l = LexiconSentimentsAnalysis()
-    test = open("test_tweets.txt")
+    test = open("../tweets/alltweets.txt")
     for tweet in test:
-        print tweet.rstrip()
-        print ">> Score: %f\n"%(l.analyse_text(tweet.rstrip()))
+        print "%f %s"%(l.analyse_text(tweet.rstrip()), tweet.rstrip())
     

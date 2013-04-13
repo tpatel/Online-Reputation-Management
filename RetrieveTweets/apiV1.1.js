@@ -57,10 +57,20 @@ function searchTweets(paramsString, depth) {
 	if(paramsString && paramsString != 'undefined') { //Max pages
 		(function(depth) {
 			twit.search(paramsString, function(err, data) {
-				if(err)
+				if(err) {
 					console.log(err);
-				else
+					var fs = require('fs');
+					fs.writeFile("./tweets.json", JSON.stringify(allTweets), function(err) {
+						if(err) {
+							console.log(err);
+						} else {
+							console.log("The file was saved!");
+						}
+					});
+				}
+				else {
 					handleResult(data, depth);
+				}
 			});
 		})(depth);
 	} else { //The end
