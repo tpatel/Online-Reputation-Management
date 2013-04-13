@@ -32,7 +32,6 @@ class SVMLearner:
     def predict_from_tweet(self, tweet):
         """Predict the polarity of a tweet"""
         tweet.set_unigrams(self.unigrams)
-        print "Features for tweet %d: %s"%(tweet.tweet_id, tweet.get_features_representation())
         return self.svm.predict([tweet.get_features_representation()])[0]
 
 
