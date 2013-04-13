@@ -37,6 +37,7 @@ class Tweet:
 
     def __str__(self):
         s = "%s\n"%(self.tweet.rstrip())
+        s += "    ID: %s\n"%(self.tweet_id)
         s += "    Length: %d\n"%(self.length)
         s += "    Number of words: %d\n"%(self.nb_words)
         return s
