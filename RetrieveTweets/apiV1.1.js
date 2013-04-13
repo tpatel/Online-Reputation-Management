@@ -89,4 +89,4 @@ function searchTweets(paramsString, depth) {
 	}
 }
 
-searchTweets('?q=microsoft&lang=en&count=100&result_type=recent');
+searchTweets('?q=louisvuitton&lang=en&count=100&result_type=recent');
