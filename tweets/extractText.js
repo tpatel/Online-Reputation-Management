@@ -17,7 +17,7 @@ fs.readdir('.', function(err, files) {
 			console.log(tweets.length);
 			sumTweets += tweets.length;
 			for(var j in tweets) {
-				fs.appendFileSync('alltweets.txt', tweets[j].text.replace(/\n/g, ' ') + '\n');
+				fs.appendFileSync('alltweets.txt', tweets[j].id_str + ' ' + tweets[j].text.replace(/\n/g, ' ') + '\n');
 			}
 		}
 	}
