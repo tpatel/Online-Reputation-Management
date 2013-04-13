@@ -5,7 +5,7 @@ NEGATIVE_LEXICON = "opinion-lexicon-English/negative-words.txt"
 
 class LexiconSentimentsAnalysis:
     """The class contains the lexicons and analyse a text with these"""
-
+	
     def __init__(self):
         self.positive_words = self.get_positive_words()
         self.negative_words = self.get_negative_words()
@@ -36,8 +36,13 @@ class LexiconSentimentsAnalysis:
         """Return the normalized score of the text"""
         t = text.lower().split()
         score = 0
+        neutral = True
         for word in t:
             score += self.get_weight(word)
+            if not score == 0:
+                neutral = False
+        if not neutral and score == 0:
+        	score = 0.1
         return float(score)
 
     def get_weight(self, word):
