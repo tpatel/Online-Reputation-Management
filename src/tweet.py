@@ -35,9 +35,27 @@ if __name__ == '__main__':
     tweets = []
     for i in data:
         tweets.append(Tweet(i));
-    print len(tweets), tweets[-1]
     
     l = LexiconSentimentsAnalysis()
     for i in tweets:
         i.polarity = l.analyse_text(i.text)
-    print tweets[-1]
+    
+    negative = sorted(tweets, key=lambda tweet: tweet.polarity)
+    negative = negative[0:20]
+    positive = sorted(tweets, key=lambda tweet: -tweet.polarity)
+    positive = positive[0:20]
+    
+    neutral = [tweet for tweet in tweets if tweet.polarity == 0]
+    neutral = sorted(neutral, key=lambda tweet: -len(tweet.text))
+    
+    print negative[0], positive[0], neutral[0]
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
