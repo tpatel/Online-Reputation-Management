@@ -4,24 +4,27 @@ import re
 import string
 import json
 
+from lexicon_sentiments_analysis import LexiconSentimentsAnalysis
+
 class Tweet:
     """This class represents a tweet"""
 
     def __init__(self, struct):
-        self.id = struct['id_str']
-        self.text = struct['text'].encode('utf-8')
-        print self
+        self.id = struct['id_str'].encode('utf-8')
+        self.text = struct['text'].encode('utf-8').rstrip()
         
         self.retweetCount = struct['retweet_count']
         self.favoriteCount = struct['favorite_count']
-        self.creation = struct['created_at']
+        self.creation = struct['created_at'].encode('utf-8')
         self.followers = struct['user_followers_count']
         
-        self.userId = struct['user_id_str']
-        self.userName = struct['user_screen_name']
+        self.userId = struct['user_id_str'].encode('utf-8')
+        self.userName = struct['user_screen_name'].encode('utf-8')
+        
+        self.polarity = 0
         
     def __str__(self):
-        s = "%s\n"%(self.text.rstrip())
+        s = "%s %f"%(self.text, self.polarity)
         return s
 
 
@@ -32,3 +35,9 @@ if __name__ == '__main__':
     tweets = []
     for i in data:
         tweets.append(Tweet(i));
+    print len(tweets), tweets[-1]
+    
+    l = LexiconSentimentsAnalysis()
+    for i in tweets:
+        i.polarity = l.analyse_text(i.text)
+    print tweets[-1]
