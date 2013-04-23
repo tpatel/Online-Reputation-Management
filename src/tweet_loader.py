@@ -5,27 +5,7 @@ import string
 import json
 
 from lexicon_sentiments_analysis import LexiconSentimentsAnalysis
-
-class Tweet:
-    """This class represents a tweet"""
-
-    def __init__(self, struct):
-        self.tweet_id = struct['id_str'].encode('utf-8')
-        self.text = struct['text'].encode('utf-8').rstrip()
-        
-        self.retweetCount = struct['retweet_count']
-        self.favoriteCount = struct['favorite_count']
-        self.creation = struct['created_at'].encode('utf-8')
-        self.followers = struct['user_followers_count']
-        
-        self.userId = struct['user_id_str'].encode('utf-8')
-        self.userName = struct['user_screen_name'].encode('utf-8')
-        
-        self.polarity = 0
-        
-    def __str__(self):
-        s = "%s %f"%(self.text, self.polarity)
-        return s
+from svm_tweet import Tweet
 
 class TweetSet:
     """This class represents a set of tweets loaded from a file"""

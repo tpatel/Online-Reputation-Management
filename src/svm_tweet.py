@@ -6,15 +6,23 @@ import string
 class Tweet:
     """This class represents a tweet for the SVM with all its features"""
 
-    def __init__(self, tweet_id, text, polarity=0):
-        self.tweet = text
-        print text
+    def __init__(self, struct):
         self.url_pattern = re.compile("http")
-        self.tweet_id = tweet_id
+        self.tweet_id = struct['id_str'].encode('utf-8')
+        self.text = struct['text'].encode('utf-8').rstrip()
+        
+        self.retweetCount = struct['retweet_count']
+        self.favoriteCount = struct['favorite_count']
+        self.creation = struct['created_at'].encode('utf-8')
+        self.followers = struct['user_followers_count']
+        
+        self.userId = struct['user_id_str'].encode('utf-8')
+        self.userName = struct['user_screen_name'].encode('utf-8')
+        
+        self.polarity = 0
 
-        self.polarity = polarity
-        self.length = len(text)
-        self.nb_words = len(text.split())
+        self.length = len(self.text)
+        self.nb_words = len(self.text.split())
         self.words = self.clean_words();
         self.unigrams = {}
         self.bigrams = {}
@@ -70,9 +78,3 @@ class Tweet:
         s += "    Polarity: %d\n"%(self.polarity)
         return s
 
-
-if __name__ == '__main__':
-    test = open("test_tweets.txt")
-    for tweet in test:
-        t = Tweet(tweet)
-        print t
