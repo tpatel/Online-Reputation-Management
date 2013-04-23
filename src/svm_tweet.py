@@ -67,13 +67,13 @@ class Tweet:
                 self.bigrams[b] += 1
 
     def clean_words(self):
-        words = self.tweet.lower().translate(None, string.punctuation).split()
+        words = self.text.lower().translate(None, string.punctuation).split()
         words = [w for w in words if w and not re.match(self.url_pattern, w)]
         return words
 
 
     def __str__(self):
-        s = "%s\n"%(self.tweet.rstrip())
+        s = "%s\n"%(self.text.rstrip())
         s += "    ID: %s\n"%(self.tweet_id)
         s += "    Polarity: %d\n"%(self.polarity)
         return s

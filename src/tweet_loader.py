@@ -28,11 +28,11 @@ class TweetSet:
             t.polarity = self.lexicon.analyse_text(t.text)
             self.tweets.append(t)
 
-        self.negative = sorted(self.tweets,
+        self.negatives = sorted(self.tweets,
                 key=lambda tweet: tweet.polarity)[0:20]
-        self.positive = sorted(self.tweets,
+        self.positives = sorted(self.tweets,
                 key=lambda tweet: -tweet.polarity)[0:20]
-        self.neutral = sorted([tweet for tweet in self.tweets if
+        self.neutrals = sorted([tweet for tweet in self.tweets if
                 tweet.polarity == 0], key=lambda tweet: -len(tweet.text))[0:20]
 
     def __str__(self):

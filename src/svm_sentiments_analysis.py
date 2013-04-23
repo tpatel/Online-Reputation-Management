@@ -14,6 +14,7 @@ class SVMLearner:
     def learn_from_tweets(self, tweets):
         """Learn from tweets (list of instances of Tweet class)"""
 
+        print "%d tweets"%(len(tweets))
         #Get unigrams
         self.unigrams = set()
         self.bigrams = set()
