@@ -47,15 +47,22 @@ if __name__ == '__main__':
     
     neutral = [tweet for tweet in tweets if tweet.polarity == 0]
     neutral = sorted(neutral, key=lambda tweet: -len(tweet.text))
+    neutral = neutral[0:20]
     
-    print negative[0], positive[0], neutral[0]
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    print "-----------------------------------------------------"
+    print "                 Negative Tweets                     "
+    print "-----------------------------------------------------"
+    for n in negative:
+        print n
+    print "\n-----------------------------------------------------"
+    print "                 Positive Tweets                     "
+    print "-----------------------------------------------------"
+    for n in positive:
+        print n
+    print "\n-----------------------------------------------------"
+    print "                 Neutral Tweets                     "
+    print "-----------------------------------------------------"
+    for n in neutral:
+        print n
+
     
