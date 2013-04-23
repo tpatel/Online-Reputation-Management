@@ -26,7 +26,7 @@ class MainAnalysis:
 #train_tweets = 'test'
 #new_tweets = 'test2'
 
-tweets_file = '../tweets/microsoft.17858.json'
+tweets_file = '../tweets/gazprom.2016.json'
 
 ''' the main function '''
 if __name__ == '__main__':
@@ -36,13 +36,13 @@ if __name__ == '__main__':
 
     #get the training tweets and insert them into a list
     tweets = []
-    for t in datas.positives:
+    for t in datas.get_positive_tweets():
         t.polarity = 10
         tweets.append(t)
-    for t in datas.negatives:
+    for t in datas.get_negative_tweets():
         t.polarity = -10
         tweets.append(t)
-    for t in datas.neutrals:
+    for t in datas.get_neutral_tweets():
         t.polarity = 0
         tweets.append(t)
 

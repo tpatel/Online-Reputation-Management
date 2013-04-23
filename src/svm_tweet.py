@@ -36,7 +36,8 @@ class Tweet:
         """Return the set of unigrams in the tweet"""
         unigrams = set()
         for w in self.words:
-            if len(w) > 2 and w[0] != "#" and not re.match(self.url_pattern, w):
+            if len(w) > 2 and w[0] != "#" and w[0] != "@" \
+                    and not re.match(self.url_pattern, w):
                 unigrams.add(w)
         return unigrams
 
@@ -71,10 +72,14 @@ class Tweet:
         words = [w for w in words if w and not re.match(self.url_pattern, w)]
         return words
 
+    def is_equal_to(self, tweet):
+        """Rough comparison between the text of two tweets
+           Returns True iff the words in the tweets are the same"""
+        set1 = set(self.get_unigrams())
+        set2 = set(tweet.get_unigrams())
+        return set1.issubset(set2) or set2.issubset(set1)
 
     def __str__(self):
-        s = "%s\n"%(self.text.rstrip())
-        s += "    ID: %s\n"%(self.tweet_id)
-        s += "    Polarity: %d\n"%(self.polarity)
+        s = "[%d] %s"%(self.polarity, self.text.rstrip())
         return s
 
