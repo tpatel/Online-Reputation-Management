@@ -16,11 +16,11 @@ from svm_tweet import Tweet
 from tweet_loader import TweetSet
 from svm_sentiments_analysis import SVMLearner
 
-''' class that will contain the actual SVM '''
 class MainAnalysis:
+    ''' class that will contain the actual SVM '''
 
-    ''' initialize the SVNLearner '''
     def __init__(self):
+        ''' initialize the SVNLearner '''
         self.m_learner = SVMLearner()
 
 #train_tweets = 'test'
@@ -28,8 +28,8 @@ class MainAnalysis:
 
 tweets_file = '../tweets/gazprom.2016.json'
 
-''' the main function '''
 if __name__ == '__main__':
+    ''' the main function '''
 
     #load the tweets from file
     datas = TweetSet(tweets_file)
