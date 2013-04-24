@@ -6,15 +6,23 @@ import string
 class Tweet:
     """This class represents a tweet for the SVM with all its features"""
 
-    def __init__(self, tweet_id, text, polarity=0):
-        self.tweet = text
-        print text
+    def __init__(self, struct):
         self.url_pattern = re.compile("http")
-        self.tweet_id = tweet_id
+        self.tweet_id = struct['id_str'].encode('utf-8')
+        self.text = struct['text'].encode('utf-8').rstrip()
+        
+        self.retweetCount = struct['retweet_count']
+        self.favoriteCount = struct['favorite_count']
+        self.creation = struct['created_at'].encode('utf-8')
+        self.followers = struct['user_followers_count']
+        
+        self.userId = struct['user_id_str'].encode('utf-8')
+        self.userName = struct['user_screen_name'].encode('utf-8')
+        
+        self.polarity = 0
 
-        self.polarity = polarity
-        self.length = len(text)
-        self.nb_words = len(text.split())
+        self.length = len(self.text)
+        self.nb_words = len(self.text.split())
         self.words = self.clean_words();
         self.unigrams = {}
         self.bigrams = {}
@@ -28,7 +36,8 @@ class Tweet:
         """Return the set of unigrams in the tweet"""
         unigrams = set()
         for w in self.words:
-            if len(w) > 2 and w[0] != "#" and not re.match(self.url_pattern, w):
+            if len(w) > 2 and w[0] != "#" and w[0] != "@" \
+                    and not re.match(self.url_pattern, w):
                 unigrams.add(w)
         return unigrams
 
@@ -59,20 +68,18 @@ class Tweet:
                 self.bigrams[b] += 1
 
     def clean_words(self):
-        words = self.tweet.lower().translate(None, string.punctuation).split()
+        words = self.text.lower().translate(None, string.punctuation).split()
         words = [w for w in words if w and not re.match(self.url_pattern, w)]
         return words
 
+    def is_equal_to(self, tweet):
+        """Rough comparison between the text of two tweets
+           Returns True iff the words in the tweets are the same"""
+        set1 = set(self.get_unigrams())
+        set2 = set(tweet.get_unigrams())
+        return set1.issubset(set2) or set2.issubset(set1)
 
     def __str__(self):
-        s = "%s\n"%(self.tweet.rstrip())
-        s += "    ID: %s\n"%(self.tweet_id)
-        s += "    Polarity: %d\n"%(self.polarity)
+        s = "[%d] %s"%(self.polarity, self.text.rstrip())
         return s
 
-
-if __name__ == '__main__':
-    test = open("test_tweets.txt")
-    for tweet in test:
-        t = Tweet(tweet)
-        print t
