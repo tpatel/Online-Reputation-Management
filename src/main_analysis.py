@@ -8,7 +8,7 @@ It loads the training tweets, prints those tweets, then trains the SVM on
 them. After that the new tweets are loaded and the SVM is used to classify
 them. Finally all those tweets are printed.
 
-By: Ludwig Forsberg 2013
+By: Ludwig Forsberg 2013.
 '''
 
 from sklearn import svm

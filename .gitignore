@@ -38,3 +38,9 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+# temporary files
+*~
+
+# . files
+.*

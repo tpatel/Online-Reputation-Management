@@ -10,9 +10,8 @@ the same file and file path but with the user-name concatenated to the
 file-name. In other words if the file to be processed is /tweets/microsoft.17858.json
 and the user is 'ludwig' then the result is stored in /tweets/microsoft.17858.json.ludwig.
 
-By: Ludwig Forsberg 2013
+By: Ludwig Forsberg 2013.
 '''
-
 
 import json
 
