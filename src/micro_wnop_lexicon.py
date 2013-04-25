@@ -1,29 +1,29 @@
 #!/usr/bin/python2.7
 
-''' 
+"""
 A little script processes the data in the Micro_WNOp and produces lexicons that
 can be used to score words.
 
 By: Ludwig Forsberg 2013.
-'''
+"""
 
 import json
 
-'''
-A class that uses the Micro-WNOp-data to create lexicons to give the scores for a word.
-
-It just process the data and enters the different words with values into
-separate dictionaries for every lexicon in the file. Then it can create new
-lexicons ('SepMicroWnopLexicon') that then can be used to retrieve the scores
-for a word.
-
-By: Ludwig Forsberg 2013.
-'''
-
 class MicroWnopLexicon:
+    """
+    A class that uses the Micro-WNOp-data to create lexicons to give the scores for a word.
+
+    It just process the data and enters the different words with values into
+    separate dictionaries for every lexicon in the file. Then it can create new
+    lexicons ('SepMicroWnopLexicon') that then can be used to retrieve the scores
+    for a word.
+
+    By: Ludwig Forsberg 2013.
+    """
+
     word_map_list = [] #a list of all the dictionaries
 
-    ''' create all the dictionaries '''
+    ## create all the dictionaries
     def __init__(self):
         temp_word_map_list = [] #a temporary list of dictionaries
         
@@ -80,8 +80,8 @@ class MicroWnopLexicon:
                 #clear the temporary set of lexicons
                 temp_word_map_list = []
 
-    ''' a function that creates new lexicons using an index '''
     def createLexicon(self, index):
+        """ a function that creates new lexicons using an index """
         #check if the index is valid
         if index >= len(self.word_map_list) or 0 > index:
             #if index is invalid, return None and give error output
@@ -91,25 +91,30 @@ class MicroWnopLexicon:
             #if index is valid, create and return the new lexicon
             return SepMicroWnopLexicon(self.word_map_list[index])
 
-'''
-A class that uses a dictionary to determine the score for a word.
-
-It just looks in the dictionary and process the scores a bit (divide the sum of
-scores with the number of occurrences in the lexicon) before returning it. 
-
-By: Ludwig Forsberg 2013
-'''
-
 class SepMicroWnopLexicon:
+    """
+    A class that uses a dictionary to determine the score for a word.
+
+    It just looks in the dictionary and process the scores a bit (divide the sum of
+    scores with the number of occurrences in the lexicon) before returning it. 
+
+    By: Ludwig Forsberg 2013
+    """
+
     word_map = dict([]) #a dictionary for the lexicon
     
-    ''' a function that just initialize the dictionary for the lexicon '''
+    
     def __init__(self, p_word_map):
+        """ a function that just initialize the dictionary for the lexicon """
+
         self.word_map = p_word_map
 
-    ''' function that returns the score of a word in a list with first the
-    positive value and then the negative'''
     def getScore(self, tweet_word):
+         """ 
+         a function that returns the score of a word in a list with first the
+         positive value and then the negative
+         """
+
         #check if the word is in the dictionary
         if tweet_word in self.word_map:
             #divide the summed score in the lexicon with the number of occurrences

@@ -1,7 +1,7 @@
 #!/usr/bin/python2.7
 
-'''
-A little script that uses the training tweets, the un-scored tweets and the
+"""
+A little classthat uses the training tweets, the un-scored tweets and the
 SVM.
 
 It loads the training tweets, prints those tweets, then trains the SVM on
@@ -9,18 +9,18 @@ them. After that the new tweets are loaded and the SVM is used to classify
 them. Finally all those tweets are printed.
 
 By: Ludwig Forsberg 2013.
-'''
+"""
 
 from sklearn import svm
 from svm_tweet import Tweet
 from tweet_loader import TweetSet
 from svm_sentiments_analysis import SVMLearner
 
-''' class that will contain the actual SVM '''
 class MainAnalysis:
+    """ class that will contain the actual SVM """
 
-    ''' initialize the SVNLearner '''
     def __init__(self):
+        """ initialize the SVNLearner """
         self.m_learner = SVMLearner()
 
 #train_tweets = 'test'
@@ -28,8 +28,8 @@ class MainAnalysis:
 
 tweets_file = '../tweets/gazprom.2016.json'
 
-''' the main function '''
 if __name__ == '__main__':
+    """ the main function """
 
     #load the tweets from file
     datas = TweetSet(tweets_file)
