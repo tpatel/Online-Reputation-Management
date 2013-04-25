@@ -17,14 +17,15 @@ class MicroWnopLexicon:
     separate dictionaries for every lexicon in the file. Then it can create new
     lexicons ('SepMicroWnopLexicon') that then can be used to retrieve the scores
     for a word.
-
     By: Ludwig Forsberg 2013.
     """
 
     word_map_list = [] #a list of all the dictionaries
 
     ## create all the dictionaries
+
     def __init__(self):
+        ''' create all the dictionaries '''
         temp_word_map_list = [] #a temporary list of dictionaries
         
         ##open the data-file
@@ -82,6 +83,7 @@ class MicroWnopLexicon:
 
     def createLexicon(self, index):
         """ a function that creates new lexicons using an index """
+
         #check if the index is valid
         if index >= len(self.word_map_list) or 0 > index:
             #if index is invalid, return None and give error output
@@ -102,7 +104,6 @@ class SepMicroWnopLexicon:
     """
 
     word_map = dict([]) #a dictionary for the lexicon
-    
     
     def __init__(self, p_word_map):
         """ a function that just initialize the dictionary for the lexicon """

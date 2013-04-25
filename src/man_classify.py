@@ -19,11 +19,13 @@ tweets = '../tweets/microsoft.17858.json'
 
 def printWrongInput():
     """ just a function that gives some error output """
+
     print ('Your input was incorrect, please try again or press \'h\' and ' + 
     'enter to get more information.')
 
 def saveResults(jsonObj, file_path):
     """ save the results onto a file """
+
     f = open(file_path, 'w')
     print jsonObj
     json.dump(jsonObj, f);
@@ -31,6 +33,7 @@ def saveResults(jsonObj, file_path):
 
 if __name__ == '__main__':
     """ the main function """
+
     #construct the file path strings for input and output
     file_path = '../tweets/'
     file_name = raw_input('What file in ../tweets would you like to parse?\n')

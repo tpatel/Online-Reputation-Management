@@ -1,7 +1,7 @@
 #!/usr/bin/python2.7
 
-POSITIVE_LEXICON = "opinion-lexicon-English/positive-words.txt"
-NEGATIVE_LEXICON = "opinion-lexicon-English/negative-words.txt"
+POSITIVE_LEXICON = "../lexicon/opinion-lexicon-English/positive-words.txt"
+NEGATIVE_LEXICON = "../lexicon/opinion-lexicon-English/negative-words.txt"
 
 class LexiconSentimentsAnalysis:
     """The class contains the lexicons and analyse a text with these"""
