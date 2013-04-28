@@ -30,16 +30,69 @@
 \tableofcontents
 
 \clearpage
-\chapter{Introduction}
+\chapter{Introduction (1p, Ludwig)}
 
-\chapter{Method}
+\section{Background}
 
-\chapter{Implementations}
+There has always been a desire to read people's minds, what they deem important and what they don't deem important, what they like and what they don't like. 
+In some cases to extract the will of the people, to be able to find the best movie, adapt ones business strategy to better appeal to ones customers or for more sinister purposes such as trying to control ones inhabitants by an authoritarian government.
 
-\chapter{Results}
+To directly read someones more advanced thoughts is however still far from possible (some simple thoughts can be read with an MRI). 
+However how and what a person chooses to communicate do very often reflect what the person thinks. With the democratization of the written word and the information channels one can therefore try to analyze the written communication that now occurs on a huge scale to determine the opinions and ideas of people. 
+The sheer volume of this information is however so great that attempting to have actual people analyzing it is infeasible. 
+The only entity with the amount of processing power required are computers. 
+To analyze a text-message in order to extract the thoughts of the sender is however a very daunting task for a computer, even a human that has trained and evolved tools designed to achieve this feat over thousands of years has difficulties.
 
-\chapter{Discussion}
+In computer science the problem of extracting subjective information in source materials is called sentiment analysis or opinion mining. 
+The most basic task in this field is usually to simply classify the polarity of a text, i e if it is positive or negative. 
+This is sometimes called semantic orientation. 
+More advanced tasks are for example classifying the emotion such as “angry”, “sad” and “happy”, and/or determining a level of “angriness” or “sadness” (as in maybe getting a score of 3 in a [0-5] interval of angriness) [a].
 
-\chapter{Conclusion}
+The focus of the bulk of the research on automated text-analysis has rested on trying to classify separate texts.
+
+\section{Problem Description}
+In our project we are interested in examining how the classification of texts in messages passed between people in a population actually corresponds with the opinion of the population and explore some methods intended to better capture the opinion of the population using the classification of texts. 
+
+Intuitively if people are very negative about a brand for example in their messages one would assume that they have a very negative opinion of the brand, but this is not necessarily true. 
+
+\chapter{Method (3p)}
+
+\section{Crawler (Thibaut)}
+
+\section{Lexicon (Ludwig)}
+We used seven different lexicons one containing about 200 unique words, five containing about 900 unique words and one containing about xxx unique words.
+One of the lexicons consisted of simply two lists of negative and positive words where the rest listed words with a certain negative and positive score between 0 and 1. 
+Some of these lexicons had support for an NLP approach where some words had different scores if they were present in a text as an adjective or an adverb.  
+But to ease the aggregation of the different lexicons we choose to keep it simple and just considered the probability of a word being adjective or adverb to be equal for example.
+
+The lexicons were used in simple bag-of-words model of the text so each word was sent to all lexicons, scored with a value between 0 and 1 in both negativity and positivity and then returned. 
+The score of a tweet was then created by summing up the score for all the words in all the lexicons. 
+
+\section{SVM (Romain)}
+
+\section{Tweaks (Thibaut)}
+
+\section{Manual (Ludwig)}
+To manually score tweets we made a little script that asked the user what file the user wants to process. 
+Then the user is presented with a text and asked to classify it where the options are positive, positive but unsure, negative, negative but unsure, neutral and neutral but unsure. 
+The user is free to go back and re-classify a tweet but cannot pass a tweet, to classify new tweets the last tweet presented must be classified. 
+Once a number of tweets has been classified the user can save his progress in a separate file and quit. 
+When the user resumes the classification process the classification will also resume where he left off.
+
+\section{Poll (Ludwig)}
+In order to compare our results to something that measured the actual opinion of the people we decided that we more or less needed some kind of poll. 
+Polls are far from perfect but should be accurate enough for our purposes. It was quite difficult to find a poll that measured the general opinion of a company. 
+Most polling institutes are hesitant to disclose their raw data and instead they present their own trademarked metrics that are usually an aggregation of a wide array of different parameters.
+
+We did however find a poll by Harris Interactive made quite recently (November 13-30 in 2012) that had quite a large numbers of interviews (14 000). 
+It also contained a section where they had a category called “Emotional Appeal” that was an aggregation of answers to how much the interviewee “Feel good about”, “Admire and Respect” and “Trust” the brand in question on a 0-7 scale. 
+These three scores were then summed up, divided by 21 and multiplied by 100 in order to essentially create a general score for the emotional appeal for the brand [b]. 
+We felt this would correspond to the opinion of the population accurate enough for our purposes.
+
+\chapter{Results (3p, Romain and Kristoffer)}
+
+\chapter{Discussion (1p, all)}
+
+\chapter{Conclusion (1p, all)}
 
 \end{document}
