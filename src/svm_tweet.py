@@ -19,6 +19,14 @@ class Tweet:
         self.userId = struct['user_id_str'].encode('utf-8')
         self.userName = struct['user_screen_name'].encode('utf-8')
         
+        if 'retweeted_status_id_str' in struct:
+            self.retweeted = True
+            self.retweetedStatusId = struct['retweeted_status_id_str'].encode('utf-8')
+        else:
+            self.retweeted = False
+        
+        self.popularity = 0 # Used in statistics computations
+        
         self.polarity = 0
 
         self.length = len(self.text)
@@ -26,6 +34,8 @@ class Tweet:
         self.words = self.clean_words();
         self.unigrams = {}
         self.bigrams = {}
+        
+
 
     def get_features_representation(self):
         """Return a list with all the features of the tweet"""
