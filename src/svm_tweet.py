@@ -28,6 +28,7 @@ class Tweet:
         self.popularity = 0 # Used in statistics computations
         
         self.polarity = 0
+        self.lexicon_score = [0, 0]
 
         self.length = len(self.text)
         self.nb_words = len(self.text.split())
@@ -90,6 +91,7 @@ class Tweet:
         return set1.issubset(set2) or set2.issubset(set1)
 
     def __str__(self):
-        s = "[%d] %s"%(self.polarity, self.text.rstrip())
+        s = "[%f, %f] %s"%(self.lexicon_score[0], self.lexicon_score[1],
+                self.text.rstrip())
         return s
 

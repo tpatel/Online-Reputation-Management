@@ -33,6 +33,7 @@ if __name__ == '__main__':
 
     #load the tweets from file
     datas = TweetSet(tweets_file)
+    print datas
 
     #get the training tweets and insert them into a list
     tweets = []
