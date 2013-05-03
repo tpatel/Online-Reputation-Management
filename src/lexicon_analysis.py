@@ -19,12 +19,8 @@ lex_list = [] #list of lexicons
 class LexiconAnalysis:
 
     def __init__(self):
-<<<<<<< HEAD
         """ a function that initializes the list of lexicons to be used """
         
-=======
-        ''' a function that initializes the list of lexicons to be used '''
->>>>>>> a0ce34983b60d5f2b71d909a21941b6513bd330e
         ##initialize the different lexicon creators
         wno = lex1.MicroWnopLexicon()
         
@@ -37,21 +33,15 @@ class LexiconAnalysis:
         lex_list.append(wno.createLexicon(5))
     
     def saveResults(self, jsonObj, file_path):
-<<<<<<< HEAD
         """ save the results onto a file """
-=======
-        ''' save the results onto a file '''
->>>>>>> a0ce34983b60d5f2b71d909a21941b6513bd330e
+
         f = open(file_path, 'w')
         json.dump(jsonObj, f);
         f.close()
 
     def getScoreTweet(self, tweet):
-<<<<<<< HEAD
         """ a function that returns the score for a tweet """
-=======
-        ''' a function that returns the score for a tweet '''
->>>>>>> a0ce34983b60d5f2b71d909a21941b6513bd330e
+
         score = [0, 0]
         ##for all the words in the tweet
         word_list = tweet.lower().split()
@@ -64,15 +54,10 @@ class LexiconAnalysis:
         return score
     
     def processTweets(self, in_file):
-<<<<<<< HEAD
         """ 
         a function that process a number of tweets in a certain file in json format 
         """
 
-=======
-        ''' a function that process a number of tweets in a certain file in
-        json format '''
->>>>>>> a0ce34983b60d5f2b71d909a21941b6513bd330e
         ##create the path to the file we will process
         file_path = dir_path + in_file
 
@@ -100,16 +85,11 @@ class LexiconAnalysis:
         self.saveResults(out_jsonObj, file_path + '.lex_scored')
         
 if __name__ == '__main__':
-<<<<<<< HEAD
     """ 
     the main function that expects a file name to the file with tweets to be
     processed to be provided 
     """
 
-=======
-    ''' the main function that expects a file name to the file with tweets to
-    be processed to be provided '''
->>>>>>> a0ce34983b60d5f2b71d909a21941b6513bd330e
     l = LexiconAnalysis()
     if 2 == len(sys.argv):
         l.processTweets(sys.argv[1])

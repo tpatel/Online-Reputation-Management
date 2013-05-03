@@ -1,0 +1,8 @@
+# tex files
+*.aux
+*.log
+*.pdf
+*.toc
+
+# other text-files
+*.odt

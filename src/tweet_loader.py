@@ -5,6 +5,7 @@ import string
 import json
 
 from lexicon_sentiments_analysis import LexiconSentimentsAnalysis
+from lexicon_analysis import LexiconAnalysis
 from svm_tweet import Tweet
 
 NB_TRAINING_TWEETS = 20
@@ -17,7 +18,8 @@ class TweetSet:
         self.positives = []
         self.negatives = []
         self.neutrals = []
-        self.lexicon = LexiconSentimentsAnalysis()
+        #self.lexicon = LexiconSentimentsAnalysis()
+        self.lexicon = LexiconAnalysis()
 
         self.load_tweets()
 
@@ -27,13 +29,17 @@ class TweetSet:
         data = json.load(json_data)
         for i in data:
             t = Tweet(i)
-            t.polarity = self.lexicon.analyse_text(t.text)
+            t.lexicon_score = self.lexicon.getScoreTweet(t.text)
+            #t.polarity = self.lexicon.analyse_text(t.text)
             self.tweets.append(t)
 
-        self.negatives = sorted(self.tweets, key=lambda tweet: tweet.polarity)
-        self.positives = sorted(self.tweets, key=lambda tweet: -tweet.polarity)
+        self.negatives = sorted(self.tweets,
+                key=lambda tweet: -tweet.lexicon_score[1])
+        self.positives = sorted(self.tweets,
+                key=lambda tweet: -tweet.lexicon_score[0])
         self.neutrals = sorted([tweet for tweet in self.tweets if
-                tweet.polarity == 0], key=lambda tweet: -len(tweet.text))
+                tweet.lexicon_score[0] == 0 and tweet.lexicon_score[1] == 0],
+                key=lambda tweet: -len(tweet.text))
 
     def get_positive_tweets(self):
         return self.uniq_top(self.positives, NB_TRAINING_TWEETS)

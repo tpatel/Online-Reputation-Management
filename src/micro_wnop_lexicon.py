@@ -58,8 +58,8 @@ class MicroWnopLexicon:
                         #calculate the offset among the scores
                         off = i*2
                         #get the new scores present on the line
-                        new_values = [float(parse_line[0+off]), \
-                float(parse_line[1+off])]
+                        new_values = [float(parse_line[0+off]),
+                                float(parse_line[1+off])]
                         #check if the word is already present in the dictionary
                         if word[0] in temp_word_map_list[i]:
                             ##if so, add the new score with the old score and
@@ -111,10 +111,10 @@ class SepMicroWnopLexicon:
         self.word_map = p_word_map
 
     def getScore(self, tweet_word):
-         """ 
-         a function that returns the score of a word in a list with first the
-         positive value and then the negative
-         """
+        """ 
+        a function that returns the score of a word in a list with first the
+        positive value and then the negative
+        """
 
         #check if the word is in the dictionary
         if tweet_word in self.word_map:
@@ -125,3 +125,4 @@ class SepMicroWnopLexicon:
         else:
             #if the word is not present, return a 0.0 word
             return [0.0, 0.0]
+
