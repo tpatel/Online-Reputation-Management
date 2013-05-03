@@ -1,7 +1,7 @@
 #!/usr/bin/python2.7
 
 """
-A little classthat uses the training tweets, the un-scored tweets and the
+A little class that uses the training tweets, the un-scored tweets and the
 SVM.
 
 It loads the training tweets, prints those tweets, then trains the SVM on
