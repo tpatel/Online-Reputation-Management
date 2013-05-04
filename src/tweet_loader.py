@@ -34,9 +34,9 @@ class TweetSet:
             self.tweets.append(t)
 
         self.negatives = sorted(self.tweets,
-                key=lambda tweet: -tweet.lexicon_score[1])
+                key=lambda tweet: -tweet.lexicon_score[1]+tweet.lexicon_score[0])
         self.positives = sorted(self.tweets,
-                key=lambda tweet: -tweet.lexicon_score[0])
+                key=lambda tweet: -tweet.lexicon_score[0]+tweet.lexicon_score[1])
         self.neutrals = sorted([tweet for tweet in self.tweets if
                 tweet.lexicon_score[0] == 0 and tweet.lexicon_score[1] == 0],
                 key=lambda tweet: -len(tweet.text))

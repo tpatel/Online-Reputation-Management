@@ -7,6 +7,9 @@ This file is running the tests to compare our results
 import math
 import json
 from main_analysis import MainAnalysis
+from tweet_loader import TweetSet
+from lexicon_analysis import LexiconAnalysis
+from lexicon_sentiments_analysis import LexiconSentimentsAnalysis
 
 class Tests:
     def __init__(self):
@@ -53,6 +56,9 @@ class Tests:
 
         for t in manual:
             pol = t["score"].index(max(t["score"]))
+            if max(t["score"]) == 1:
+                pol = 1
+
             if pol == 0:
                 t["score"] = 10
             elif pol == 1:
@@ -81,7 +87,30 @@ class Tests:
                 agree += 1
             print "%s\t %d\t -\t %d\t %s"%(svm_results[i].tweet_id,
                     svm_results[i].polarity, manual_results[i]["score"],
-                    manual_results[i]["id_str"])
+                    svm_results[i].text)
+
+        print "\n\nAgree on %d tweets (%d%%)"%(agree, agree*100/nb)
+
+    def compare_lexicon_manual(self, f, nb):
+        lexicon = LexiconSentimentsAnalysis()
+        datas = TweetSet(f)
+        manual_files = [f+".ludwig", f+".kristoffer", f+".romain"]
+        manual_results = self.get_manual_results(manual_files, nb)
+        print "Lexicon Polarity vs. Manual Polarity"
+        agree = 0
+        for i in range(nb):
+            t = datas.tweets[i]
+            score = lexicon.getScoreTweet(t.text)
+            pol = 0
+            print score[0] - score[1]
+            if score[0] - score[1] >= 2:
+                pol = 10
+            elif score[1] - score[0] >= 2:
+                pol = -10
+            if pol == manual_results[i]["score"]:
+                agree += 1
+            print "%s\t %d\t -\t %d\t %s"%(t.tweet_id, pol,
+                    manual_results[i]["score"], t.text)
 
         print "\n\nAgree on %d tweets (%d%%)"%(agree, agree*100/nb)
 
@@ -116,9 +145,9 @@ if __name__ == '__main__':
     disney_file = '../tweets/disney.7403.json'
     costco_file = '../tweets/costco.7164.json'
     tests = Tests()
-    tests.compare_svm_manual(coca_file, 100)
-    tests.compare_svm_manual(disney_file, 100)
-    tests.compare_svm_manual(costco_file, 100)
+    tests.compare_lexicon_manual(coca_file, 100)
+    tests.compare_lexicon_manual(disney_file, 100)
+    tests.compare_lexicon_manual(costco_file, 100)
     print "Coca cola without tweaks: %s"%(tests.get_company_score(coca_file, False))
     print "Coca cola with tweaks: %s"%(tests.get_company_score(coca_file))
     print "Disney: %s"%(tests.get_company_score(disney_file))

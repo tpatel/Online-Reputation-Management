@@ -54,6 +54,16 @@ class LexiconSentimentsAnalysis:
             score -= 1
         return score
 
+    def getScoreTweet(self, text):
+        t = text.lower().split()
+        score = [0, 0]
+        for word in t:
+            if word in self.positive_words:
+                score[0] += 1
+            if word in self.negative_words:
+                score[1] += 1
+        return score
+
 
 if __name__ == '__main__':
     l = LexiconSentimentsAnalysis()
