@@ -33,18 +33,40 @@ class Tests:
             data.close()
             if not manual:
                 manual = tweets[0:nb]
+                for t in manual:
+                    v = [0, 0, 0]
+                    if t["score"] >= 2:
+                        v[0] += 1
+                    elif t["score"] <= -1:
+                        v[2] += 1
+                    else:
+                        v[1] += 1
+                    t["score"] = v
             else:
                 for i in range(nb):
-                    manual[i]["score"] += tweets[i]["score"]
+                    if tweets[i]["score"] >= 2:
+                        manual[i]["score"][0] += 1
+                    elif t["score"] <= -1:
+                        manual[i]["score"][2] += 1
+                    else:
+                        manual[i]["score"][1] += 1
 
         for t in manual:
-            t["score"] /= len(files)
-            if t["score"] >= 2:
+            pol = t["score"].index(max(t["score"]))
+            if pol == 0:
                 t["score"] = 10
-            elif t["score"] <= -1:
-                t["score"] = -10
-            else:
+            elif pol == 1:
                 t["score"] = 0
+            else:
+                t["score"] = -10
+            
+#            t["score"] /= len(files)
+#            if t["score"] >= 2:
+#                t["score"] = 10
+#            elif t["score"] <= -1:
+#                t["score"] = -10
+#            else:
+#                t["score"] = 0
 
         return manual
 
@@ -94,9 +116,9 @@ if __name__ == '__main__':
     disney_file = '../tweets/disney.7403.json'
     costco_file = '../tweets/costco.7164.json'
     tests = Tests()
-#tests.compare_svm_manual(coca_file, 100)
-#tests.compare_svm_manual(disney_file, 100)
-#tests.compare_svm_manual(costco_file, 100)
+    tests.compare_svm_manual(coca_file, 100)
+    tests.compare_svm_manual(disney_file, 100)
+    tests.compare_svm_manual(costco_file, 100)
     print "Coca cola without tweaks: %s"%(tests.get_company_score(coca_file, False))
     print "Coca cola with tweaks: %s"%(tests.get_company_score(coca_file))
     print "Disney: %s"%(tests.get_company_score(disney_file))
