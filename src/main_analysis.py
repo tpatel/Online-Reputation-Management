@@ -19,47 +19,49 @@ from svm_sentiments_analysis import SVMLearner
 class MainAnalysis:
     """ class that will contain the actual SVM """
 
-    def __init__(self):
+    def __init__(self, tweets_file):
         """ initialize the SVNLearner """
         self.m_learner = SVMLearner()
+        self.tweets_file = tweets_file
+        self.datas = TweetSet(self.tweets_file)
+        self.training_tweets = []
 
-#train_tweets = 'test'
-#new_tweets = 'test2'
+    def learn(self):
+        """ Make the SVM learn with datas loaded"""
+        #get the training tweets and insert them into a list
+        self.training_tweets = []
+        for t in self.datas.get_positive_tweets():
+            t.polarity = 10
+            self.training_tweets.append(t)
+        for t in self.datas.get_negative_tweets():
+            t.polarity = -10
+            self.training_tweets.append(t)
+        for t in self.datas.get_neutral_tweets():
+            t.polarity = 0
+            self.training_tweets.append(t)
+        self.m_learner.learn_from_tweets(self.training_tweets)
 
-tweets_file = '../tweets/gazprom.2016.json'
+    def classify(self, tweets):
+        """Get the polarity of tweets using the SVM"""
+        classified = []
+        for t in tweets:
+            #use the SVM to predict the polarity
+            t.polarity = self.m_learner.predict_from_tweet(t)
+            #append the tweet to the list
+            classified.append(t)
+
+        return classified
+
 
 if __name__ == '__main__':
-    """ the main function """
-
-    #load the tweets from file
-    datas = TweetSet(tweets_file)
-    print datas
-
-    #get the training tweets and insert them into a list
-    tweets = []
-    for t in datas.get_positive_tweets():
-        t.polarity = 10
-        tweets.append(t)
-    for t in datas.get_negative_tweets():
-        t.polarity = -10
-        tweets.append(t)
-    for t in datas.get_neutral_tweets():
-        t.polarity = 0
-        tweets.append(t)
-
+    tweets_file = '../tweets/coca cola.4592.json'
     #train the SVM
-    a = MainAnalysis()
-    a.m_learner.learn_from_tweets(tweets)
+    a = MainAnalysis(tweets_file)
+    a.learn()
 
-    classified = []
-    #make the SVM classify all the tweets
-    for t in datas.tweets:
-        #use the SVM to predict the polarity
-        t.polarity = a.m_learner.predict_from_tweet(t)
-        #append the tweet to the list
-        classified.append(t)
-    #print all the tweets
-    for t in classified:
+    #make the SVM classify the tweets
+    for t in a.classify(a.datas.tweets):
+        #print all the tweets
         print t
             
 

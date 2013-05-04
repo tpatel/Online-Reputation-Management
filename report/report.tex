@@ -69,6 +69,13 @@ The lexicons were used in simple bag-of-words model of the text so each word was
 The score of a tweet was then created by summing up the score for all the words in all the lexicons. 
 
 \section{SVM (Romain)}
+We used a Support Vector Machine (SVM) to get the polarity of a tweet. It is a supervised learning model that recognize patterns. We used the python plugin \textit{scikit-learn}\footnote{http://scikit-learn.org/stable/} and its implementation of the SVM to make it work.
+
+First we had to make our SVM learn. To that purpose we used our lexicon to create training data. Among all the tweets about a company, we label as "positives" the X tweets with the highest positive score given by the lexicons. Likewise, we label as "negatives" the X tweets with the highest negative score. Finally, we label as "neutral" the X longest tweets which have both null positive and negative score. The SVM will then lean from these 3*X tweets.
+
+We choose as features to represent a tweet the unigrams and bigrams. We get them by cleaning the text from the punctuation, and getting all the words and couple of words. We remove all the urls.
+
+Finally, to guess the polarity of a random tweet about the company, we extract its features, and then classify it thanks to the SVM.
 
 \section{Tweaks (Thibaut)}
 
