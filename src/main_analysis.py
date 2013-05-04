@@ -46,7 +46,7 @@ class MainAnalysis:
         classified = []
         for t in tweets:
             #use the SVM to predict the polarity
-            t.polarity = a.m_learner.predict_from_tweet(t)
+            t.polarity = self.m_learner.predict_from_tweet(t)
             #append the tweet to the list
             classified.append(t)
 
