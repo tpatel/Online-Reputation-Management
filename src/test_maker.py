@@ -78,7 +78,8 @@ class Tests:
             else:
                 score["neg"] += s
             
-        total = (score["neg"]+ score["neu"] + score["pos"])/100
+        total = (score["neg"] + score["neu"] + score["pos"])/100
+        score["opinion"] = "%f%%"%(float(score["pos"]*100)/(score["neg"] + score["pos"]))
         score["pos"] = "%f%%"%(float(score["pos"])/total)
         score["neu"] = "%f%%"%(float(score["neu"])/total)
         score["neg"] = "%f%%"%(float(score["neg"])/total)
