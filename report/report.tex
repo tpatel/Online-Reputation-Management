@@ -59,6 +59,31 @@ Intuitively if people are very negative about a brand for example in their messa
 
 \section{Crawler (Thibaut)}
 
+As we need enough data to train and test our algorithm, we need a dataset of tweets. Given that we are also using the meta information of the tweets (number of retweet for example), we could not find preexisting datasets and we chose to directly harvest Twitter.
+We use the Twitter search as an entry point in the Twitter flow of data. This enables us to get pertinent information by getting only the tweets containing the name of brands we choose.
+
+We have observed in the different research papers that after getting the raw information, there is a filtering step. We chose not to do this part ourselves. In order to reduce the scope of the project, we only consider the English language. This filtering is done at the harvesting time by using the Twitter language filter.
+We also assume that there is no topic drift in a tweet. That is to say if the tweet contains the name of the brand, its content is going to be about this brand.
+
+The quantity of information extracted from Twitter corresponds to the maximum amount of tweets we can get from a search at a given time : Twitter index only the tweets from the last 6 to 9 days.
+
+The 3 brands chosen are Coca Cola, Costco and Disney, and we got respectively 4592, 7164 and 7403 tweets, with the selected metadata that is used in our work.
+
+Example of a tweet:
+
+{
+	"created_at": "Sun Apr 28 18:40:13 +0000 2013",
+	"id_str": "328579420908580864",
+	"text": "Shout out to Tops for filling up my frigid with Coca-Cola",
+	"in_reply_to_status_id_str": null,
+	"in_reply_to_user_id_str": null,
+	"retweet_count": 0,
+	"favorite_count": 0,
+	"user_id_str": "143882218",
+	"user_screen_name": "ShutDoWnDud3_24",
+	"user_followers_count": 328
+}
+
 \section{Lexicon (Ludwig)}
 We used seven different lexicons one containing about 200 unique words, five containing about 900 unique words and one containing about xxx unique words.
 One of the lexicons consisted of simply two lists of negative and positive words where the rest listed words with a certain negative and positive score between 0 and 1. 
@@ -78,6 +103,16 @@ We choose as features to represent a tweet the unigrams and bigrams. We get them
 Finally, to guess the polarity of a random tweet about the company, we extract its features, and then classify it thanks to the SVM.
 
 \section{Tweaks (Thibaut)}
+
+Thanks to the previous parts, we are now in possession of the tweets associated with their polarity (positive, negative or neutral). Our goal is to extract global information from this new dataset.
+This is the novelty aspect in our work, and we chose to present two way of grouping this polarity information.
+
+What we aim for is a measure for the popularity of a brand. It is achieved by aggregating the polarity of each tweet, weighted by their influence over the network.
+Then the main aspect of our work consists in finding the right way to measure the influence of a tweet.
+
+// about the influence measure
+// about the top 10 influencial tweets => actionability
+// about the overall opinion score
 
 \section{Manual (Ludwig)}
 To manually score tweets we made a little script that asked the user what file the user wants to process. 
