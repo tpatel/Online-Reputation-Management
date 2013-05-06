@@ -9,6 +9,7 @@ By: Ludwig Forsberg 2013.
 
 import json
 import sys
+from lexicon_sentiments_analysis import LexiconSentimentsAnalysis
 
 import micro_wnop_lexicon as lex1 #lexicon creator
 
@@ -31,6 +32,8 @@ class LexiconAnalysis:
         lex_list.append(wno.createLexicon(3))
         lex_list.append(wno.createLexicon(4))
         lex_list.append(wno.createLexicon(5))
+
+        self.opinion_lexicon = LexiconSentimentsAnalysis()
     
     def saveResults(self, jsonObj, file_path):
         """ save the results onto a file """
@@ -51,6 +54,8 @@ class LexiconAnalysis:
                 #add the score of that word in that lexicon to the total score
                 #for that word
                 score = map(sum, zip(score, lexicon.getScore(word)))
+            #opinion lexicon
+            score = map(sum, zip(score, self.opinion_lexicon.getScore(word)))
         return score
     
     def processTweets(self, in_file):

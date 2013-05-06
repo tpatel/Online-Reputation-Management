@@ -64,6 +64,14 @@ class LexiconSentimentsAnalysis:
                 score[1] += 1
         return score
 
+    def getScore(self, word):
+        score = [0, 0]
+        if word in self.positive_words:
+            score[0] += 1
+        if word in self.negative_words:
+            score[1] += 1
+        return score
+
 
 if __name__ == '__main__':
     l = LexiconSentimentsAnalysis()
