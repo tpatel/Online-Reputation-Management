@@ -1,0 +1,12 @@
+Coca cola without tweaks: {'neg': '34.288889%', 'neu': '55.377778%', 'pos': '12.377778%', 'opinion': '26.523810%'}
+Coca cola with tweaks: {'neg': '10.467159%', 'neu': '89.286175%', 'pos': '0.246666%', 'opinion': '2.302311%'}
+Disney without tweaks: {'neg': '81.108108%', 'neu': '1.027027%', 'pos': '17.905405%', 'opinion': '18.083800%'}
+Disney with tweaks: {'neg': '97.568884%', 'neu': '0.444545%', 'pos': '1.986571%', 'opinion': '1.995441%'}
+CostCo without tweaks: {'neg': '69.563380%', 'neu': '14.521127%', 'pos': '16.816901%', 'opinion': '19.468449%'}
+CostCo with tweaks: {'neg': '45.507851%', 'neu': '39.729225%', 'pos': '14.762924%', 'opinion': '24.494333%'}
+Microsoft without tweaks: {'neg': '92.792135%', 'neu': '4.735955%', 'pos': '2.730337%', 'opinion': '2.858319%'}
+Microsoft with tweaks: {'neg': '94.356865%', 'neu': '4.710623%', 'pos': '0.932512%', 'opinion': '0.978611%'}
+Louis Vuiton without tweaks: {'neg': '63.888889%', 'neu': '38.666667%', 'pos': '0.814815%', 'opinion': '1.259302%'}
+Louis Vuiton with tweaks: {'neg': '25.552249%', 'neu': '73.876361%', 'pos': '0.571390%', 'opinion': '2.187253%'}
+Gazprom without tweaks: {'neg': '20.050000%', 'neu': '37.900000%', 'pos': '42.850000%', 'opinion': '68.124006%'}
+Gazprom with tweaks: {'neg': '20.223083%', 'neu': '33.501546%', 'pos': '46.275371%', 'opinion': '69.588642%'}
