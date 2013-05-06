@@ -96,7 +96,7 @@ The score of a tweet was then created by summing up the score for all the words 
 \section{SVM (Romain)}
 We used a Support Vector Machine (SVM) to get the polarity of a tweet. It is a supervised learning model that recognize patterns. We used the python plugin \textit{scikit-learn}\footnote{http://scikit-learn.org/stable/} and its implementation of the SVM to make it work.
 
-First we had to make our SVM learn. To that purpose we used our lexicon to create training data. Among all the tweets about a company, we label as "positives" the X tweets with the highest positive score given by the lexicons. Likewise, we label as "negatives" the X tweets with the highest negative score. Finally, we label as "neutral" the X longest tweets which have both null positive and negative score. The SVM will then lean from these 3*X tweets.
+First we had to make our SVM learn. To that purpose we used our lexicon to create training data. Among all the tweets about a company, we label as "positives" the X tweets with the highest positive score given by the lexicons. Likewise, we label as "negatives" the X tweets with the highest negative score. Finally, we label as "neutral" the X longest tweets which have both null positive and negative score. The SVM will then learn from these 3*X tweets.
 
 We choose as features to represent a tweet the unigrams and bigrams. We get them by cleaning the text from the punctuation, and getting all the words and couple of words. We remove all the urls.
 
@@ -105,7 +105,7 @@ Finally, to guess the polarity of a random tweet about the company, we extract i
 \section{Tweaks (Thibaut)}
 
 Thanks to the previous parts, we are now in possession of the tweets associated with their polarity (positive, negative or neutral). Our goal is to extract global information from this new dataset.
-This is the novelty aspect in our work, and we chose to present two way of grouping this polarity information.
+This is the novelty aspect in our work, and we chose to present two ways of grouping this polarity information.
 
 What we aim for is a measure for the popularity of a brand. It is achieved by aggregating the polarity of each tweet, weighted by their influence over the network.
 Then the main aspect of our work consists in finding the right way to measure the influence of a tweet.
@@ -131,6 +131,48 @@ It also contained a section where they had a category called “Emotional Appeal
 These three scores were then summed up, divided by 21 and multiplied by 100 in order to essentially create a general score for the emotional appeal for the brand [b]. 
 We felt this would correspond to the opinion of the population accurate enough for our purposes.
 
+\section{Comparing the methods (Kristoffer) [preliminary heading]}
+We made three different tests to compare our different methods of determining the reputation of a brand.
+
+
+
+
+Summary (Will write this in more detail soon):
+
+Test 1 Lexicon+SVM+tweak vs Poll:
+Classify all tweets using lexicon
+Pick top 20 in each category
+Train SVM on these
+Classify with SVM
+Apply tweak (generate 0-100 value (as in pos/(pos+neg))
+Compare with Poll
+
+Parameters
+“influence” function (log(followers+1) + retweets + favorites)
+
+
+Test 2 Manual vs Lexicon+SVM:
+Classify all tweets using lexicon
+Pick top 20 in each category
+Train SVM on these
+Classify top 100 with SVM
+Compare with manual (by tweet)
+
+
+Test 3 Manual vs Lexicon:
+Classify first 100 tweets using lexicon
+Compare with manual (by tweet)
+
+Parameters
+number of top tweet picked to train the SVM
+
+
+
+
+
+
+
+
 \chapter{Results (3p, Romain and Kristoffer)}
 
 \chapter{Discussion (1p, all)}
@@ -138,3 +180,11 @@ We felt this would correspond to the opinion of the population accurate enough f
 \chapter{Conclusion (1p, all)}
 
 \end{document}
+
+
+
+
+
+
+
+
