@@ -14,7 +14,6 @@ class SVMLearner:
     def learn_from_tweets(self, tweets):
         """Learn from tweets (list of instances of Tweet class)"""
 
-        print "%d tweets"%(len(tweets))
         #Get unigrams
         self.unigrams = set()
         self.bigrams = set()
@@ -29,7 +28,6 @@ class SVMLearner:
             t.set_bigrams(self.bigrams)
             features.append(t.get_features_representation())
             polarities.append(t.polarity)
-        print polarities
 
         self.svm.fit(features, polarities)
 
