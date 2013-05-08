@@ -77,6 +77,9 @@ class Tweet:
             b = "%s %s"%(w1,w2)
             if b in self.bigrams.keys():
                 self.bigrams[b] += 1
+        for b in self.bigrams.keys():
+            if self.bigrams[b] > 0:
+                self.bigrams[b] = 1 
 
     def clean_words(self):
         words = self.text.lower().translate(None, string.punctuation).split()
