@@ -98,7 +98,11 @@ The score of a tweet was then created by summing up the score for all the words 
 \section{SVM (Romain)}
 We used a Support Vector Machine (SVM) to get the polarity of a tweet. It is a supervised learning model that recognize patterns. We used the python plugin \textit{scikit-learn}\footnote{http://scikit-learn.org/stable/} and its implementation of the SVM to make it work.
 
-First we had to make our SVM learn. To that purpose we used our lexicon to create training data. Among all the tweets about a company, we label as "positives" the X tweets with the highest positive score given by the lexicons. Likewise, we label as "negatives" the X tweets with the highest negative score. Finally, we label as "neutral" the X longest tweets which have both null positive and negative score. The SVM will then learn from these 3*X tweets.
+Our goal is to create a SVM specialized in one company, because we believe that a word witch is polarized for one company don't have to be polarized for another.
+For instance, the word \textit{sample} is positive when talking about CostCo because they offer a lot of samples and people seems to enjoy it. However, a \textit{sample} when talking about Disney would probably be a sample of a movie, and then should be neutral.
+That is the king of informations our SVM is supposed to extract.
+
+First we had to make our SVM learn. To that purpose we used our lexicon to create training data. Among all the tweets about a company, we label as "positives" the $n$ tweets with the highest positive score given by the lexicons. Likewise, we label as "negatives" the $n$ tweets with the highest negative score. Finally, we label as "neutral" the $n$ longest tweets which have both null positive and negative score. The SVM will then learn from these $3n$ tweets.
 
 We choose as features to represent a tweet the unigrams and bigrams. We get them by cleaning the text from the punctuation, and getting all the words and couple of words. We remove all the urls.
 
@@ -174,15 +178,15 @@ number of top tweet picked to train the SVM
 
 \section{Lexicon evaluation}
 
-Using the result of our manual classification on tweets about Coca Cola, Disney and CostCo, we were able to evaluate the results of our unsupervised classification with the lexicon score on these three companies.
+Using the results of our manual classification on tweets about Coca Cola, Disney and CostCo, we were able to evaluate the results of our unsupervised classification with the lexicon score on these three companies.
 To classify a tweet with the lexicon, we get the positive and the negative score of this tweet, subtract one to the other, and finally apply an arbitrary threshold to get the classification.
 This threshold was set to 2, so that if the score is greater than 2 the tweet is classified as positive, if the score is less than -2 the tweet is negative, and otherwise to tweet is classified neutral.
 
 Here are the results we got on the 100 tweets we classified manually for each company:
 \begin{itemize}
-        \item \textbf{Coca Cola}: the lexicon agree on 53\% of the tweets.
-        \item \textbf{CostCo}: the lexicon agree on 58\% of the tweets.
-        \item \textbf{Disney}: the lexicon agree on 58\% of the tweets.
+        \item \textbf{Coca Cola}: the lexicon agrees on 53\% of the tweets.
+        \item \textbf{CostCo}: the lexicon agrees on 58\% of the tweets.
+        \item \textbf{Disney}: the lexicon agrees on 58\% of the tweets.
 \end{itemize}
 Looking more deeply on the results, we can see that our lexicon method doesn't take a lot of risks.
 Most of the mistakes consist in classifying as neutral a positive or negative tweet. That means it is unable to detect any sentimental parts in theses tweets, because they are too short, too ironic, or because the sentimental part is actually contained in the emoticons or hashtags.\\
@@ -190,6 +194,25 @@ For instance, the following tweets are classified as neutrals, while they are ac
 \centerline{\textit{Costco Sundays!!}}\\
 \centerline{\textit{Need to do a Costco run today... :) \#LoveThatStore}}
 
+\section{SVM classification}
+
+Using the results  of our manual classification once again, we have also evaluated our SVM classifier.
+We used 450 tweets to make the SVM learn, based on the method previously described.
+
+Here are the results we got on the 100 tweets we classified manually for each company:
+\begin{itemize}
+        \item \textbf{Coca Cola}: the SVM agrees on 48\% of the tweets.
+        \item \textbf{CostCo}: the lexicon agrees on 50\% of the tweets.
+        \item \textbf{Disney}: the lexicon agrees on 16\% of the tweets.
+\end{itemize}
+We can see that the results are below the ones we got with the lexicon method.
+That means that our SVM was not able to remove the noise in the learning data induced by the lexicon method.\\
+In the case of Coca Cola and CostCo, results are pretty close to the previous ones, with around 50\% of matching.
+For Disney however, results are really bad. Our guess  is that as Disney has more diversified activities than the two other companies (movies, tv, amusement park, ...), the topics talked about are really different, thus the SVM would need a lot more learning datas to classify tweets correctly.
+
+Looking closer to the results, we can see that unlike with the lexicon method, this method doesn't tend to classify as neutral when it makes mistakes.
+It often classifies a negative tweet as positive and vice versa.
+That means that its mistakes are more serious.
 
 \chapter{Discussion (1p, all)}
 
