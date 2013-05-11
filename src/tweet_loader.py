@@ -8,11 +8,11 @@ from lexicon_sentiments_analysis import LexiconSentimentsAnalysis
 from lexicon_analysis import LexiconAnalysis
 from svm_tweet import Tweet
 
-NB_TRAINING_TWEETS = 20
+NB_TRAINING_TWEETS = 150
 
 class TweetSet:
     """This class represents a set of tweets loaded from a file"""
-    def __init__(self, filename):
+    def __init__(self, filename, nb=-1):
         self.filename = filename
         self.tweets = []
         self.positives = []
@@ -20,6 +20,7 @@ class TweetSet:
         self.neutrals = []
         #self.lexicon = LexiconSentimentsAnalysis()
         self.lexicon = LexiconAnalysis()
+        self.nb = nb
 
         self.load_tweets()
 
@@ -27,9 +28,11 @@ class TweetSet:
         """Loads tweets stored as a json in filename"""
         json_data = open(self.filename)
         data = json.load(json_data)
+        if self.nb > 0:
+           data = data[0:self.nb]
         for i in data:
             t = Tweet(i)
-            t.lexicon_score = self.lexicon.getScoreTweet(t.text)
+            t.lexicon_score = self.lexicon.getScoreTweet(t.cleaned_text)
             #t.polarity = self.lexicon.analyse_text(t.text)
             self.tweets.append(t)
 

@@ -93,7 +93,7 @@ class Tests:
 
     def compare_lexicon_manual(self, f, nb):
         lexicon = LexiconSentimentsAnalysis()
-        datas = TweetSet(f)
+        datas = TweetSet(f, nb)
         manual_files = [f+".ludwig", f+".kristoffer", f+".romain",
                 f+".thibaut"]
         manual_results = self.get_manual_results(manual_files, nb)
@@ -101,7 +101,7 @@ class Tests:
         agree = 0
         for i in range(nb):
             t = datas.tweets[i]
-            score = lexicon.getScoreTweet(t.text)
+            score = lexicon.getScoreTweet(t.cleaned_text)
             pol = 0
             if score[0] - score[1] >= 2:
                 pol = 10
@@ -129,7 +129,7 @@ class Tests:
             else:
                 score["neg"] += s
             
-        total = (score["neg"] + score["neu"] + score["pos"])/100
+        total = float(score["neg"] + score["neu"] + score["pos"])/100
         score["opinion"] = "%f%%"%(float(score["pos"]*100)/(score["neg"] + score["pos"]))
         score["pos"] = "%f%%"%(float(score["pos"])/total)
         score["neu"] = "%f%%"%(float(score["neu"])/total)
@@ -153,7 +153,7 @@ class Tests:
             else:
                 score["neu"] += s
             
-        total = (score["neg"] + score["neu"] + score["pos"])/100
+        total = float(score["neg"] + score["neu"] + score["pos"])/100
         score["opinion"] = "%f%%"%(float(score["pos"]*100)/(score["neg"] + score["pos"]))
         score["pos"] = "%f%%"%(float(score["pos"])/total)
         score["neu"] = "%f%%"%(float(score["neu"])/total)
@@ -161,8 +161,6 @@ class Tests:
         return score
 
 
-
-#print "%d: %s - Polarity %d"%(i, t.tweet_id, t.polarity)
 
 if __name__ == '__main__':
     coca_file = '../tweets/coca cola.4592.json'
@@ -172,21 +170,22 @@ if __name__ == '__main__':
     louis_vuiton_file = '../tweets/louisvuitton.2792.json'
     gazprom_file = '../tweets/gazprom.2016.json'
     tests = Tests()
-#    tests.compare_lexicon_manual(coca_file, 100)
-#    tests.compare_lexicon_manual(disney_file, 100)
-#    tests.compare_svm_manual(coca_file, 100)
-#    tests.compare_svm_manual(disney_file, 100)
-#    tests.compare_svm_manual(costco_file, 100)
-    print "Coca cola without tweaks: %s"%(tests.get_company_score_with_lexicon(coca_file, False))
-    print "Coca cola with tweaks: %s"%(tests.get_company_score_with_lexicon(coca_file))
-    print "Disney without tweaks: %s"%(tests.get_company_score_with_lexicon(disney_file, False))
-    print "Disney with tweaks: %s"%(tests.get_company_score_with_lexicon(disney_file))
-    print "CostCo without tweaks: %s"%(tests.get_company_score_with_lexicon(costco_file, False))
-    print "CostCo with tweaks: %s"%(tests.get_company_score_with_lexicon(costco_file))
-    print "Microsoft without tweaks: %s"%(tests.get_company_score_with_lexicon(microsoft_file, False))
-    print "Microsoft with tweaks: %s"%(tests.get_company_score_with_lexicon(microsoft_file))
-    print "Louis Vuiton without tweaks: %s"%(tests.get_company_score_with_lexicon(louis_vuiton_file, False))
-    print "Louis Vuiton with tweaks: %s"%(tests.get_company_score_with_lexicon(louis_vuiton_file))
-    print "Gazprom without tweaks: %s"%(tests.get_company_score_with_lexicon(gazprom_file, False))
-    print "Gazprom with tweaks: %s"%(tests.get_company_score_with_lexicon(gazprom_file))
+    tests.compare_lexicon_manual(coca_file, 100)
+    tests.compare_lexicon_manual(disney_file, 100)
+    tests.compare_lexicon_manual(costco_file, 100)
+    tests.compare_svm_manual(coca_file, 100)
+    tests.compare_svm_manual(disney_file, 100)
+    tests.compare_svm_manual(costco_file, 100)
+#    print "Coca cola without tweaks: %s"%(tests.get_company_score(coca_file, False))
+#    print "Disney without tweaks: %s"%(tests.get_company_score(disney_file, False))
+#    print "CostCo without tweaks: %s"%(tests.get_company_score(costco_file, False))
+#    print "Microsoft without tweaks: %s"%(tests.get_company_score(microsoft_file, False))
+#    print "Louis Vuiton without tweaks: %s"%(tests.get_company_score(louis_vuiton_file, False))
+#    print "Gazprom without tweaks: %s"%(tests.get_company_score(gazprom_file, False))
+#    print "Coca cola with tweaks: %s"%(tests.get_company_score(coca_file))
+#    print "Disney with tweaks: %s"%(tests.get_company_score(disney_file))
+#    print "CostCo with tweaks: %s"%(tests.get_company_score(costco_file))
+#    print "Microsoft with tweaks: %s"%(tests.get_company_score(microsoft_file))
+#    print "Louis Vuiton with tweaks: %s"%(tests.get_company_score(louis_vuiton_file))
+#    print "Gazprom with tweaks: %s"%(tests.get_company_score(gazprom_file))
 

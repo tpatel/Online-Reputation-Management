@@ -2,6 +2,11 @@
 
 import re
 import string
+import nltk
+from nltk.corpus.reader import wordnet
+from nltk.stem.wordnet import WordNetLemmatizer
+
+lmtzr = WordNetLemmatizer()
 
 class Tweet:
     """This class represents a tweet for the SVM with all its features"""
@@ -10,6 +15,8 @@ class Tweet:
         self.url_pattern = re.compile("http")
         self.tweet_id = struct['id_str'].encode('utf-8')
         self.text = struct['text'].encode('utf-8').rstrip()
+        self.words = self.clean_text(self.text)
+        self.cleaned_text = " ".join(self.words)
         
         self.retweetCount = struct['retweet_count']
         self.favoriteCount = struct['favorite_count']
@@ -32,15 +39,14 @@ class Tweet:
 
         self.length = len(self.text)
         self.nb_words = len(self.text.split())
-        self.words = self.clean_words();
         self.unigrams = {}
         self.bigrams = {}
-        
 
 
     def get_features_representation(self):
         """Return a list with all the features of the tweet"""
         return self.unigrams.values() + self.bigrams.values()
+        return self.unigrams.values()
         #return self.unigrams.values() + [self.length, self.nb_words]
 
     def get_unigrams(self):
@@ -66,6 +72,7 @@ class Tweet:
         w1 = self.words[0] if self.words else ""
         for w2 in self.words[1:]:
             bigrams.add("%s %s"%(w1,w2))
+            w1 = w2
         return bigrams
 
     def set_bigrams(self, bigrams):
@@ -77,6 +84,7 @@ class Tweet:
             b = "%s %s"%(w1,w2)
             if b in self.bigrams.keys():
                 self.bigrams[b] += 1
+            w1 = w2
         for b in self.bigrams.keys():
             if self.bigrams[b] > 0:
                 self.bigrams[b] = 1 
@@ -85,6 +93,31 @@ class Tweet:
         words = self.text.lower().translate(None, string.punctuation).split()
         words = [w for w in words if w and not re.match(self.url_pattern, w)]
         return words
+
+    def clean_text(self, text):
+        words = text.lower().translate(None, string.punctuation).split()
+        words = [w for w in words if w and not re.match(self.url_pattern, w)]
+        cleaned = []
+        for w in nltk.pos_tag(words):
+            k = self.get_wordnet_pos(w[1])
+            if k:
+                cleaned.append(lmtzr.lemmatize(w[0], k))
+            else:
+                cleaned.append(lmtzr.lemmatize(w[0]))
+        return cleaned
+
+
+    def get_wordnet_pos(self, treebank_tag):
+        if treebank_tag.startswith('J'):
+            return wordnet.ADJ
+        elif treebank_tag.startswith('V'):
+            return wordnet.VERB
+        elif treebank_tag.startswith('N'):
+            return wordnet.NOUN
+        elif treebank_tag.startswith('R'):
+            return wordnet.ADV
+        else:
+            return ''
 
     def is_equal_to(self, tweet):
         """Rough comparison between the text of two tweets

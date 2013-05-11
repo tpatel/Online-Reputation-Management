@@ -30,6 +30,7 @@ class MainAnalysis:
         """ Make the SVM learn with datas loaded"""
         #get the training tweets and insert them into a list
         self.training_tweets = []
+        print self.datas
         for t in self.datas.get_positive_tweets():
             t.polarity = 10
             self.training_tweets.append(t)
