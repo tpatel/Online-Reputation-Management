@@ -172,6 +172,25 @@ number of top tweet picked to train the SVM
 
 \chapter{Results (3p, Romain and Kristoffer)}
 
+\section{Lexicon evaluation}
+
+Using the result of our manual classification on tweets about Coca Cola, Disney and CostCo, we were able to evaluate the results of our unsupervised classification with the lexicon score on these three companies.
+To classify a tweet with the lexicon, we get the positive and the negative score of this tweet, subtract one to the other, and finally apply an arbitrary threshold to get the classification.
+This threshold was set to 2, so that if the score is greater than 2 the tweet is classified as positive, if the score is less than -2 the tweet is negative, and otherwise to tweet is classified neutral.
+
+Here are the results we got on the 100 tweets we classified manually for each company:
+\begin{itemize}
+        \item \textbf{Coca Cola}: the lexicon agree on 53\% of the tweets.
+        \item \textbf{CostCo}: the lexicon agree on 58\% of the tweets.
+        \item \textbf{Disney}: the lexicon agree on 58\% of the tweets.
+\end{itemize}
+Looking more deeply on the results, we can see that our lexicon method doesn't take a lot of risks.
+Most of the mistakes consist in classifying as neutral a positive or negative tweet. That means it is unable to detect any sentimental parts in theses tweets, because they are too short, too ironic, or because the sentimental part is actually contained in the emoticons or hashtags.\\
+For instance, the following tweets are classified as neutrals, while they are actually positives:\\
+\centerline{\textit{Costco Sundays!!}}\\
+\centerline{\textit{Need to do a Costco run today... :) \#LoveThatStore}}
+
+
 \chapter{Discussion (1p, all)}
 
 \chapter{Conclusion (1p, all)}
