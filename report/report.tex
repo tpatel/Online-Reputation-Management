@@ -117,9 +117,11 @@ This is the novelty aspect in our work, and we chose to present two ways of grou
 What we aim for is a measure for the popularity of a brand. It is achieved by aggregating the polarity of each tweet, weighted by their influence over the network.
 Then the main aspect of our work consists in finding the right way to measure the influence of a tweet.
 
-// about the influence measure
-// about the top 10 influencial tweets => actionability
-// about the overall opinion score
+The influence measure is critic. It is the measure that enables us to aggregate the polarity of a tweet in order to get an overall opinion on a brand.
+
+Thanks to this measure, we can extract a first statistic : the top 10 influencial tweets. This is a simple extraction given the influence score of each tweet, but this is increasing the actionability of our results, which means that a company using this results can take action by contacting the author of those tweets for example.
+
+The overall opinion score is our main goal, and once we have computed the polarity and the influence of each tweet, we sum the influence of the positive tweets and divide this result by the sum of the influence of the positive and negative tweets.
 
 \section{Manual (Ludwig)}
 To manually score tweets we made a little script that asked the user what file the user wants to process. 
