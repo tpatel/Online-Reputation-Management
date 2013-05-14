@@ -30,7 +30,7 @@
 \clearpage
 
 \abstract{
-In this report we explore the possibility of measuring the opinion of a group of people using messages from twitter. At first we give a short introduction to the rationale of trying to analyze communication in order to extract the opinion. Then we explain why communication over twitter was used as well as exactly how the analysis, and the evaluation of the analysis, would be made. We used lexicons, Support Vector Machines and our own ``influence algorithm'' in order to perform the analysis and then we manually classified some tweets and made use of polls in order to evaluate our analysis. We explain how these components was used to both construct and evaluate our analysis, then we present the result that we got. Finally we discuss the results, present ideas of measures that could be made to improve them and some conclusions that could be made. At best we got a 50\% accuracy when it comes to classifying the tweets, and the analysis yielded a value that was a x percents off the poll whereas simply counting tweets was y percents off.
+In this report we explore the possibility of measuring the opinion of a group of people using messages from twitter. At first we give a short introduction to the rationale of trying to analyze communication in order to extract the opinion. Then we explain why communication over twitter was used as well as exactly how the analysis, and the evaluation of the analysis, would be made. We used lexicons, Support Vector Machines and our own ``influence algorithm'' in order to perform the analysis and then we manually classified some tweets and made use of polls in order to evaluate our analysis. We explain how these components was used to both construct and evaluate our analysis, then we present the result that we got. Finally we discuss the results, present ideas of measures that could be made to improve them and some conclusions that could be made. At best we got a 58\% accuracy when it comes to classifying the tweets, and the analysis yielded a value that was a x percents off the poll whereas simply counting tweets was y percents off.
 }
 
 \clearpage
@@ -40,9 +40,13 @@ In this report we explore the possibility of measuring the opinion of a group of
 \title{\large \textbf{Ludwig Forsberg}}\\
 asdasdasd
 \vspace{2cm}\\
-\title{\large \textbf{Romain Pomier}}\\
-asdasdasd
-\vspace{2cm}\\
+\title{\large \textbf{Romain Pomier}}
+\begin{itemize}
+  \item Pre-processing of words given to the lexicons and the SVM
+  \item Use of the SVM (features extraction, learning, classification)
+  \item Writing of the scripts that perform the tests
+\end{itemize}
+\vspace{2cm}
 \title{\large \textbf{Kristoffer Hallqvist}}\\
 asdasdasd
 \vspace{2cm}\\
@@ -67,7 +71,7 @@ The only entity with the amount of processing power required are computers.
 To analyze a text-message in order to extract the thoughts of the sender is however a very daunting task for a computer, even a human that has trained and evolved tools designed to achieve this feat over thousands of years has difficulties.
 
 In computer science the problem of extracting subjective information in source materials is called sentiment analysis or opinion mining. 
-The most basic task in this field is usually to simply classify the polarity of a text, i e if it is positive or negative. 
+The most basic task in this field is usually to simply classify the polarity of a text, i.e. if it is positive or negative. 
 This is sometimes called semantic orientation. 
 
 The focus of the bulk of the research on automated text-analysis has rested on trying to classify separate texts.
@@ -113,11 +117,15 @@ Some of these lexicons had support for an NLP approach where some words had diff
 But to ease the aggregation of the different lexicons we choose to keep it simple and just considered the probability of a word being adjective or adverb to be equal for example.
 
 The lexicons were used in simple bag-of-words model of the text so each word was sent to all lexicons, scored with a value between 0 and 1 in both negativity and positivity and then returned. 
-The score of a tweet was then created by summing up the score for all the words in all the lexicons. 
+The score of a tweet was then created by summing up the score for all the words in all the lexicons.
+
+We performed a pre-processing of the words using the \textit{Natural Language Toolkit} python plugin.\cite{NLTK}.
+We remove the punctuation, then we use a stemmer and lemmatizer, thus for instance we transform all variations "loving", "loves" and "loved" into simply "love".
+That makes it easier for the lexicon to recognize words.
 
 \section{SVM}
 
-We used a Support Vector Machine (SVM) to get the polarity of a tweet. It is a supervised learning model that recognize patterns. We used the python plugin \textit{scikit-learn}\footnote{http://scikit-learn.org/stable/} and its implementation of the SVM to make it work.
+We used a Support Vector Machine (SVM) to get the polarity of a tweet. It is a supervised learning model that recognize patterns. We used the python plugin \textit{scikit-learn}\cite{Scikit} and its implementation of the SVM to make it work.
 
 Our goal is to create a SVM specialized in one company, because we believe that a word witch is polarized for one company don't have to be polarized for another.
 For instance, the word \textit{sample} is positive when talking about CostCo because they offer a lot of samples and people seems to enjoy it. However, a \textit{sample} when talking about Disney would probably be a sample of a movie, and then should be neutral.
@@ -125,7 +133,7 @@ That is the king of informations our SVM is supposed to extract.
 
 First we had to make our SVM learn. To that purpose we used our lexicon to create training data. Among all the tweets about a company, we label as "positives" the $n$ tweets with the highest positive score given by the lexicons. Likewise, we label as "negatives" the $n$ tweets with the highest negative score. Finally, we label as "neutral" the $n$ longest tweets which have both null positive and negative score. The SVM will then learn from these $3n$ tweets.
 
-We choose as features to represent a tweet the unigrams and bigrams. We get them by cleaning the text from the punctuation, and getting all the words and couple of words. We remove all the urls.
+To represent a tweet, we chose as features its unigrams and bigrams. We use the same pre-processing of words than with the lexicons.
 
 Finally, to guess the polarity of a random tweet about the company, we extract its features, and then classify it thanks to the SVM.
 
@@ -207,9 +215,9 @@ Tweets are notoriously difficult to classify. Due to the small character limitat
 
 This results from classification using only lexicons was about 50\% accurate when compared to the manually classified tweets wich is good but far from great. To improve this results one may simply acquire more lexicons and use more sophisticated POS tagging. 
 
-Six out of the seven lexicons we did use came from the same source. Those six were created by applying six different machine-learning techniques on the same initial corpus. That may have led to some issues such as giving too much importance to some words only because they were present in this initial dictionary. When it comes to POS tagging ... [ROMAIN]
+Six out of the seven lexicons we did use came from the same source. Those six were created by applying six different machine-learning techniques on the same initial corpus. That may have led to some issues such as giving too much importance to some words only because they were present in this initial dictionary.
 
-One could also we perform some processing of the words of the tweet such as stemming, lemmatization and spelling-correction before sending it to the lexicons ... [ROMAIN]
+We may also improve our usage of the lexicons. At the moment we don't use a Part-Of-Speech tagging, so the polarity of a word is evaluated regardless of the context of the word. For example "very good" and "not very good" will more or less yield the same result. It would be good also to consider the position of the company name, so that we can see the difference between "Costco is great but I dislike ice-cream" and "I dislike Costco but I think ice-cream is great".
 
 The results from using the Support Vector Machine are pretty poor. We suspect two main reasons for this.
 
@@ -237,6 +245,7 @@ To get a definitive answer on this matter one would have to get much better resu
 
 %These references are very flexible to make however you want them, if you want them in a different format I'm open to suggestions
 
+  
 \bibitem{Pang02}
   Bo Pang, Lillian Lee and Shivakumar Vaithyanathan,\\
   \emph{Thumbs up? Sentiment classification using machine learning techniques} (2002)\\
@@ -246,6 +255,14 @@ To get a definitive answer on this matter one would have to get much better resu
   Peter Turney\\
   \emph{Thumbs Up or Thumbs Down? Semantic Orientation Applied to Unsupervised Classification of Reviews} (2002)\\
   \url{http://arxiv.org/pdf/cs/0212032v1} (2013/05/14)
+  
+\bibitem{NLTK}
+  Natural Language Toolkit, a python plugin. Website:\\
+  \url{http://nltk.org/}
+  
+\bibitem{Scikit}
+  Scikit python plugin website:\\
+  \url{http://scikit-learn.org/stable/}
 
 \end{thebibliography}
 
