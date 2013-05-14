@@ -3,7 +3,8 @@
 \usepackage[T1]{fontenc}
 \usepackage[margin=2.5cm]{geometry}
 \usepackage[parfill]{parskip}
-%\usepackage[compact]{titlesec}
+\usepackage{url}
+\usepackage[nottoc,numbib]{tocbibind}
 
 \newcommand*{\TitleFont}{%
   \usefont{\encodingdefault}{\rmdefault}{b}{n}%
@@ -15,10 +16,13 @@
   \fontsize{20.74}{20}%
   \selectfont}
 
+\renewcommand\bibname{References}
+
+
 \title{\TitleFontTwo DD2476: ir13 \\ \TitleFont Reputation Estimation using Twitter}
 
 
-\author{Ludwig Forsberg \\ \texttt{ludwigf@kth.se} \and Romain Pomier \\ \texttt{romain.pomier@gmail.com} \and Kristoffer Hallqvist \\ \texttt{khallq@kth.se} \and Thibaut Patel \\ \texttt{thibaut.patel@gmail.com}}
+\author{Ludwig Forsberg \\ \hspace{0.45cm} \small\texttt{ludwigf@kth.se} \hspace{0.45cm} \and Romain Pomier \\ \small\texttt{romain.pomier@gmail.com} \and Kristoffer Hallqvist \\ \small\texttt{khallq@kth.se} \and Thibaut Patel \\ \small\texttt{thibaut.patel@gmail.com}}
 
 \begin{document}
 
@@ -28,6 +32,23 @@
 \abstract{
 In this report we explore the possibility of measuring the opinion of a group of people using messages from twitter. At first we give a short introduction to the rationale of trying to analyze communication in order to extract the opinion. Then we explain why communication over twitter was used as well as exactly how the analysis, and the evaluation of the analysis, would be made. We used lexicons, Support Vector Machines and our own ``influence algorithm'' in order to perform the analysis and then we manually classified some tweets and made use of polls in order to evaluate our analysis. We explain how these components was used to both construct and evaluate our analysis, then we present the result that we got. Finally we discuss the results, present ideas of measures that could be made to improve them and some conclusions that could be made. At best we got a 50\% accuracy when it comes to classifying the tweets, and the analysis yielded a value that was a x percents off the poll whereas simply counting tweets was y percents off.
 }
+
+\clearpage
+\thispagestyle{empty}
+\title{\huge \textbf{Statement of collaboration}}
+\vspace{3cm}\\
+\title{\large \textbf{Ludwig Forsberg}}\\
+asdasdasd
+\vspace{2cm}\\
+\title{\large \textbf{Romain Pomier}}\\
+asdasdasd
+\vspace{2cm}\\
+\title{\large \textbf{Kristoffer Hallqvist}}\\
+asdasdasd
+\vspace{2cm}\\
+\title{\large \textbf{Thibaut Patel}}\\
+sdasdasd
+
 
 \tableofcontents
 
@@ -57,16 +78,16 @@ In our project we are interested in examining how the classification of text in 
 
 \chapter{Method}
 
-To try to keep it simple we decided to estimate where on a scale between negative and positive the opinion of the people would be on a certain matter.
+To try to keep it simple we decided to estimate where on a scale between negative and positive the opinion of the people would be of a particular brand.
 However in order to utilize the reach of a tweet we first need to at least determine if the message itself is negative or positive, or where on the scale it is.
 So we are forced to first do a classification using only the text to be able to use the algorithm.
 
-To perform this text-based classification we chose to use a Support Vector Machine (SVM) because that approach appeared to get the best results when comparing results from [references].
+To perform this text-based classification we chose to use a Support Vector Machine (SVM) because that approach appeared to get the best results when comparing results from \cite{Pang02} and \cite{Turney02}.
 We also decided to use a supervised approach which means that we provide the SVM with messages that already had been classified to train on.
 To get these classified messages we decided to use lexicons to classify all the messages and then pick a number of the messages with the highest ranking in each category for the SVM to train on.
 
 To make sure the results from the lexicons and the SVM were reasonable we considered it necessary to evaluate them as well. 
-In order to do this we manually classified a number of tweets and then used the lexicon and the SVM to classify those same tweets as well and then we compared the results.
+In order to do this we manually classified a number of tweets and then used the lexicon and the SVM to classify those same tweets as well and compared the results.
 
 Once the SVM had made the initial classification on the text we translated it to a position on the scale between negative and positive, then we applied our algorithm and received another position. Finally to evaluate both of these positions we decided to use a poll on the subject that had yielded a position on a similar scale.
 
@@ -74,7 +95,7 @@ To be able to use good polls, and get a lot of relevant tweets to process, we de
 
 \section{Crawler}
 
-As we need enough data to train and test our algorithm, we need a dataset of tweets. Given that we are also using the meta information of the tweets (number of retweet for example), we could not find preexisting datasets and we chose to directly harvest Twitter.
+As we need a considerable amount of data to train and test our algorithm, we need a dataset of tweets. Given that we are also using the meta information of the tweets (number of retweet for example), we could not find preexisting datasets and we chose to directly harvest Twitter.
 We use the Twitter search as an entry point in the Twitter flow of data. This enables us to get pertinent information by getting only the tweets containing the name of brands we choose.
 
 We have observed in the different research papers that after getting the raw information, there is a filtering step. We chose not to do this part ourselves. In order to reduce the scope of the project, we only consider the English language. This filtering is done at the harvesting time by using the Twitter language filter.
@@ -82,24 +103,7 @@ We also assume that there is no topic drift in a tweet. That is to say if the tw
 
 The quantity of information extracted from Twitter corresponds to the maximum amount of tweets we can get from a search at a given time : Twitter index only the tweets from the last 6 to 9 days.
 
-The 3 brands chosen are Coca Cola, Costco and Disney, and we got respectively 4592, 7164 and 7403 tweets, with the selected metadata that is used in our work.
-
-Example of a tweet:
-
-\begin{verbatim}
-{
-    "created_at": "Sun Apr 28 18:40:13 +0000 2013",
-    "id_str": "328579420908580864",
-    "text": "Shout out to Tops for filling up my frigid with Coca-Cola",
-    "in_reply_to_status_id_str": null,
-    "in_reply_to_user_id_str": null, 
-    "retweet_count": 0,
-    "favorite_count": 0,
-    "user_id_str": "143882218",
-    "user_screen_name": "ShutDoWnDud3_24",
-    "user_followers_count": 328
-}
-\end{verbatim}
+For the 3 brands chosen, Coca Cola, Costco and Disney, we got respectively 4592, 7164 and 7403 tweets, with the selected metadata that is used in our algorithm.
 
 \section{Lexicon}
 
@@ -215,8 +219,6 @@ Second, we trained our SVM with data that contains a lot of noise when we used t
 
 The poll that was used was an aggregation of rankings done on three different subjects (“Feel good about”, “Admire and Respect” and “Trust”). The value for these should be quite strongly correlated among themselves and also to the fact that they people who were interviewed actually “like” or “dislike” a brand. But we have no real scientific way of knowing.
 
-The answers one receives from asking people what they actually think may not always correlate with reality. Even in these kind of polls people may be reluctant to voice their actual opinions if it is considered controversial. In some cases people may not know what they actually think, one would imagine that this case balances itself out in the end however.
-
 We do know that the survey we used was exclusively performed in America. Unfortunately there is no way to filter tweets on the origin but one could at least filter it on language. To filter on english unfortunately does not exclude all non-americans (since it is such a global language). To make sure that the poll used is made on the same people that make the tweets one could use a poll conducted on people with a very local language and then filter on that language. The poll was conducted quite recently however.
 
 [THIBAUT]
@@ -231,6 +233,21 @@ In the end we conclude that our results are far from perfect but that they hint 
 
 To get a definitive answer on this matter one would have to get much better results using the lexicons and SVM in a much more sophisticated way.
 
-\chapter{References}
+\begin{thebibliography}{9}
+
+%These references are very flexible to make however you want them, if you want them in a different format I'm open to suggestions
+
+\bibitem{Pang02}
+  Bo Pang, Lillian Lee and Shivakumar Vaithyanathan,\\
+  \emph{Thumbs up? Sentiment classification using machine learning techniques} (2002)\\
+  \url{http://www.cs.cornell.edu/home/llee/papers/sentiment.pdf} (2013/05/14)
+
+\bibitem{Turney02}
+  Peter Turney\\
+  \emph{Thumbs Up or Thumbs Down? Semantic Orientation Applied to Unsupervised Classification of Reviews} (2002)\\
+  \url{http://arxiv.org/pdf/cs/0212032v1} (2013/05/14)
+
+\end{thebibliography}
+
 
 \end{document}
