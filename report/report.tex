@@ -26,7 +26,7 @@
 \clearpage
 
 \abstract{
-This is an abstract, which needs to be finished.
+In this report we explore the possibility of measuring the opinion of a group of people using messages from twitter. At first we give a short introduction to the rationale of trying to analyze communication in order to extract the opinion. Then we explain why communication over twitter was used as well as exactly how the analysis, and the evaluation of the analysis, would be made. We used lexicons, Support Vector Machines and our own ``influence algorithm'' in order to perform the analysis and then we manually classified some tweets and made use of polls in order to evaluate our analysis. We explain how these components was used to both construct and evaluate our analysis, then we present the result that we got. Finally we discuss the results, present ideas of measures that could be made to improve them and some conclusions that could be made. At best we got a 50\% accuracy when it comes to classifying the tweets, and the analysis yielded a value that was a x percents off the poll whereas simply counting tweets was y percents off.
 }
 
 \tableofcontents
@@ -52,44 +52,25 @@ This is sometimes called semantic orientation.
 The focus of the bulk of the research on automated text-analysis has rested on trying to classify separate texts.
 
 \section{Problem Description}
-In our project we are interested in examining how the classification of texts in messages passed between people in a population actually corresponds with the opinion of the population and explore some methods intended to better capture the opinion of the population using the classification of texts. 
 
-Intuitively if people are very negative about a brand for example in their messages one would assume that they have a very negative opinion of the brand, but this is not necessarily true. 
+In our project we are interested in examining how the classification of text in tweets passed between people in a population actually corresponds with the populations opinion of a particular brand and explore if utilizing the number of followers, retweets and favorites, something we call ``reach'', of a tweet would better capture the opinion of the population then just using a classification of the texts. 
 
 \chapter{Method}
 
-We made three different tests to compare our different methods of determining the reputation of a brand
+To try to keep it simple we decided to estimate where on a scale between negative and positive the opinion of the people would be on a certain matter.
+However in order to utilize the reach of a tweet we first need to at least determine if the message itself is negative or positive, or where on the scale it is.
+So we are forced to first do a classification using only the text to be able to use the algorithm.
 
+To perform this text-based classification we chose to use a Support Vector Machine (SVM) because that approach appeared to get the best results when comparing results from [references].
+We also decided to use a supervised approach which means that we provide the SVM with messages that already had been classified to train on.
+To get these classified messages we decided to use lexicons to classify all the messages and then pick a number of the messages with the highest ranking in each category for the SVM to train on.
 
-Summary (Will write this in more detail soon):
+To make sure the results from the lexicons and the SVM were reasonable we considered it necessary to evaluate them as well. 
+In order to do this we manually classified a number of tweets and then used the lexicon and the SVM to classify those same tweets as well and then we compared the results.
 
-Test 1 Lexicon+SVM+tweak vs Poll:
-Classify all tweets using lexicon
-Pick top 20 in each category
-Train SVM on these
-Classify with SVM
-Apply tweak (generate 0-100 value (as in pos/(pos+neg))
-Compare with Poll
+Once the SVM had made the initial classification on the text we translated it to a position on the scale between negative and positive, then we applied our algorithm and received another position. Finally to evaluate both of these positions we decided to use a poll on the subject that had yielded a position on a similar scale.
 
-Parameters
-“influence” function (log(followers+1) + retweets + favorites)
-
-
-Test 2 Manual vs Lexicon+SVM:
-Classify all tweets using lexicon
-Pick top 20 in each category
-Train SVM on these
-Classify top 100 with SVM
-Compare with manual (by tweet)
-
-
-Test 3 Manual vs Lexicon:
-Classify first 100 tweets using lexicon
-Compare with manual (by tweet)
-
-Parameters
-number of top tweet picked to train the SVM
-
+To be able to use good polls, and get a lot of relevant tweets to process, we decided to evaluate our analysis on three different well-known brands; Disney, Costco and Coca Cola.
 
 \section{Crawler}
 
@@ -121,6 +102,7 @@ Example of a tweet:
 \end{verbatim}
 
 \section{Lexicon}
+
 We used seven different lexicons one containing about 200 unique words, five containing about 900 unique words and one containing about xxx unique words.
 One of the lexicons consisted of simply two lists of negative and positive words where the rest listed words with a certain negative and positive score between 0 and 1. 
 Some of these lexicons had support for an NLP approach where some words had different scores if they were present in a text as an adjective or an adverb.  
@@ -130,6 +112,7 @@ The lexicons were used in simple bag-of-words model of the text so each word was
 The score of a tweet was then created by summing up the score for all the words in all the lexicons. 
 
 \section{SVM}
+
 We used a Support Vector Machine (SVM) to get the polarity of a tweet. It is a supervised learning model that recognize patterns. We used the python plugin \textit{scikit-learn}\footnote{http://scikit-learn.org/stable/} and its implementation of the SVM to make it work.
 
 Our goal is to create a SVM specialized in one company, because we believe that a word witch is polarized for one company don't have to be polarized for another.
@@ -157,6 +140,7 @@ Thanks to this measure, we can extract a first statistic : the top 10 influencia
 The overall opinion score is our main goal, and once we have computed the polarity and the influence of each tweet, we sum the influence of the positive tweets and divide this result by the sum of the influence of the positive and negative tweets.
 
 \section{Manual}
+
 To manually score tweets we made a little script that asked the user what file the user wants to process. 
 Then the user is presented with a text and asked to classify it where the options are positive, positive but unsure, negative, negative but unsure, neutral and neutral but unsure. 
 The user is free to go back and re-classify a tweet but cannot pass a tweet, to classify new tweets the last tweet presented must be classified. 
@@ -164,6 +148,7 @@ Once a number of tweets has been classified the user can save his progress in a 
 When the user resumes the classification process the classification will also resume where he left off.
 
 \section{Poll}
+
 In order to compare our results to something that measured the actual opinion of the people we decided that we more or less needed some kind of poll. 
 Polls are far from perfect but should be accurate enough for our purposes. It was quite difficult to find a poll that measured the general opinion of a company. 
 Most polling institutes are hesitant to disclose their raw data and instead they present their own trademarked metrics that are usually an aggregation of a wide array of different parameters.
@@ -241,6 +226,10 @@ We are really interested in developing the actionability of our solution, that i
 As we implemented the top 10 influential tweets, we wanted to continue in the same direction by implementing the top influential Twitter users. This features enable the company to get a better reach on its customers by using these influential intermediaries. We would have used a similar “influential weight” that what we use for the influential tweets, but aggregating this measure by author.
 
 Another extension to the current solution would be to work with the links embedded in tweets. The first step would be to rank the top articles, and to crawl their title, in order to present an understandable list of articles that were shared and read by a lot of the consumers. We also had the idea of taking this reputation management further by computing the polarity of the article. We would then extend our reputation management to the pages linked from Twitter, which would give a much broader coverage, even if I would need new tools to analyze the polarity of an article because of the different nature of an article versus a tweet.
+
+In the end we conclude that our results are far from perfect but that they hint at the fact that using parameters such as followers, retweets and favorites do improve the estimation of the opinion of a population over simply trying to calculate the opinion of separate tweets and then summing up the amount of tweets of each opinion.
+
+To get a definitive answer on this matter one would have to get much better results using the lexicons and SVM in a much more sophisticated way.
 
 \chapter{References}
 
