@@ -170,10 +170,8 @@ Thus the bulk of our work consists of finding the right way to measure the influ
 
 The relevant meta-data we had to estimate the influence was the amount of times the tweet had been re-tweeted, the amount of followers its author had and the number of favorites it had. So we simply chose to combine them in a way felt was relevant. To get a good result the important thing was to balance the importance of each metric to each other. Since we deemed that the number of re-tweets and favorites of a tweet was about equally indicative of a an influential tweet but far more indicative then the number of followers of the author our algorithm looked a like this:
 
-$I_t = \text{Influence of a tweet t}$\\
-$Fo_t = \text{The number of followers of the author of tweet t}$\\
-$R_t = \text{The number of re-tweets of the tweet t}$\\
-$Fa_t = \text{The number of favorites of the tweet t}$\\
+$I_t = \text{Influence of a tweet t}$, $Fo_t = \text{The number of followers of the author of tweet t}$\\
+$R_t = \text{The number of re-tweets of the tweet t}$, $Fa_t = \text{The number of favorites of the tweet t}$\\
 \begin{equation}
 I_t = \log (Fo_t + 1) + R_t + Fa_t
 \end{equation}
@@ -184,7 +182,7 @@ Once we have computed the polarity and the influence of every tweet we used the 
 Opinion = 100 \times \frac{\sum_{\substack{t \in T_{pos}}} I_t}{\sum_{\substack{t \in T_{pos}}} I_t + \sum_{\substack{t \in T_{neg}}} I_t}
 \end{equation}
 
-This will get us a position somewhere in a [0-100] range where 0 would be a fully negative opinion and 100 a fully positive. We made the assumption here that the tweets that were classified as ``neutral'' was tweets about a brand that contained no opinion.
+We made the assumption here that the tweets that were classified as ``neutral'' was tweets about a brand that contained no opinion.
 
 With the influence measurement we can now also extract the top 10 most influencial tweets. This is an easy task once you have the influence value of every tweet but this increases the actionability (the ability to use the data to perform actions) of the result. For example a company using this feature can take action by contacting the author of one of tweets and offer them some kind of deal.
 
