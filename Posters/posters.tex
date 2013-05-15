@@ -61,6 +61,20 @@
 
 {\TitleFont Lexicon \& SVM}
 
+\begin{itemize}
+\item We use 7 different lexicons\\
+{\TextFont Together they contains 8000 unique words with positive and negative scores.}
+\item For each tweet we sum the scores of its words\\
+{\TextFont Our pre-processing removes punctuation and lemmatize words for better results.}
+\item From this score, we create learning data\\
+{\TextFont Positive tweets are the \textit{n} with highest positive score, the same for negative.\\
+The neutral tweets are the \textit{n} longest tweets with a score of 0.}
+\item The SVM represents the tweets with features\\
+{\TextFont These features are the unigrams and bigrams, extracted from the cleaned text.}
+\item We make the SVM learn with the generated learning data\\
+{\TextFont We then have a classifier for tweets about a company which learn automatically.}
+\end{itemize}
+
 \clearpage
 \thispagestyle{empty}
 

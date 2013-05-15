@@ -127,7 +127,7 @@ For the 3 brands chosen, Coca Cola, Costco and Disney, we got respectively 4592,
 
 \section{Lexicon}
 
-We used seven different lexicons one containing about 200 unique words, five containing about 900 unique words and one containing about xxx unique words.
+We used seven different lexicons one containing about 200 unique words, five containing about 900 unique words and one containing about 7000 unique words.
 One of the lexicons consisted of simply two lists of negative and positive words where the rest listed words with a certain negative and positive score between 0 and 1. 
 Some of these lexicons had support for an NLP approach where some words had different scores if they were present in a text as an adjective or an adverb.  
 But to ease the aggregation of the different lexicons we choose to keep it simple and just considered the probability of a word being adjective or adverb to be equal for example.
@@ -266,7 +266,7 @@ The poll that was used was an aggregation of rankings done on three different su
 
 We do know that the survey we used was exclusively performed in America. Unfortunately there is no way to filter tweets on the origin but one could at least filter it on language. To filter on english unfortunately does not exclude all non-americans (since it is such a global language). To make sure that the poll used is made on the same people that make the tweets one could use a poll conducted on people with a very local language and then filter on that language. The poll was conducted quite recently however.
 
-[THIBAUT]
+Concerning the limitation of the influence computation, we couldn't find any existing result to compare the efficiency of our formula. However the resulting computation comes from tries and error when applying the function to our dataset, and seems to give good results. More research can be done in this part of our study in order to bring a deeper analysis of our results.
 
 We are really interested in developing the actionability of our solution, that is to say that a company using our solution could take action according to the result of the program’s computation. There is several tweaks that could have been applied to our solution in order to offer a wider range of tools for a company.
 
