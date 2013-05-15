@@ -77,20 +77,19 @@ In this report we explore the possibility of measuring the opinion of a group of
 
 \section{Background}
 
-There has always been a desire to read people's minds.
-To extract the will of the people, to be able to find the best movie, adapt ones business strategy to better appeal to ones customers or for more sinister purposes such as trying to control ones inhabitants by an authoritarian government.
+With the development of social networks, people tend to share more and more what they think on internet.
+A lot of companies are trying to use these means to advertise and communicate directly to their customers.
+They may be really interested in knowing what people are actually saying about them.
+With this information, they could adapt their business strategy to be in harmony with their customers, controlling as much as possible their image.
 
-To directly read someones more advanced thoughts is however still far from possible.
-However how and what a person chooses to communicate do very often reflect what the person thinks.
-The sheer volume of communication that occurs today is however so great that attempting to have actual people analyzing it is infeasible. 
-The only entity with the amount of processing power required are computers. 
-To analyze a text-message in order to extract the thoughts of the sender is however a very daunting task for a computer, even a human that has trained and evolved tools designed to achieve this feat over thousands of years has difficulties.
+Twitter is the dreamed place to do such an analyze of people's opinions about a company. It is a social network where user post small text messages called tweets that everybody can read. A tweet has a maximal length of 140 characters. However, such a task would be too big for a human to process, regarding the number of tweets. The only way is then to automatize the analyze with a computer.
 
 In computer science the problem of extracting subjective information in source materials is called sentiment analysis or opinion mining. 
 The most basic task in this field is usually to simply classify the polarity of a text, i.e. if it is positive or negative. 
 This is sometimes called semantic orientation. 
 
 The focus of the bulk of the research on automated text-analysis has rested on trying to classify separate texts.
+
 
 \section{Problem Description}
 
@@ -244,13 +243,13 @@ That means that its mistakes are more serious.
 
 
 
-
-
-
 \chapter{Discussion/Conclusion}
-Tweets are notoriously difficult to classify. Due to the small character limitations (140 characters) people often utilize the context to a high degree in their messages which even makes classification for humans difficult if the messages are stripped of their context. Computers can not utilize the context to the same degree as humans but they suffer from this fact as well. One positive effect of the small character limitation with respect to classification is that tweets often only contain one semantic orientation about one particular thing.
 
-This results from classification using only lexicons was about 50\% accurate when compared to the manually classified tweets wich is good but far from great. To improve this results one may simply acquire more lexicons and use more sophisticated POS tagging. 
+Tweets are notoriously difficult to classify. Due to the small character limitations, people often utilize the context to a high degree in their messages.
+They are then difficult to classify when they stand alone, even for humans.
+Computers cannot utilize the context to the same degree as humans but they suffer from this fact as well. One positive effect of the small character limitation with respect to classification is that tweets often contain one clear idea, with few nuances.
+
+The results from our classification using only lexicons was is good but far from great. To improve this results one may simply acquire more lexicons and use more sophisticated POS tagging.
 
 Six out of the seven lexicons we did use came from the same source. Those six were created by applying six different machine-learning techniques on the same initial corpus. That may have led to some issues such as giving too much importance to some words only because they were present in this initial dictionary.
 
