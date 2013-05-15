@@ -91,7 +91,7 @@ class Tests:
 
         print "\n\nAgree on %d tweets (%d%%)"%(agree, agree*100/nb)
 
-    def compare_lexicon_manual(self, f, nb):
+    def compare_lexicon_manual(self, f, nb, thres=2):
         lexicon = LexiconSentimentsAnalysis()
         datas = TweetSet(f, nb)
         manual_files = [f+".ludwig", f+".kristoffer", f+".romain",
@@ -103,9 +103,9 @@ class Tests:
             t = datas.tweets[i]
             score = lexicon.getScoreTweet(t.cleaned_text)
             pol = 0
-            if score[0] - score[1] >= 2:
+            if score[0] - score[1] >= thres:
                 pol = 10
-            elif score[1] - score[0] >= 2:
+            elif score[1] - score[0] >= thres:
                 pol = -10
             if pol == manual_results[i]["score"]:
                 agree += 1
@@ -113,6 +113,7 @@ class Tests:
                     manual_results[i]["score"], t.text)
 
         print "\n\nAgree on %d tweets (%d%%)"%(agree, agree*100/nb)
+#        print "%f Agree on %d tweets (%d%%)"%(thres, agree, agree*100/nb)
 
     def get_company_score(self, f, tweak=True):
         svm_results = self.get_svm_results(f)
@@ -170,9 +171,9 @@ if __name__ == '__main__':
     louis_vuiton_file = '../tweets/louisvuitton.2792.json'
     gazprom_file = '../tweets/gazprom.2016.json'
     tests = Tests()
-    tests.compare_lexicon_manual(coca_file, 100)
-    tests.compare_lexicon_manual(disney_file, 100)
-    tests.compare_lexicon_manual(costco_file, 100)
+#    tests.compare_lexicon_manual(coca_file, 100)
+#    tests.compare_lexicon_manual(disney_file, 100)
+#    tests.compare_lexicon_manual(costco_file, 100)
     tests.compare_svm_manual(coca_file, 100)
     tests.compare_svm_manual(disney_file, 100)
     tests.compare_svm_manual(costco_file, 100)
