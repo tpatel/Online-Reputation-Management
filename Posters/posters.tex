@@ -1,36 +1,80 @@
-\documentclass[landscape,letterpaper,40pt]{extarticle}
+\documentclass[landscape,20pt]{extarticle}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[margin=2cm]{geometry}
 \usepackage[parfill]{parskip}
-%\usepackage[helvetica]
 %\usepackage[compact]{titlesec}
 
-\newcommand*{\TitleFont}{%
-  \usefont{\encodingdefault}{\rmdefault}{b}{n}%
-  \fontsize{24.88}{50}%
-  \selectfont}
+%\usepackage[sc]{mathpazo}
+%\linespread{1.05}         % Palatino needs more leading (space between lines)
 
-\newcommand*{\TitleFontTwo}{%
-  \usefont{\encodingdefault}{\rmdefault}{b}{n}%
-  \fontsize{20.74}{20}%
-  \selectfont}
+\renewcommand{\familydefault}{\sfdefault}
+%\renewcommand*\rmdefault{cmfib}
 
-\title{\TitleFontTwo DD2476: ir13 \\ \TitleFont Reputation Estimation using Twitter}
+\newcommand*{\TitleFont}{\Huge \bf}
 
-
-\author{Ludwig Forsberg \\ \texttt{ludwigf@kth.se} \and Romain Pomier \\ \texttt{romain.pomier@gmail.com} \and Kristoffer Hallqvist \\ \texttt{khallq@kth.se} \and Thibaut Patel \\ \texttt{thibaut.patel@gmail.com}}
+\newcommand*{\TextFont}{\normalsize \it}
 
 \begin{document}
-\thefontsize\Huge
+\thispagestyle{empty}
+\Large
+{\TitleFont Introduction}
 
-\maketitle
+\begin{itemize}
+\item The value of an Opinion\\
+{\TextFont There a lot of different things one can use an opinion for}
+\item Analyzing Communication\\
+{\TextFont Communication reflects an opinion}
+\item Semantic Orientation\\
+{\TextFont Detecting if an opinion is negative or positive}
+\item Classifying tweets and counting them = opinion?\\
+{\TextFont Is there a better way to extract an opinion?}
+\item The ``Reach'' of a tweet\\
+{\TextFont Take followers, retweets and favorites into account!}
+\end{itemize}
 
 \clearpage
-\chapter{Introduction (1p, Ludwig)}
+\thispagestyle{empty}
 
-There has always been a desire to read people's minds, what they deem important and what they don't deem important, what they like and what they don't like. 
-In some cases to extract the will of the people, to be able to find the best movie, adapt ones business strategy to better appeal to ones customers or for more sinister purposes such as trying to control ones inhabitants by an authoritarian government.
+{\TitleFont System Overview}
+
+\clearpage
+\thispagestyle{empty}
+
+{\TitleFont Method}
+
+\begin{itemize}
+\item The opinion of a brand, negative or positive?\\
+{\TextFont To keep it simple we measured simply if the opinion was positive or negative}
+\item Opinion = position in a range\\
+{\TextFont Essentially a score in the [0-100] range where 0 is fully negative}
+\item Must still classify tweets using the text alone\\
+{\TextFont To use the reach one must know the initial opinion of the brand in the tweet}
+\item SVM + Supervised Learning through Lexicons\\
+{\TextFont We used a SVM to classify and Lexicons to classify training data for the SVM}
+\item Evaluate the Lexicon, the SVM and the final algorithm\\
+{\TextFont To make sure the different components yield reasonable results we have to \\evaluate them, we used manual classification and a Poll to evaluate them}
+\end{itemize}
+
+\clearpage
+\thispagestyle{empty}
+
+{\TitleFont Lexicon \& SVM}
+
+\clearpage
+\thispagestyle{empty}
+
+{\TitleFont Algorithm}
+
+\clearpage
+\thispagestyle{empty}
+
+{\TitleFont Result}
+
+\clearpage
+\thispagestyle{empty}
+
+{\TitleFont Discussion \& Conclusion}
+
 
 \end{document}
-
