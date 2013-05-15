@@ -102,7 +102,7 @@ To try to keep it simple we decided to estimate where in a range between negativ
 However in order to utilize the reach of a tweet we first need to at least determine if the message itself is negative or positive, or where in the range it is.
 So we are forced to first do a classification using only the text to be able to use the algorithm.
 
-To perform this text-based classification we chose to use a Support Vector Machine (SVM) because that approach appeared to get the best results when comparing results from \cite{Pang02} and \cite{Turney02}.
+To perform this text-based classification we chose to use a Support Vector Machine (SVM) because that approach appeared to get the best results when comparing results from \cite{Pang02}, \cite{Turney02} and \cite{Taboada10}.
 We also decided to use a supervised approach which means that we provide the SVM with messages that already had been classified to train on.
 To get these classified messages we decided to use lexicons to classify all the messages and then pick a number of the messages with the highest ranking in each category for the SVM to train on.
 
@@ -228,11 +228,6 @@ Looking closer to the results, we can see that unlike with the lexicon method, t
 It often classifies a negative tweet as positive and vice versa.
 That means that its mistakes are more serious.
 
-
-
-
-
-
 \chapter{Discussion/Conclusion}
 Tweets are notoriously difficult to classify. Due to the small character limitations (140 characters) people often utilize the context to a high degree in their messages which even makes classification for humans difficult if the messages are stripped of their context. Computers can not utilize the context to the same degree as humans but they suffer from this fact as well. One positive effect of the small character limitation with respect to classification is that tweets often only contain one semantic orientation about one particular thing.
 
@@ -277,6 +272,11 @@ To get a definitive answer on this matter one would have to get much better resu
   Peter Turney\\
   \emph{Thumbs Up or Thumbs Down? Semantic Orientation Applied to Unsupervised Classification of Reviews} (2002)\\
   \url{http://arxiv.org/pdf/cs/0212032v1} (2013/05/14)
+
+\bibitem{Taboada10}
+  Maite Taboada, Julian Brooke, Milan Tofiloski, Kimberly Voll and Manfred Stede\\
+  \emph{Lexicon-Based Methods for Sentiment Analysis} (2010)\\
+  \url{http://cgi.sfu.ca/~mtaboada/docs/Taboada_etal_SO-CAL.pdf} (2013/05/15)
   
 \bibitem{NLTK}
   Natural Language Toolkit, a python plugin. Website:\\
