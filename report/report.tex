@@ -262,11 +262,9 @@ It often classifies a negative tweet as positive and vice versa.
 That means that its mistakes are more serious.
 
 
-\chapter{Discussion/Conclusion}
+\chapter{Discussion}
 
-Tweets are notoriously difficult to classify. Due to the small character limitations, people often utilize the context to a high degree in their messages.
-They are then difficult to classify when they stand alone, even for humans.
-Computers cannot utilize the context to the same degree as humans but they suffer from this fact as well. One positive effect of the small character limitation with respect to classification is that tweets often contain one clear idea, with few nuances.
+\section{Lexicon}
 
 The results from our classification using only lexicons was is good but far from great. To improve this results one may simply acquire more lexicons and use more sophisticated POS tagging.
 
@@ -274,15 +272,21 @@ Six out of the seven lexicons we did use came from the same source. Those six we
 
 We may also improve our usage of the lexicons. At the moment we don't use a Part-Of-Speech tagging, so the polarity of a word is evaluated regardless of the context of the word. For example ``very good'' and ``not very good'' will more or less yield the same result. It would be good also to consider the position of the company name, so that we can see the difference between ``Costco is great but I dislike ice-cream'' and ``I dislike Costco but I think ice-cream is great''.
 
-The results from using the Support Vector Machine are pretty poor. We suspect two main reasons for this.
+\section{Support Vector Machine}
+
+The results from using the SVM are pretty poor. We suspect two main reasons for this.
 
 First, using unigrams and bigrams as features may not be enough. To get better results, we should add more relevant features, like for example information about the urls (number, domain name, …), about the emoticons (number of positives, negatives) or about the tweet as a whole (length, number of verbs, number of adjectives etc).
 
 Second, we trained our SVM with data that contains a lot of noise when we used the output of the lexicon to generate training data. The lexicon method offered a 50\% match on our manually classified, which doesn’t look good enough for learning purpose.
 
+\section{Poll}
+
 The poll that was used was an aggregation of rankings done on three different subjects (“Feel good about”, “Admire and Respect” and “Trust”). The value for these should be quite strongly correlated among themselves and also to the fact that they people who were interviewed actually “like” or “dislike” a brand. But we have no real scientific way of knowing.
 
 We do know that the survey we used was exclusively performed in America. Unfortunately there is no way to filter tweets on the origin but one could at least filter it on language. To filter on english unfortunately does not exclude all non-americans (since it is such a global language). To make sure that the poll used is made on the same people that make the tweets one could use a poll conducted on people with a very local language and then filter on that language. The poll was conducted quite recently however.
+
+\section{Tweaks}
 
 Concerning the limitation of the influence computation, we couldn't find any existing result to compare the efficiency of our formula. However the resulting computation comes from tries and error when applying the function to our dataset, and seems to give good results. More research can be done in this part of our study in order to bring a deeper analysis of our results.
 
@@ -290,10 +294,11 @@ We are really interested in developing the actionability of our solution, that i
 
 As we implemented the top 10 influential tweets, we wanted to continue in the same direction by implementing the top influential Twitter users. This features enable the company to get a better reach on its customers by using these influential intermediaries. We would have used a similar “influential weight” that what we use for the influential tweets, but aggregating this measure by author.
 
-Another extension to the current solution would be to work with the links embedded in tweets. The first step would be to rank the top articles, and to crawl their title, in order to present an understandable list of articles that were shared and read by a lot of the consumers. We also had the idea of taking this reputation management further by computing the polarity of the article. We would then extend our reputation management to the pages linked from Twitter, which would give a much broader coverage, even if I would need new tools to analyze the polarity of an article because of the different nature of an article versus a tweet.
+Another extension to the current solution would be to work with the links embedded in tweets. The idea is use the content of the links that are shared on twitter about a company, and output the most important ones. We may also use the contents of these pages to detect the polarity of a tweet.
+
+\section{Conclusion}
 
 In the end we conclude that our results are far from perfect but that they hint at the fact that using parameters such as followers, retweets and favorites do improve the estimation of the opinion of a population over simply trying to calculate the opinion of separate tweets and then summing up the amount of tweets of each opinion.
-
 To get a definitive answer on this matter one would have to get much better results using the lexicons and SVM in a much more sophisticated way.
 
 \begin{thebibliography}{9}
