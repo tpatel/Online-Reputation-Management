@@ -6,9 +6,7 @@
 \usepackage{url}
 \usepackage[nottoc,numbib]{tocbibind}
 \usepackage{amsmath}
-
-
-
+\usepackage[pdftex]{graphicx}
 
 \newcommand*{\TitleFont}{%
   \usefont{\encodingdefault}{\rmdefault}{b}{n}%
@@ -135,7 +133,7 @@ For the 3 brands chosen, Coca Cola, Costco and Disney, we got respectively 4592,
 
 \section{Lexicon}
 
-We used seven different lexicons one containing about 200 unique words and came from the University of Pavia \cite{WNOP}, as did another five that contained about 900 unique words and one lexicon contained about 1000 unique words. 
+We used seven different lexicons one containing about 200 unique words and came from the University of Pavia \cite{WNOP}, as did another five that contained about 900 unique words and one lexicon contained about 7000 unique words. 
 The last lexicon consisted of simply two lists of negative and positive words where the rest listed words with a certain negative and positive score between 0 and 1. 
 The lexicons from the University of Pavia had some support for a NLP approach where some words had different scores if they were present in a text as an adjective or an adverb for example.  
 But to ease the aggregation of the different lexicons we choose to keep it simple and just considered the probability of a word being adjective or adverb to be equal for example.
@@ -212,6 +210,20 @@ We felt this would correspond to the opinion of the population accurate enough f
 
 \section{Manual classification}
 
+These are the results of the manual classification of the first 100 tweets for each brand. Each member of the group individually classified the tweets, and these are the average polarities for the different brands.
+
+\centerline{\includegraphics[scale=0.6]{../img/man1.png}}
+
+The fact that we classified them individually led to quite a few disagreements:
+
+\begin{itemize}
+        \item \textbf{Coca Cola}: All of us agreed on 42\% of the tweets.
+        \item \textbf{CostCo}: All of us agreed on 51\% of the tweets.
+        \item \textbf{Disney}: All of us agreed on 34\% of the tweets.
+\end{itemize}
+
+For example, this means that out of the 100 Coca cola tweets, there were 42 which we all classified according to the same polarity, and 58 where at least one member disagreed with the others.
+
 \section{Lexicon evaluation}
 
 Using the results of our manual classification on tweets about Coca Cola, Disney and CostCo, we were able to evaluate the results of our unsupervised classification with the lexicon score on these three companies.
@@ -269,7 +281,7 @@ The poll that was used was an aggregation of rankings done on three different su
 
 We do know that the survey we used was exclusively performed in America. Unfortunately there is no way to filter tweets on the origin but one could at least filter it on language. To filter on english unfortunately does not exclude all non-americans (since it is such a global language). To make sure that the poll used is made on the same people that make the tweets one could use a poll conducted on people with a very local language and then filter on that language. The poll was conducted quite recently however.
 
-[THIBAUT]
+Concerning the limitation of the influence computation, we couldn't find any existing result to compare the efficiency of our formula. However the resulting computation comes from tries and error when applying the function to our dataset, and seems to give good results. More research can be done in this part of our study in order to bring a deeper analysis of our results.
 
 We are really interested in developing the actionability of our solution, that is to say that a company using our solution could take action according to the result of the program’s computation. There is several tweaks that could have been applied to our solution in order to offer a wider range of tools for a company.
 
