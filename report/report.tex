@@ -4,7 +4,7 @@
 \usepackage[margin=2.5cm]{geometry}
 \usepackage[parfill]{parskip}
 \usepackage{url}
-%\usepackage[nottoc,numbib]{tocbibind}
+\usepackage[nottoc,numbib]{tocbibind}
 
 
 
@@ -24,7 +24,7 @@
 \title{\TitleFontTwo DD2476: ir13 \\ \TitleFont Reputation Estimation using Twitter}
 
 
-\author{Ludwig Forsberg \\ \hspace{0.45cm} \small\texttt{ludwigf@kth.se} \hspace{0.45cm} \and Romain Pomier \\ \small\texttt{romain.pomier@gmail.com} \and Kristoffer Hallqvist \\ \small\texttt{khallq@kth.se} \and Thibaut Patel \\ \small\texttt{thibaut.patel@gmail.com}}
+\author{Ludwig Forsberg \\ \hspace{0.5cm} \small\texttt{ludwigf@kth.se} \hspace{0.5cm} \and Romain Pomier \\ \small\texttt{romain.pomier@gmail.com} \and Kristoffer Hallqvist \\ \small\texttt{khallq@kth.se} \and Thibaut Patel \\ \small\texttt{thibaut.patel@gmail.com}}
 
 \begin{document}
 
@@ -98,8 +98,8 @@ In our project we are interested in examining how the classification of text in 
 
 \chapter{Method}
 
-To try to keep it simple we decided to estimate where on a scale between negative and positive the opinion of the people would be of a particular brand.
-However in order to utilize the reach of a tweet we first need to at least determine if the message itself is negative or positive, or where on the scale it is.
+To try to keep it simple we decided to estimate where in a range between negative and positive the opinion of the people would be of a particular brand.
+However in order to utilize the reach of a tweet we first need to at least determine if the message itself is negative or positive, or where in the range it is.
 So we are forced to first do a classification using only the text to be able to use the algorithm.
 
 To perform this text-based classification we chose to use a Support Vector Machine (SVM) because that approach appeared to get the best results when comparing results from \cite{Pang02} and \cite{Turney02}.
@@ -109,7 +109,7 @@ To get these classified messages we decided to use lexicons to classify all the 
 To make sure the results from the lexicons and the SVM were reasonable we considered it necessary to evaluate them as well. 
 In order to do this we manually classified a number of tweets and then used the lexicon and the SVM to classify those same tweets as well and compared the results.
 
-Once the SVM had made the initial classification on the text we translated it to a position on the scale between negative and positive, then we applied our algorithm and received another position. Finally to evaluate both of these positions we decided to use a poll on the subject that had yielded a position on a similar scale.
+Once the SVM had made the initial classification on the text we translated it to a position in the range between negative and positive, then we applied our algorithm and received another position. Finally to evaluate both of these positions we decided to use a poll on the subject that had yielded a position on a similar range.
 
 To be able to use good polls, and get a lot of relevant tweets to process, we decided to evaluate our analysis on three different well-known brands; Disney, Costco and Coca Cola.
 
@@ -181,16 +181,14 @@ In order to compare our results to something that measured the actual opinion of
 Polls are far from perfect but should be accurate enough for our purposes. It was quite difficult to find a poll that measured the general opinion of a company. 
 Most polling institutes are hesitant to disclose their raw data and instead they present their own trademarked metrics that are usually an aggregation of a wide array of different parameters.
 
-We did however find a poll by Harris Interactive made quite recently (November 13-30 in 2012) that had quite a large numbers of interviews (14 000). 
-It also contained a section where they had a category called “Emotional Appeal” that was an aggregation of answers to how much the interviewee “Feel good about”, “Admire and Respect” and “Trust” the brand in question on a 0-7 scale. 
-These three scores were then summed up, divided by 21 and multiplied by 100 in order to essentially create a general score for the emotional appeal for the brand [b]. 
+We did however find a poll by Harris Interactive made quite recently (November 13-30 in 2012) that had quite a large numbers of interviews (14 000) \cite{Harris13}. 
+It also contained a section where they had a category called “Emotional Appeal” that was an aggregation of answers to how much the interviewee “Feel good about”, “Admire and Respect” and “Trust” the brand in question on a 0-7 range. 
+These three scores were then summed up, divided by 21 and multiplied by 100 in order to essentially create a general score for the emotional appeal for the brand \cite{Harris13}. 
 We felt this would correspond to the opinion of the population accurate enough for our purposes.
 
 \chapter{Results}
 
 \section{Manual classification}
-
-
 
 \section{Lexicon evaluation}
 
@@ -224,7 +222,7 @@ Here are the results we got on the 100 tweets we classified manually for each co
 We can see that the results are below the ones we got with the lexicon method.
 That means that our SVM was not able to remove the noise in the learning data induced by the lexicon method.\\
 In the case of Coca Cola and CostCo, results are pretty close to the previous ones, with around 50\% of matching.
-For Disney however, results are really bad. Our guess  is that as Disney has more diversified activities than the two other companies (movies, tv, amusement park, ...), the topics talked about are really different, thus the SVM would need a lot more learning datas to classify tweets correctly.
+For Disney however, results are really bad. Our guess is that as Disney has more diversified activities than the two other companies (movies, tv, amusement park, ...), the topics talked about are really different, thus the SVM would need a lot more learning datas to classify tweets correctly.
 
 Looking closer to the results, we can see that unlike with the lexicon method, this method doesn't tend to classify as neutral when it makes mistakes.
 It often classifies a negative tweet as positive and vice versa.
@@ -269,10 +267,9 @@ To get a definitive answer on this matter one would have to get much better resu
 \begin{thebibliography}{9}
 
 %These references are very flexible to make however you want them, if you want them in a different format I'm open to suggestions
-
   
 \bibitem{Pang02}
-  Bo Pang, Lillian Lee and Shivakumar Vaithyanathan,\\
+  Bo Pang, Lillian Lee and Shivakumar Vaithyanathan\\
   \emph{Thumbs up? Sentiment classification using machine learning techniques} (2002)\\
   \url{http://www.cs.cornell.edu/home/llee/papers/sentiment.pdf} (2013/05/14)
 
@@ -288,6 +285,11 @@ To get a definitive answer on this matter one would have to get much better resu
 \bibitem{Scikit}
   Scikit python plugin website:\\
   \url{http://scikit-learn.org/stable/}
+
+\bibitem{Harris13}
+  Harris Interactive\\
+  \emph{The Harris Poll 2013 RQ® Summary Report} (2013)\\
+  \url{http://www.harrisinteractive.com/vault/2013 RQ Summary Report FINAL.pdf} (2013/05/15)
 
 \end{thebibliography}
 
