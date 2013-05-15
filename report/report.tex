@@ -5,7 +5,7 @@
 \usepackage[parfill]{parskip}
 \usepackage{url}
 \usepackage[nottoc,numbib]{tocbibind}
-
+\usepackage[pdftex]{graphicx}
 
 
 \newcommand*{\TitleFont}{%
@@ -189,6 +189,20 @@ We felt this would correspond to the opinion of the population accurate enough f
 \chapter{Results}
 
 \section{Manual classification}
+
+These are the results of the manual classification of the first 100 tweets for each brand. Each member of the group individually classified the tweets, and these are the average polarities for the different brands.
+
+\centerline{\includegraphics[scale=0.6]{../img/man1.png}}
+
+The fact that we classified them individually led to quite a few disagreements:
+
+\begin{itemize}
+        \item \textbf{Coca Cola}: All of us agreed on 42\% of the tweets.
+        \item \textbf{CostCo}: All of us agreed on 51\% of the tweets.
+        \item \textbf{Disney}: All of us agreed on 34\% of the tweets.
+\end{itemize}
+
+For example, this means that out of the 100 Coca cola tweets, there were 42 which we all classified according to the same polarity, and 58 where at least one member disagreed with the others.
 
 \section{Lexicon evaluation}
 
