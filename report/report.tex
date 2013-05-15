@@ -109,7 +109,9 @@ To get these classified messages we decided to classify all the messages using l
 To make sure the results from the lexicons and the SVM were reasonable we considered it necessary to evaluate them as well. 
 In order to do this we manually classified a number of tweets and then used the lexicon and the SVM to classify those same tweets as well and compare the results.
 
-Once the SVM had made the initial classification on the text we translated it to a position in the range between negative and positive, then we applied our algorithm and received another position. Finally to evaluate both of these positions we decided to use a poll on the subject that had yielded a position on a similar range.
+To make sure the results from the manual classification also was reasonable we decided to make four different people classify the same tweets and then compare the results.
+
+Once the SVM had made the initial classification on the text we translated it to a position in a range between negative and positive, then we applied our algorithm and received another position. Finally to evaluate both of these positions we decided to use a poll on the subject that had yielded a position on a similar range (i e the two positions could be compared).
 
 To be able to use good polls, and get a lot of relevant tweets to process, we decided to evaluate our analysis on primarily three different well-known brands; Disney, Costco and Coca Cola.
 
@@ -183,7 +185,7 @@ Once we have computed the polarity and the influence of every tweet we used the 
 Opinion = 100 \times \frac{\sum_{\substack{t \in T_{pos}}} I_t}{\sum_{\substack{t \in T_{pos}}} I_t + \sum_{\substack{t \in T_{neg}}} I_t}
 \end{equation}
 
-This will get us a position somewhere in a [0-100] range where 0 would be a fully negative opinion and 100 a fully positive.
+This will get us a position somewhere in a [0-100] range where 0 would be a fully negative opinion and 100 a fully positive. We made the assumption here that the tweets that were classified as ``neutral'' was tweets about a brand that contained no opinion.
 
 With the influence measurement we can now also extract the top 10 most influencial tweets. This is an easy task once you have the influence value of every tweet but this increases the actionability (the ability to use the data to perform actions) of the result. For example a company using this feature can take action by contacting the author of one of tweets and offer them some kind of deal.
 
@@ -222,7 +224,7 @@ The fact that we classified them individually led to quite a few disagreements:
         \item \textbf{Disney}: All of us agreed on 34\% of the tweets.
 \end{itemize}
 
-For example, this means that out of the 100 Coca cola tweets, there were 42 which we all classified according to the same polarity, and 58 where at least one member disagreed with the others.
+For example, this means that out of the 100 Coca cola tweets, there were 42 which we all classified according to the same polarity while being either unsure or sure of the classification, and 58 where at least one member disagreed with the others while being either unsure or sure of the classification.
 
 \section{Lexicon evaluation}
 
