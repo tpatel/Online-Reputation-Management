@@ -4,7 +4,9 @@
 \usepackage[margin=2.5cm]{geometry}
 \usepackage[parfill]{parskip}
 \usepackage{url}
-\usepackage[nottoc,numbib]{tocbibind}
+%\usepackage[nottoc,numbib]{tocbibind}
+
+
 
 \newcommand*{\TitleFont}{%
   \usefont{\encodingdefault}{\rmdefault}{b}{n}%
@@ -172,6 +174,10 @@ We felt this would correspond to the opinion of the population accurate enough f
 
 \chapter{Results}
 
+\section{Manual classification}
+
+
+
 \section{Lexicon evaluation}
 
 Using the results of our manual classification on tweets about Coca Cola, Disney and CostCo, we were able to evaluate the results of our unsupervised classification with the lexicon score on these three companies.
@@ -209,6 +215,11 @@ For Disney however, results are really bad. Our guess  is that as Disney has mor
 Looking closer to the results, we can see that unlike with the lexicon method, this method doesn't tend to classify as neutral when it makes mistakes.
 It often classifies a negative tweet as positive and vice versa.
 That means that its mistakes are more serious.
+
+
+
+
+
 
 \chapter{Discussion/Conclusion}
 Tweets are notoriously difficult to classify. Due to the small character limitations (140 characters) people often utilize the context to a high degree in their messages which even makes classification for humans difficult if the messages are stripped of their context. Computers can not utilize the context to the same degree as humans but they suffer from this fact as well. One positive effect of the small character limitation with respect to classification is that tweets often only contain one semantic orientation about one particular thing.
