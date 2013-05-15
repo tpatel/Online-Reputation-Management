@@ -36,8 +36,25 @@
 \clearpage
 \thispagestyle{empty}
 
+{\TitleFont System Overview}
+
+\clearpage
+\thispagestyle{empty}
+
 {\TitleFont Method}
 
+\begin{itemize}
+\item The opinion of a brand, negative or positive?\\
+{\TextFont To keep it simple we measured simply if the opinion was positive or negative}
+\item Opinion = position on a scale\\
+{\TextFont Essentially a score in the [0-100] range where 0 is fully negative}
+\item Must still classify tweets using the text alone\\
+{\TextFont To use the reach one must know the initial opinion of the brand in the tweet}
+\item SVM + Supervised Learning through Lexicons\\
+{\TextFont We used a SVM to classify and Lexicons to classify training data for the SVM}
+\item Evaluate the Lexicon, the SVM and the final algorithm\\
+{\TextFont To make sure the different components yield reasonable results we have to \\evaluate them, we used manual classification and a Poll to evaluate them}
+\end{itemize}
 
 \clearpage
 \thispagestyle{empty}
@@ -61,23 +78,3 @@
 
 
 \end{document}
-
-\begin{frame}
-
-\begin{tabular}{p{0.5\textwidth}p{0.5\textwidth}}
-
-\begin{itemize}
-\item The value of an Opinion
-\item Analyzing Communication
-\item Semantic Orientation
-\end{itemize} &
-
-\begin{itemize}
-\item 
-\item Something to say about it
-\item
-\end{itemize} \\
-
-\end{tabular}
-
-\end{frame}
