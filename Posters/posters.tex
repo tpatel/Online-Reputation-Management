@@ -4,6 +4,7 @@
 \usepackage[margin=2cm]{geometry}
 \usepackage[parfill]{parskip}
 \usepackage[pdftex]{graphicx}
+\usepackage{amsmath}
 %\usepackage[compact]{titlesec}
 
 %\usepackage[sc]{mathpazo}
@@ -82,9 +83,8 @@ The neutral tweets are the \textit{n} longest tweets with a score of 0.}
 \thispagestyle{empty}
 
 {\TitleFont Algorithm}
-
+\begin{itemize}
 \item The influence of a tweet is computed from the number of followers $Fo_t$, the number of retweets $R_t$ and the number of Favorites $Fa_t$.
-
 \begin{equation}
 I_t = \log (Fo_t + 1) + R_t + Fa_t
 \end{equation}
@@ -94,6 +94,8 @@ I_t = \log (Fo_t + 1) + R_t + Fa_t
 \begin{equation}
 Opinion = 100 \times \frac{\sum_{\substack{t \in T_{pos}}} I_t}{\sum_{\substack{t \in T_{pos}}} I_t + \sum_{\substack{t \in T_{neg}}} I_t}
 \end{equation}
+
+\end{itemize}
 
 \clearpage
 \thispagestyle{empty}
