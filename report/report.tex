@@ -150,7 +150,7 @@ The score of a tweet was then created by summing up the score of all the words b
 We performed some pre-processing of the words by using the \textit{Natural Language Toolkit} python plugin \cite{NLTK}.
 Using this plugin we removed punctuations and then we used a stemmer and a lemmatizer. This transformed all variations of ``love'', such as ``loving'', ``loves'' and ``loved'' into simply ``love'' which made it easier for the lexicon to correctly score the words.
 
-\section{SVM}
+\section{Support Vector Machine}
 
 We used a Support Vector Machine (SVM) to get the polarity of a tweet which is a supervised learning model that recognize patterns. We used the python plugin \textit{scikit-learn}\cite{Scikit} and its implementation of the SVM in our project.
 
@@ -300,11 +300,11 @@ The poll that was used was an aggregation of rankings done on three different su
 
 We do know that the survey we used was exclusively performed in America. Unfortunately there is no way to filter tweets on the origin but one could at least filter it on language. To filter on english unfortunately does not exclude all non-americans (since it is such a global language). To make sure that the poll used is made on the same people that make the tweets one could use a poll conducted on people with a very local language and then filter on that language. The poll was conducted quite recently however.
 
-\section{Tweaks}
+\section{Algorithm}
 
 Concerning the limitation of the influence computation, we couldn't find any existing result to compare the efficiency of our formula. However the resulting computation comes from tries and error when applying the function to our dataset, and seems to give good results. More research can be done in this part of our study in order to bring a deeper analysis of our results.
 
-We are really interested in developing the actionability of our solution, that is to say that a company using our solution could take action according to the result of the program’s computation. There is several tweaks that could have been applied to our solution in order to offer a wider range of tools for a company.
+We are really interested in developing the actionability of our solution, that is to say that a company using our solution could take action according to the result of the program’s computation. There is several features that could have been applied to our solution in order to offer a wider range of tools for a company.
 
 As we implemented the top 10 influential tweets, we wanted to continue in the same direction by implementing the top influential Twitter users. This features enable the company to get a better reach on its customers by using these influential intermediaries. We would have used a similar “influential weight” that what we use for the influential tweets, but aggregating this measure by author.
 
