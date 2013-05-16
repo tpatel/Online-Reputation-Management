@@ -62,9 +62,9 @@ In this report we explore the possibility of measuring the opinion of a group of
 \end{itemize}
 \title{\large \textbf{Thibaut Patel}}
 \begin{itemize}
-  \item item1
-  \item item2
-  \item item3
+  \item Dataset contruction, using Twitter API and applying transformation to the resulting data.
+  \item Design and implementation of the influence measure and the opinion aggregation (algorithm).
+  \item Participation in the poster: Overview diagram and Algorithm formulas.
 \end{itemize}
 \title{\large \textbf{Everyone}}
 \begin{itemize}
@@ -84,7 +84,7 @@ A lot of companies are trying to use these means to advertise and communicate di
 They may be really interested in knowing people's opinion of their brand.
 With this information, they could adapt their business strategy to be in harmony with their customers, taking more control over their image.
 
-Twitter is the ideal place for analyzing people's opinions of a brand. 
+Twitter \cite{TwitterAbout} is the ideal place for analyzing people's opinions of a brand. 
 It is a social network where user post small text messages called tweets that everybody can read. 
 A tweet has a maximal length of 140 characters. However, such a task would be too big for a human to process, considering the number of tweets.
 The only realistic way is then to automatize the analysis using a computer.
@@ -132,7 +132,7 @@ To make our task simpler we also made the assumption that there were no topic dr
 That is to say that if the tweet contains the name of the brand, its content is going to be about this brand.
 
 The quantity of information extracted from Twitter corresponds to the maximum amount of tweets we could get from a search.
-Twitter only maintain tweets in their indexes for 6 to 9 days.
+Twitter only maintain tweets in their indexes for 6 to 9 days.\cite{Twitter}
 
 For the 3 brands chosen, Coca Cola, Costco and Disney, we got respectively 4592, 7164 and 7403 tweets, together with the selected metadata that is used in our algorithm.
 
@@ -174,14 +174,17 @@ Thus the bulk of our work consists of finding the right way to measure the influ
 
 We assumed that a tweet which has more re-tweets, more favorites and whose author has more followers would better indicate the opinion of the whole population then one with less. Therefore we chose to combine these metrics and then use them as weights when evaluating the opinion of the people. Since we deemed that the number of re-tweets and favorites of a tweet to be about equally indicative of a an influential tweet but far more indicative then the number of followers of the author our algorithm looked as follows:
 
-$I_t = \text{Influence of a tweet t}$, $Fo_t = \text{The number of followers of the author of tweet t}$\\
-$R_t = \text{The number of re-tweets of the tweet t}$, $Fa_t = \text{The number of favorites of the tweet t}$\\
+$I_t = \text{Influence of a tweet t}$\\
+$Fo_t = \text{The number of followers of the author of tweet t}$\\
+$R_t = \text{The number of re-tweets of the tweet t}$\\
+$Fa_t = \text{The number of favorites of the tweet t}$\\
 \begin{equation}
 I_t = \log (Fo_t + 1) + R_t + Fa_t
 \end{equation}
 
-Once we have computed the polarity and the influence of every tweet we used the following formula to yield the final opinion position:
-
+Once we have computed the polarity and the influence of every tweet we used the following formula to yield the final opinion position:\\
+$T_{pos} = \text{The set of positive tweets}$\\
+$T_{neg} = \text{The set of negative tweets}$\\
 \begin{equation}
 Opinion = 100 \times \frac{\sum_{\substack{t \in T_{pos}}} I_t}{\sum_{\substack{t \in T_{pos}}} I_t + \sum_{\substack{t \in T_{neg}}} I_t}
 \end{equation}
@@ -291,7 +294,7 @@ Our guess is that as Disney is a much more diversified company than the two othe
 If one looks closer at how the SVM actually classified separate tweets then we can see that unlike the lexicon it doesn't have a bias toward classifiying a tweet as neutral, instead it often classifies a negative tweet as positive and vice versa.
 This in essence means that its mistakes are more serious.
 
-We believe there are two major reasons to the poor performance of the SVM.
+We believe there are two major reasons for the poor performance of the SVM.
 
 Firstly, using uni-grams and bi-grams as features to represent a tweet may not be enough. To get better results, one should probably add more relevant features, like for example information about the urls (number, domain name, etc), about the emoticons (number of positives, negatives) or about the tweet as a whole (length, number of verbs, number of adjectives etc).
 
@@ -321,9 +324,14 @@ Another extension to the current analysis would be to work with the links embedd
 
 In the end we conclude that our results are far from perfect and that more tests and a more sophisticated method is required to reach a definitive answer. However the results hints at using our influence algorithm actually makes the results worse. If this is true then this means that at least one of our assumptions when creating the algorithm was incorrect. A tweet with either more re-tweets, favorites or followers of its author actually reflects the opinion of the population less accurate then a tweet with less. Perhaps people tend to re-tweet tweets they find interesting, yet in effect have an opposite opinion.
 
-\begin{thebibliography}{9}
+\begin{thebibliography}{12}
 
 %These references are very flexible to make however you want them, if you want them in a different format I'm open to suggestions
+\vspace{-1cm}
+\bibitem{TwitterAbout}
+  Twitter
+  \emph{The fastest, simplest way to stay close to everything you care about} (2013)
+  \url{https://twitter.com/about} (2013/05/15)
 
 \bibitem{SenWiki}
   Wikipedia
@@ -344,6 +352,10 @@ In the end we conclude that our results are far from perfect and that more tests
   Maite Taboada, Julian Brooke, Milan Tofiloski, Kimberly Voll and Manfred Stede\\
   \emph{Lexicon-Based Methods for Sentiment Analysis} (2010)\\
   \url{http://cgi.sfu.ca/~mtaboada/docs/Taboada_etal_SO-CAL.pdf} (2013/05/15)
+
+\bibitem{Twitter}
+  Twitter Search API usage. Website:\\
+  \url{https://dev.twitter.com/docs/using-search}
 
 \bibitem{WNOP07}
   Università degli studi di Pavia\\
