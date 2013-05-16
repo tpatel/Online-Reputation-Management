@@ -32,7 +32,7 @@
 \clearpage
 
 \abstract{
-In this report we explore the possibility of measuring the opinion of a group of people, using messages from twitter. At first we give a short introduction to the rationale of trying to analyze communication in order to extract the opinion. Then we explain why communication over twitter was used as well as exactly how the analysis, and the evaluation of the analysis, was made. We used lexicons, a Support Vector Machine and our own ``influence'' algorithm in order to perform the analysis and then we manually classified some tweets and made use of a poll in order to evaluate it. We explain how these components were used to both construct and evaluate our analysis, then we present the result that we got. Finally we discuss the results, present some measures that could improve them and some conclusions that could be made. The analysis with the influence algorithm yielded a value that was on average 74.67 units off the poll whereas simply counting tweets without the influence algorithm was on average 48.96 units off on a 0 to 100 scale.
+In this report we explore the possibility of measuring the opinion of a group of people, using messages from twitter. At first we give a short introduction to the rationale of trying to analyze communication in order to extract the opinion. Then we explain why communication over twitter was used as well as exactly how the analysis, and the evaluation of the analysis, was made. We used lexicons, a Support Vector Machine and our own ``influence'' algorithm in order to perform the analysis and then we manually classified some tweets and made use of a poll in order to evaluate it. We explain how these components were used to both construct and evaluate our analysis, and then we present the result that we got. Finally we discuss the results, present some measures that could improve them and some conclusions that could be made. The analysis with the influence algorithm yielded a value that was on average 74.67 units off the poll whereas simply counting tweets without the influence algorithm was on average 48.96 units off on a 0 to 100 scale.
 }
 
 \clearpage
@@ -62,8 +62,8 @@ In this report we explore the possibility of measuring the opinion of a group of
 \end{itemize}
 \title{\large \textbf{Thibaut Patel}}
 \begin{itemize}
-  \item Dataset contruction, using Twitter API and applying transformation to the resulting data.
-  \item Design and implementation of the influence measure and the opinion aggregation (algorithm).
+  \item Dataset construction, using the Twitter API and applying transformation to the resulting data.
+  \item Design and implementation of the influence measure and the opinion aggregation (the algorithm).
   \item Participation in the poster: Overview diagram and Algorithm formulas.
 \end{itemize}
 \title{\large \textbf{Everyone}}
@@ -97,7 +97,7 @@ Most of the research done within the automated text-analysis field has focused o
 
 \section{Problem Description}
 
-In our project we were interested in examining how the classification of the text in tweets passed between people in a population actually corresponds with the populations opinion of a particular brand and explore if utilizing the number of followers, retweets and favorites, something we call ``influence'', of a tweet would better capture the opinion of the population than just using a classification of the texts. 
+In our project we were interested in examining how the classification of the text in tweets passed between people in a population actually corresponds with the populations opinion of a particular brand and explore if utilizing the number of followers, re-tweets and favorites, something we call ``influence'', of a tweet would better capture the opinion of the population than just using a classification of the texts. 
 
 \chapter{Method}
 
@@ -121,13 +121,13 @@ To be able to use good polls, and get a lot of relevant tweets to process, we de
 \section{Crawler}
 
 As we needed a considerable amount of data to train and test our algorithm, we needed a dataset of tweets. 
-Given that we were also using the meta information of the tweets (number of retweet for example), we could not find pre-existing datasets which we could use.
+Given that we were also using the meta-information of the tweets (number of re-tweet for example), we could not find pre-existing datasets which we could use.
 Instead we chose to directly harvest tweets from Twitter.
 We used the Twitter search as the entry point to the Twitter flow of data. 
 This enabled us to get pertinent information by retrieving only the tweets containing the name of the brands we desired.
 
 In order to reduce the scope of the project, we only considered tweets in the English language. 
-The non-English tweets was filtered away while harvesting by using the Twitter language filter.
+The non-English tweets were filtered away while harvesting by using the Twitter language filter.
 To make our task simpler we also made the assumption that there were no topic drift in a tweet. 
 That is to say that if the tweet contains the name of the brand, its content is going to be about this brand.
 
@@ -141,7 +141,7 @@ For the 3 brands chosen, Coca Cola, Costco and Disney, we got respectively 4592,
 We used seven different lexicons one containing about 200 unique words and came from the University of Pavia \cite{WNOP07}, as did another five that contained about 900 unique words and one lexicon contained about 7000 unique words from \cite{Liu04}. 
 The last lexicon consisted of simply two lists of negative and positive words where the rest listed words with a certain negative and positive score between 0 and 1. 
 The lexicons from the University of Pavia had some support for a NLP approach where some words had different scores if they were present in a text as an adjective or an adverb for example.  
-But to ease the aggregation of the different lexicons we choose to keep it simple and just considered the probability of a word being adjective or adverb to be equal for example.
+But to ease the aggregation of the different lexicons we choose to keep it simple and just considered the probability of a word being an adjective or an adverb to be equal for example.
 
 The lexicons were used with a simple bag-of-words model of the text so each word was sent to every lexicon, they scored the word with a value between 0 and 1 in both negativity and positivity and then returned that value. 
 The score of a tweet was then created by summing up the positive and negative score of all the words by all the lexicons.
@@ -151,15 +151,15 @@ Using this plugin we removed punctuations and then we used a stemmer and a lemma
 
 \section{Support Vector Machine}
 
-We used a Support Vector Machine (SVM) to get the polarity of a tweet which is a supervised learning model that recognize patterns. We used the python plugin \textit{scikit-learn}\cite{Scikit} and its implementation of the SVM in our project.
+We used a Support Vector Machine (SVM) to get the polarity of a tweet which is a supervised learning model that recognizes patterns. We used the python plugin Scikit-learn\cite{Scikit} and its implementation of the SVM in our project.
 
 Our goal was to create a SVM specialized on one brand because we believed that a word which may be considered negative for one brand may not be negative for another.
-For instance, the word \textit{sample} is very positive when talking about CostCo because they offer a lot of samples which people thoroughly enjoy. However, a \textit{sample} in a Disney context would probably be a sample of a movie, and then should be considered neutral.
-This is the kind of informations our SVM was supposed to extract.
+For instance, the word \textit{sample} is very positive when talking about Costco because they offer a lot of samples which people thoroughly enjoy. However, a \textit{sample} in a Disney context would probably be a sample of a movie, and then should be considered neutral.
+This is the kind of information our SVM was supposed to extract.
 
 First we had to train our SVM and for this purpose we used our lexicons to generate training data. Of all the tweets about a brand that the lexicons labeled as ``positive'' the $n$ tweets with the highest positive score were picked. Likewise, of those labeled as ``negative'' by the lexicons the $n$ tweets with the highest negative score were picked. Finally we picked the $n$ longest tweets which the lexicon had given no negative or positive value. The SVM was then trained using these $3n$ tweets.
 
-To represent a tweet we chose to use its uni-grams and bi-grams as features. We used the same pre-processing of the words that was used with the lexicons.
+To represent a tweet we chose to use its unigrams and bigrams as features. We used the same pre-processing of the words that was used with the lexicons.
 
 Lastly to estimate the polarity of a random tweet about a brand we simply extracted its features and classified it using the trained SVM.
 
@@ -172,7 +172,7 @@ The purpose of the Algorithm is to improve an estimation of the opinion of a bra
 This was achieved by aggregating the polarity of every tweet, weighted by the influence of the tweet over the network.
 Thus the bulk of our work consists of finding the right way to measure the influence of a tweet.
 
-We assumed that a tweet which has more re-tweets, more favorites and whose author has more followers would better indicate the opinion of the whole population then one with less. Therefore we chose to combine these metrics and then use them as weights when evaluating the opinion of the people. Since we deemed that the number of re-tweets and favorites of a tweet to be about equally indicative of a an influential tweet but far more indicative then the number of followers of the author our algorithm looked as follows:
+We assumed that a tweet which has more re-tweets, more favorites and whose author has more followers would better indicate the opinion of the whole population then one with less. Therefore we chose to combine these metrics and then use them as weights when evaluating the opinion of the people. Since we deemed that the number of re-tweets and favorites of a tweet to be about equally indicative of an influential tweet but far more indicative then the number of followers of the author our algorithm looked as follows:
 
 $I_t = \text{Influence of a tweet t}$\\
 $Fo_t = \text{The number of followers of the author of tweet t}$\\
@@ -182,7 +182,7 @@ $Fa_t = \text{The number of favorites of the tweet t}$\\
 I_t = \log (Fo_t + 1) + R_t + Fa_t
 \end{equation}
 
-Once we have computed the polarity and the influence of every tweet we used the following formula to yield the final opinion position:\\
+Once we have computed the polarity and the influence of every tweet we used the following formula to yield the final opinion:\\
 $T_{pos} = \text{The set of positive tweets}$\\
 $T_{neg} = \text{The set of negative tweets}$\\
 \begin{equation}
@@ -191,15 +191,15 @@ Opinion = 100 \times \frac{\sum_{\substack{t \in T_{pos}}} I_t}{\sum_{\substack{
 
 We made the assumption here that the tweets that were classified as ``neutral'' was tweets about a brand that contained no opinion.
 
-With the influence measurement we can now also extract the top ten most influencial tweets. This is an easy task once you have the influence value of every tweet but this increases the actionability (the ability to use the data to perform actual actions) of the result. For example a company using this feature can take action by contacting the author of one of tweets and offer them some kind of deal.
+With the influence measurement we can now also extract the top ten most influential tweets. This is an easy task once you have the influence value of every tweet but this increases the actionability (the ability to use the data to perform actual actions) of the result. For example a company using this feature can take action by contacting the author of one of tweets and offer them some kind of deal.
 
 
 \section{Manual}
 
 To manually classify tweets we made a little script that asked the user what file the user wants to process. 
 Then the user is presented with a text of a tweet and asked to classify it where the options are positive, positive but unsure, negative, negative but unsure, neutral and neutral but unsure. 
-The user is free to go back and re-classify a tweet but cannot pass a tweet, to classify new tweets the last tweet presented must be classified. 
-Once a number of tweets has been classified the user can save his progress in a separate file and quit. 
+The user is free to go back and re-classify a tweet but cannot go pass a tweet that has not been classified. 
+Once a number of tweets have been classified the user can save his progress in a separate file and quit. 
 When the user resumes the classification process the classification will also resume where he left off.
 
 \section{Poll}
@@ -208,7 +208,7 @@ In order to compare our results to something that measured the actual opinion of
 Polls are far from perfect but should be accurate enough for our purposes. It was quite difficult to find a poll that measured the general opinion of a brand. 
 Most polling institutes are hesitant to disclose their raw data and instead they present their own trademarked metrics that are usually an aggregation of a wide array of different parameters.
 
-We did however find a poll by Harris Interactive tha was made quite recently (November 13-30 in 2012) and had quite a large numbers of interviews (14 000) \cite{Harris13}. 
+We did however find a poll by Harris Interactive that was made quite recently (November 13-30 in 2012) and had quite a large numbers of interviews (14 000) \cite{Harris13}. 
 It also contained a section where they had a category called “Emotional Appeal” that was an aggregation of answers to how much the interviewee “Feel good about”, “Admire and Respect” and “Trust” the brand in question in a 0-7 range. 
 These three scores were then summed up, divided by 21 and multiplied by 100 in order to essentially create a general score for the emotional appeal for the brand \cite{Harris13}. 
 We felt this would correspond to the opinion of the population accurate enough for our purposes so we decided to use this Poll.
@@ -298,6 +298,7 @@ In essence, this means that its mistakes are more serious.
 We believe there are two major reasons for the poor performance of the SVM.
 
 Firstly, using unigrams and bigrams to represent a tweet may not be enough. To get better results, one should probably add more relevant features, like for example information about the URLs (number, domain name, etc), about the emoticons (number of positives, negatives) or about the tweet as a whole (length, number of verbs, number of adjectives etc).
+
 
 Secondly, we trained our SVM with data that contained a lot of noise when we used the output of the lexicons to generate training data. The lexicons had a 50\% accuracy rate when classifying the tweets we classified manually, and this is probably way too noisy for training purposes.
 
