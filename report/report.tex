@@ -97,7 +97,7 @@ Most of the research done within the automated text-analysis field has focused o
 
 \section{Problem Description}
 
-In our project we were interested in building a classifier that can extract the polarity of messages exchanged on Twitter that are about one specific company. Using the informations given by the website, we measure the ``influence'' of the tweets, and then aggregate the results to get the opinion of the population about the company.
+In our project we were interested in building a classifier that can extract the polarity of messages exchanged on Twitter that are about one specific company. Using the information given by the website, we measure the ``influence'' of the tweets, and then aggregate the results to get the opinion of the population about the company.
 
 \chapter{Method}
 
@@ -289,7 +289,7 @@ In the case of Coca Cola and CostCo, the results are pretty close to lexicon, wi
 For Disney however, results are really bad. 
 Our guess is that as Disney is a much more diversified company than the two others (they make movies, tv, run an amusement park, etc). The topics touched upon in those tweets are really different, indicating that the SVM would need a lot more training data to classify those tweets more accurately.
 
-If one looks closer at how the SVM actually classified separate tweets, we can see that unlike the lexicon it doesn't have a bias toward classifiying a tweet as neutral; instead it often classifies a negative tweet as positive and vice versa.
+If one looks closer at how the SVM actually classified separate tweets, we can see that unlike the lexicon it doesn't have a bias toward classifying a tweet as neutral; instead it often classifies a negative tweet as positive and vice versa.
 In essence, this means that its mistakes are more serious.
 
 We believe there are two major reasons for the poor performance of the SVM.
@@ -311,7 +311,7 @@ However, if one compares the poll with the manual classification, the difference
 
 The computation of our algorithm ultimately comes from assumptions made on how a twitter user reacts to a tweet depending on the opinion of the user and the opinion voiced in the tweet. Our assumptions were that if the user re-tweets the tweet, favorites the tweet or is the follower of someone who made the tweet then the probability is higher that the user supports the opinion rather than disagrees with it. Intuitively this seems to be correct but judging from our results this seems not to be the case. The results instead rather indicate that at least one of these assumptions must be wrong since applying the algorithm seems to make the results worse, or rather, one of the parameters seems to have an adverse effect. 
 
-If one looks at how the different values affect the ``influence-weight'' the algorithm generates for each tweet, we see that it is the re-tweets factor that dominate the others. So it is likely that the assumption we made about the re-tweeting is the problem.
+If one looks at how the different values affect the ``influence weight'' the algorithm generates for each tweet, we see that it is the re-tweets factor that dominate the others. So it is likely that the assumption we made about the re-tweeting is the problem.
 
 Apart from the actual algorithm, we were also really interested in developing the actionability of our analysis. There are several features that could have been applied to our solution in order to offer a wider range of tools for a company.
 
