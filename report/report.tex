@@ -144,7 +144,7 @@ The lexicons from the University of Pavia had some support for an NLP approach w
 But to ease the aggregation of the different lexicons, we choose to keep it simple and just considered the probability of a word being an adjective or an adverb to be equal, for example.
 
 The lexicons were used with a simple bag-of-words model of the text so each word was sent to every lexicon, they scored the word with a value between 0 and 1 in both negativity and positivity and then returned that value. 
-The score of a tweet was then created by summing up the positive and negative score of all the words by all the lexicons.
+The score of a tweet was then created by summing up the positive and negative scores, respectively, of all the words by all the lexicons.
 
 We performed some pre-processing of the words by using the \textit{Natural Language Toolkit} python plugin \cite{NLTK}.
 Using this plugin we removed punctuations, and then we used a stemmer and a lemmatizer. This transformed all variations of ``love'', such as ``loving'', ``loves'' and ``loved'' into simply ``love'' which made it easier for the lexicon to correctly grade the words.
@@ -159,7 +159,7 @@ This is the kind of information our SVM was supposed to extract.
 
 First we had to train our SVM and for this purpose we used our lexicons to generate training data. Of all the tweets about a brand that the lexicons labeled as ``positive'', the $n$ tweets with the highest positive score were picked. Likewise, of those labeled as ``negative'' by the lexicons the $n$ tweets with the highest negative score were picked. Finally we picked the $n$ longest tweets which the lexicon had given no negative or positive value. The SVM was then trained using these $3n$ tweets.
 
-To represent a tweet, we chose to use its unigrams and bigrams as features. We used the same pre-processing of the words that was used with the lexicons.
+We used the unigrams and bigrams of a tweet as features in the SVM, i.e. the things used to represent the tweet. We used the same pre-processing of the words that was used with the lexicons.
 
 Lastly, to estimate the polarity of a random tweet about a brand we simply extracted its features and classified it using the trained SVM.
 
@@ -311,7 +311,7 @@ However, if one compares the poll with the manual classification, the difference
 
 The computation of our algorithm ultimately comes from assumptions made on how a twitter user reacts to a tweet depending on the opinion of the user and the opinion voiced in the tweet. Our assumptions were that if the user re-tweets the tweet, favorites the tweet or is the follower of someone who made the tweet then the probability is higher that the user supports the opinion rather than disagrees with it. Intuitively this seems to be correct but judging from our results this seems not to be the case. The results instead rather indicate that at least one of these assumptions must be wrong since applying the algorithm seems to make the results worse, or rather, one of the parameters seems to have an adverse effect. 
 
-If one looks at how the different values influences the final ``influence-weight'' of the algorithm of the tweet we see that it is the re-tweets value that dominate the others. Given that our algorithm actually seem to make the results worse one may guess that people in practice generally do not re-tweet tweets they agree with, but rather tweets they disagree with. For example an environmentalist may mostly re-tweet statements he or she disagrees with to inform his or her followers of them, like new Gazprom oil discoveries.
+If one looks at how the different values affect the ``influence-weight'' the algorithm generates for each tweet, we see that it is the re-tweets factor that dominate the others. So it is likely that the assumption we made about the re-tweeting is the problem.
 
 Apart from the actual algorithm, we were also really interested in developing the actionability of our analysis. There are several features that could have been applied to our solution in order to offer a wider range of tools for a company.
 
