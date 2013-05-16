@@ -217,7 +217,7 @@ We felt this would correspond to the opinion of the population accurate enough f
 
 \section{Manual classification}
 
-These are the results of the manual classification of the first 100 tweets for each brand. Each member of the group individually classified the tweets, and these are the average polarities for the different brands.
+These are the results of the manual classification of the first 100 tweets for each brand. Each member of the group individually classified the tweets as either positive, negative or neutral, and these are the average polarities for the different brands:
 
 \centerline{\includegraphics[scale=0.55]{../img/man1.png}}
 
@@ -229,13 +229,13 @@ The fact that we classified them individually led to quite a few disagreements:
         \item \textbf{Disney}: All of us agreed on 34\% of the tweets.
 \end{itemize}
 
-For example, this means that out of the 100 Coca cola tweets, there were 42 which we all classified according to the same polarity while being either unsure or sure of the classification, and 58 where at least one member disagreed with the others while being either unsure or sure of the classification.
+For example, this means that out of the 100 Coca cola tweets, there were 42 which we all classified according to the same polarity and 58 where at least one member disagreed with the others. Confidence is not taken into consideration.
 
 \section{Lexicon evaluation}
 
 Using the results of our manual classification on tweets about Coca Cola, Disney and CostCo, we were able to evaluate the results of our unsupervised classification with the lexicon score on these three brands.
-To classify a tweet with the lexicon, we get the positive and the negative score of this tweet, subtract one to the other, and finally apply an arbitrary threshold to get the classification.
-This threshold was set to 2, so that if the score is greater than 2 the tweet is classified as positive, if the score is less than -2 the tweet is negative, and otherwise to tweet is classified neutral.
+To classify a tweet with the lexicon method, we take the positive score of the tweet, subtract the negative score and finally apply an arbitrary threshold to determine the classification.
+This threshold was set to 2, which means that if the score is greater than 2 the tweet is classified as positive, if the score is less than -2 the tweet is negative, and otherwise the tweet is classified neutral.
 
 Here are the results we got on the 100 tweets we classified manually for each brand:
 \begin{itemize}
@@ -246,10 +246,10 @@ Here are the results we got on the 100 tweets we classified manually for each br
 
 \section{SVM classification}
 
-We evaluated our SVM classifier in much the same way as the lexicon, i e by using the results of our manual classification.
+We evaluated our SVM classifier in much the same way as the lexicon method, i.e. by comparing them to the results of our manual classification.
 We used 450 tweets to train the SVM, based on the method previously described.
 
-Here are the results we got on the 100 tweets we classified manually for each brand:
+Here are the results we got for the 100 tweets we classified manually for each brand:
 \begin{itemize}
         \item \textbf{Coca Cola}: the SVM agrees on 48\% of the tweets.
         \item \textbf{CostCo}: the SVM agrees on 50\% of the tweets.
@@ -263,7 +263,7 @@ Here we can see the results achieved through the different methods by our progra
 \centerline{\includegraphics[scale=0.55]{../img/full1.png}}
 
 
-The results of the SVM and lexicon were created by dividing the number of positive tweets with the number of all tweets excluding the neutral ones.
+The results from the SVM and lexicon were calculated by dividing the number of positive tweets with the total number of non-neutral tweets.
 
 \chapter{Discussion}
 
