@@ -32,7 +32,7 @@
 \clearpage
 
 \abstract{
-In this report we explore the possibility of measuring the opinion of a group of people, using messages from twitter. At first we give a short introduction to the rationale of trying to analyze communication in order to extract the opinion. Then we explain why communication over twitter was used as well as exactly how the analysis, and the evaluation of the analysis, was made. We used lexicons, a Support Vector Machine and our own ``influence'' algorithm in order to perform the analysis and then we manually classified some tweets and made use of a poll in order to evaluate it. We explain how these components were used to both construct and evaluate our analysis, and then we present the result that we got. Finally we discuss the results, present some measures that could improve them and some conclusions that could be made. The analysis with the influence algorithm yielded a value that was on average 74.67 units off the poll whereas simply counting tweets without the influence algorithm was on average 48.96 units off on a 0 to 100 scale.
+In this report we explore the possibility of measuring the opinion of a group of people, using messages from twitter. At first we give a short introduction to the rationale of trying to analyze communication in order to extract the opinion. Then we explain why communication over twitter was used as well as exactly how the analysis, and the evaluation of the analysis, was made. We used lexicons, a Support Vector Machine and our own ``influence'' algorithm in order to perform the analysis. Then we manually classified some tweets and compared the results to a poll result in order to evaluate them. We explain how these components were used to both construct and evaluate our analysis, and then we present the result that we got. Finally we discuss the results, present some measures that could improve them and some conclusions that could be made. The analysis with the influence algorithm yielded a value that was on average 74.67 units off the poll whereas simply counting tweets without the influence algorithm was on average 48.96 units off on a 0 to 100 scale.
 }
 
 \clearpage
@@ -194,7 +194,7 @@ We made the assumption here that the tweets that were classified as ``neutral'' 
 With the influence measurement we can now also extract the top ten most influential tweets. This is an easy task once you have the influence value of every tweet but this increases the actionability (the ability to use the data to perform actual actions) of the result. For example a company using this feature can take action by contacting the author of one of tweets and offer them some kind of deal.
 
 
-\section{Manual}
+\section{Manual classification}
 
 To manually classify tweets we made a little script that asked the user what file the user wants to process. 
 Then the user is presented with a text of a tweet and asked to classify it where the options are positive, positive but unsure, negative, negative but unsure, neutral and neutral but unsure. 

@@ -24,23 +24,33 @@
 
 \begin{itemize}
 \item The value of an Opinion\\
-{\TextFont There a lot of different things one can use an opinion for}
+{\TextFont There a lot of different things one can use an opinion for.}
 \item Analyzing Communication\\
-{\TextFont Communication reflects an opinion}
+{\TextFont Communication reflects an opinion.}
 \item Semantic Orientation\\
-{\TextFont Detecting if an opinion is negative or positive}
+{\TextFont Detecting if an opinion is negative or positive.}
 \item Classifying tweets and counting them = opinion?\\
 {\TextFont Is there a better way to extract an opinion?}
 \item The ``influence'' of a tweet\\
-{\TextFont Take followers, retweets and favorites into account!}
+{\TextFont Take followers, re-tweets and favorites into account!}
 \end{itemize}
+
+\newpage
+\thispagestyle{empty}
+\mbox{}
 
 \clearpage
 \thispagestyle{empty}
 
 {\TitleFont System Overview}
-\newline
-\centerline{\includegraphics[scale=1]{../img/Overview.png}}
+\vspace{0.4cm}
+\begin{center}
+\includegraphics[scale=1]{../img/Overview.png}
+\end{center}
+
+\newpage
+\thispagestyle{empty}
+\mbox{}
 
 \clearpage
 \thispagestyle{empty}
@@ -49,16 +59,20 @@
 
 \begin{itemize}
 \item The opinion of a brand, negative or positive?\\
-{\TextFont To keep it simple we measured simply if the opinion was positive or negative}
+{\TextFont To keep it simple we measured if the opinion was positive or negative.}
 \item Opinion = position in a range\\
-{\TextFont Essentially a score in the [0-100] range where 0 is fully negative}
+{\TextFont Essentially a score in the [0-100] range where 0 is fully negative.}
 \item Must still classify tweets using the text alone\\
-{\TextFont To use the influence one must know the initial opinion of the brand in the tweet}
+{\TextFont To use the influence one must know the initial opinion of the brand in the tweet.}
 \item SVM + Supervised Learning through Lexicons\\
-{\TextFont We used a SVM to classify and Lexicons to classify training data for the SVM}
+{\TextFont We used a SVM to classify, and the lexicons to make training data for the SVM.}
 \item Evaluate the Lexicon, the SVM and the final algorithm\\
-{\TextFont To make sure the different components yield reasonable results we have to \\evaluate them, we used manual classification and a Poll to evaluate them}
+{\TextFont To make sure the different components yielded reasonable results we have to \\evaluate them, we used manual classification and a Poll to evaluate them.}
 \end{itemize}
+
+\newpage
+\thispagestyle{empty}
+\mbox{}
 
 \clearpage
 \thispagestyle{empty}
@@ -67,35 +81,43 @@
 
 \begin{itemize}
 \item We use 7 different lexicons\\
-{\TextFont Together they contains 8000 unique words with positive and negative scores.}
+{\TextFont Together they contain ca 8000 unique words with positive and negative scores.}
 \item For each tweet we sum the scores of its words\\
 {\TextFont Our pre-processing removes punctuation and lemmatize words for better results.}
-\item From this score, we create learning data\\
-{\TextFont Positive tweets are the \textit{n} with highest positive score, the same for negative.\\
+\item From this score, we generate training data\\
+{\TextFont Positive tweets are the \textit{n} with highest positive score, similarly for negative.\\
 The neutral tweets are the \textit{n} longest tweets with a score of 0.}
-\item The SVM represents the tweets with features\\
-{\TextFont These features are the unigrams and bigrams, extracted from the cleaned text.}
-\item We make the SVM learn with the generated learning data\\
-{\TextFont We then have a classifier for tweets about a company which learn automatically.}
+\item The SVM represents the tweets using features\\
+{\TextFont The features are unigrams and bigrams extracted from the pre-processed text.}
+\item We make train the SVM with the generated training data\\
+{\TextFont We then have a classifier for tweets about a brand which train automatically.}
 \end{itemize}
+
+\newpage
+\thispagestyle{empty}
+\mbox{}
 
 \clearpage
 \thispagestyle{empty}
 
 {\TitleFont Algorithm}
 \begin{itemize}
-\item The influence of a tweet is computed from the number of followers $Fo_t$, the number of retweets $R_t$ and the number of Favorites $Fa_t$.
+\item The influence of a tweet is computed using the number of Followers $Fo_t$ of the author, the number of Re-tweets $R_t$ and the number of Favorites $Fa_t$.
 \begin{equation}
 I_t = \log (Fo_t + 1) + R_t + Fa_t
 \end{equation}
 
-\item The opinion is computed as a percentage and aggregates the polarity of each tweet weighted its influence.
+\item The opinion is computed as a percentage and aggregates the polarity of each tweet weighted by its influence.
 
 \begin{equation}
 Opinion = 100 \times \frac{\sum_{\substack{t \in T_{pos}}} I_t}{\sum_{\substack{t \in T_{pos}}} I_t + \sum_{\substack{t \in T_{neg}}} I_t}
 \end{equation}
 
 \end{itemize}
+
+\newpage
+\thispagestyle{empty}
+\mbox{}
 
 \clearpage
 \thispagestyle{empty}
@@ -109,6 +131,10 @@ Opinion = 100 \times \frac{\sum_{\substack{t \in T_{pos}}} I_t}{\sum_{\substack{
 \newline
 \centerline{\includegraphics[scale=0.85]{../img/man1.png}}
 
+\newpage
+\thispagestyle{empty}
+\mbox{}
+
 \clearpage
 \thispagestyle{empty}
 
@@ -119,7 +145,9 @@ Opinion = 100 \times \frac{\sum_{\substack{t \in T_{pos}}} I_t}{\sum_{\substack{
 \centerline{\includegraphics[scale=0.7]{../img/full1.png}}
 
 
-
+\newpage
+\thispagestyle{empty}
+\mbox{}
 
 \clearpage
 \thispagestyle{empty}
@@ -128,15 +156,15 @@ Opinion = 100 \times \frac{\sum_{\substack{t \in T_{pos}}} I_t}{\sum_{\substack{
 \Large
 \begin{itemize}
 \item Tweets are notoriously hard to classify\\
-{\TextFont Limited word-limit forces people to be very succint}
+{\TextFont Limited word-limit forces people to be very succint.}
 \item The SVM had major problems\\
-{\TextFont More features were needed, less noisy training data}
+{\TextFont More features were needed, less noisy training data.}
 \item Poll and tweet population and overlapping\\
-{\TextFont Filtering on a more local language may improve overlapping}
-\item Justifying parameters in the Algorithm\\
-{\TextFont More data is needed to get good parameters for the Algorithm}
-\item The results hints at improvement\\
-{\TextFont It seems like using meta-data may improve an opinion estimation, but better results are required to make a definitive answer}
+{\TextFont Filtering on a more local language may improve overlapping.}
+\item The Algorithm actually makes the result worse\\
+{\TextFont At least one of the assumptions about Twitter users must be incorrect.}
+\item Re-tweets dominate the influence\\
+{\TextFont Since the algorithm made the result worse this may mean that people usually re-tweet tweets that they do not agree with.}
 \end{itemize}
 
 \end{document}
