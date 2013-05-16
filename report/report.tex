@@ -106,8 +106,8 @@ However in order to utilize the influence of a tweet we first need to at least d
 This forces us to first perform a classification using only the text and then apply the algorithm on the results afterwards.
 
 To perform this text-based classification we chose to use a Support Vector Machine (SVM) because that approach appeared to give the best results when we compared the results of \cite{Pang02}, \cite{Turney02} and \cite{Taboada10}.
-We also decided to use a supervised approach which means that we provided the SVM with messages that already had been classified to train on.
-To get these classified messages, we decided to classify all the messages using lexicons and then pick a number of the messages with the highest ranking in each category for the SVM to train on.
+We also decided to use a distant supervised approach which means that to make the SVM learn we provide it messages that are classified automatically with an unsupervised method.
+We decided to classify all the messages using lexicons and then pick a number of the messages with the highest ranking in each category for the SVM to train on.
 
 To make sure the results from the lexicons and the SVM were reasonable, we considered it necessary to evaluate them as well. 
 In order to do this, we manually classified a number of tweets and then used the lexicon and the SVM to classify those tweets as well, and compared the results.
