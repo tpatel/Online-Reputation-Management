@@ -272,49 +272,50 @@ The results from the SVM and lexicon were calculated by dividing the number of p
 The overall results from our classification using only the lexicons are far from great. 
 
 From looking at how separate tweets were actually classified we noticed that the most common mistake the lexicons made was to classify a positive or negative tweet as neutral. 
-This means that it is unable to detect the parts in these tweets that signal opinions, because they are not present in the lexicon, because they are too short, too ironic, or because they are actually contained in an emoticons or hashtag.
-For instance, the following tweets are classified as neutral, even though they are actually positive:\\
+This means that it is unable to detect the parts in these tweets that signal opinions, either because they are not present in the lexicon, because they are too short, too ironic, or because they are contained in an emoticon or hashtag.
+For instance, the following tweets are classified as neutral, even though they are arguably positive:
+\\
 \centerline{\textit{Costco Sundays!!}}\\
 \centerline{\textit{Need to do a Costco run today... :) \#LoveThatStore}}
 
-To reduce this problem one may add more lexicons and use lexicons from more sources. Six out of the seven lexicons we did use came from the same source. Those six were created by applying six different machine-learning techniques on the same initial corpus. That may have led to some issues such as giving too much importance to some words only because they were present in this initial dictionary.
+To reduce this problem, one may add more lexicons and use lexicons from more sources. Six out of the seven lexicons we did use came from the same source. Those six were created by applying six different machine-learning techniques on the same initial corpus. That may have led to some issues such as giving too much significance to some words only because they were present in this initial dictionary.
 
-Anoter measure to improve the result may be to make use of some Part-Of-Speech tagging, so the polarity of a word is evaluated using the context of the word. For example ``very good'' and ``not very good'' will more or less yield the same result. It would be good also to consider the position of the brand name, so that we can see the difference between ``Costco is great but I dislike ice-cream'' and ``I dislike Costco but I think ice-cream is great''.
+Anoter measure to improve the result may be to make use of some Part-Of-Speech tagging, so the polarity of a word is evaluated using the context of the word. For example \emph{``very good''} and \emph{``not very good''} will more or less yield the same result. It would be good also to consider the position of the brand name, so that we can see the difference between \emph{``Costco is great but I dislike ice-cream''} and \emph{``I dislike Costco but I think ice-cream is great''}.
 
-We did perform some lemmatization but to improve the results one may make use of even more sophisticated lemmatization.
+We did perform some lemmatization but to improve the results one would have to make use of even more sophisticated lemmatization.
 
 \section{Support Vector Machine}
 
-Interestingly enough, we can see that the results from the SVM are below the ones from the lexicons.
+Interestingly enough, we can see that the results from the SVM worse than those from the lexicons.
 This probably means that our SVM was not able to remove the noise in the training data induced by the lexicon method.
 In the case of Coca Cola and CostCo, the results are pretty close to lexicon, with around 50\% of matching.
 For Disney however, results are really bad. 
-Our guess is that as Disney is a much more diversified company than the two others (they make movies, tv, run an amusement park, etc), the topics touched upon in those tweets are really different, thus the SVM would need a lot more learning datas to classify those tweets correctly.
+Our guess is that as Disney is a much more diversified company than the two others (they make movies, tv, run an amusement park, etc). The topics touched upon in those tweets are really different, indicating that the SVM would need a lot more training data to classify those tweets more accurately.
 
-If one looks closer at how the SVM actually classified separate tweets then we can see that unlike the lexicon it doesn't have a bias toward classifiying a tweet as neutral, instead it often classifies a negative tweet as positive and vice versa.
-This in essence means that its mistakes are more serious.
+If one looks closer at how the SVM actually classified separate tweets, we can see that unlike the lexicon it doesn't have a bias toward classifiying a tweet as neutral; instead it often classifies a negative tweet as positive and vice versa.
+In essence, this means that its mistakes are more serious.
 
 We believe there are two major reasons for the poor performance of the SVM.
 
-Firstly, using uni-grams and bi-grams as features to represent a tweet may not be enough. To get better results, one should probably add more relevant features, like for example information about the urls (number, domain name, etc), about the emoticons (number of positives, negatives) or about the tweet as a whole (length, number of verbs, number of adjectives etc).
+Firstly, using unigrams and bigrams to represent a tweet may not be enough. To get better results, one should probably add more relevant features, like for example information about the URLs (number, domain name, etc), about the emoticons (number of positives, negatives) or about the tweet as a whole (length, number of verbs, number of adjectives etc).
 
-Secondly, we trained our SVM with data that contained a lot of noise when we used the output of the lexicons to generate training data. The lexicons had a 50\% accuracy rate when classifying those tweets we manually classified, and this is probably way too noisy for training purpose.
+Secondly, we trained our SVM with data that contained a lot of noise when we used the output of the lexicons to generate training data. The lexicons had a 50\% accuracy rate when classifying the tweets we classified manually, and this is probably way too noisy for training purposes.
 
 \section{Poll}
 
-The poll that was used was an aggregation of rankings done on three different subjects (“Feel good about”, “Admire and Respect” and “Trust”). The value of these should be quite strongly correlated among themselves and also correlated to whether the people who were interviewed actually “like” or “dislike” a brand. But we have no real scientific way of knowing.
+The poll that was used was an aggregation of rankings done on three different subjects (“Feel good about”, “Admire and Respect” and “Trust”). The value of these should be quite strongly correlated among themselves and also correlated to whether the people who were interviewed actually “like” or “dislike” a brand. But we have no real scientific way of knowing this.
 
-We do know that the survey we used was exclusively performed in America. Unfortunately there is no way to filter tweets on the origin but one could at least filter it on language. To filter on english unfortunately does not exclude all non-americans (since it is such a global language). To make sure that the poll used is made on the same people that make the tweets one could use a poll conducted on people with a very local language and then filter on that language. The poll was conducted quite recently however.
+We do know that the survey we used was exclusively performed in America. Unfortunately there is no way to filter tweets on the origin but one could at least filter it on language. To filter on English unfortunately does not exclude all non-Americans (since it is such a global language). To make sure that the poll used is made on the same people that make the tweets one could use a poll conducted on people with a very local language and then filter on that language. The poll was conducted quite recently, though.
 
-However if one compares the poll with the manual classification the difference is on average only 3.77\%. The data in the manual classification is way too small to make any definitive conclusions but atleast it hints at the fact that the poll was quite accurate.
+However, if one compares the poll with the manual classification, the difference is on average only 3.77 percentage points. The data from the manual classification is way too small to make any definitive conclusions but at least it hints at the fact that the poll was quite accurate.
 
 \section{Algorithm and features}
 
-The computation of our algorithm ultimately comes from assumptions made on how a twitter user act to a tweet depending on the opinion of the user and the opinion voiced in a tweet. Our assumptions were that if the user re-tweets the tweet, favorites the tweet or is the follower of someone who made the tweet then the probability is higher that the user supports the opinion then otherwise. Intuitively this seems to be correct but judging from our results this seems not to be the case. The results instead rather indicate that at least one of these assumptions must be wrong since applying the algorithm seems to make the result worse, or rather one of the parameters seems to have an adverse effect. 
+The computation of our algorithm ultimately comes from assumptions made on how a twitter user reacts to a tweet depending on the opinion of the user and the opinion voiced in the tweet. Our assumptions were that if the user re-tweets the tweet, favorites the tweet or is the follower of someone who made the tweet then the probability is higher that the user supports the opinion rather than disagrees with it. Intuitively this seems to be correct but judging from our results this seems not to be the case. The results instead rather indicate that at least one of these assumptions must be wrong since applying the algorithm seems to make the results worse, or rather, one of the parameters seems to have an adverse effect. 
 
-If one looks at how the different values influences the final ``influence-weight'' of the algorithm of the tweet we see that it is the re-tweets value that dominate the others. Given that our algorithm actually seem to make the results worse one may guess that people in practice in general do not re-tweet tweets they agree with, but rather tweets they disagree with. For example an environmentalist may mostly re-tweet statements he or she disagrees with to inform his or her followers of them, like new Gazprom oil discoveries.
+If one looks at how the different values influences the final ``influence-weight'' of the algorithm of the tweet we see that it is the re-tweets value that dominate the others. Given that our algorithm actually seem to make the results worse one may guess that people in practice generally do not re-tweet tweets they agree with, but rather tweets they disagree with. For example an environmentalist may mostly re-tweet statements he or she disagrees with to inform his or her followers of them, like new Gazprom oil discoveries.
 
-Apart from the actual algorithm we were also really interested in developing the actionability of our analysis. There are several features that could have been applied to our solution in order to offer a wider range of tools for a company.
+Apart from the actual algorithm, we were also really interested in developing the actionability of our analysis. There are several features that could have been applied to our solution in order to offer a wider range of tools for a company.
 
 As we implemented the top ten influential tweets, we wanted to continue in the same direction and implement the top influential Twitter users as well. This feature would enable a company to easier reach out to its customers. We would have used a similar “influential weight” that what used for the influential tweets, but aggregating this measure by author instead.
 
@@ -322,7 +323,7 @@ Another extension to the current analysis would be to work with the links embedd
 
 \section{Conclusion}
 
-In the end we conclude that our results are far from perfect and that more tests and a more sophisticated method is required to reach a definitive answer. However the results hints at using our influence algorithm actually makes the results worse. If this is true then this means that at least one of our assumptions when creating the algorithm was incorrect. A tweet with either more re-tweets, favorites or followers of its author actually reflects the opinion of the population less accurate then a tweet with less. Perhaps people tend to re-tweet tweets they find interesting, yet in effect have an opposite opinion.
+In the end we conclude that our results are far from perfect and that more tests and a more sophisticated method is required to reach a definitive answer. However the results hints at using our influence algorithm actually makes the results worse. If this is true then it means that at least one of our assumptions when creating the algorithm was incorrect. A tweet with either more re-tweets, favorites or followers of its author actually reflects the opinion of the population less accurately than a tweet with fewer of those. Perhaps people tend to re-tweet tweets they find interesting, yet in effect have an opposite opinion.
 
 \begin{thebibliography}{12}
 
