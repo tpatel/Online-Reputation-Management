@@ -79,20 +79,21 @@ In this report we explore the possibility of measuring the opinion of a group of
 \chapter{Introduction}
 
 \section{Background}
-
-With the development of social networks, people tend to share more and more of their opinions on internet.
+With the development of social networks, people are sharing their opinions over the Internet more and more.
 A lot of companies are trying to use these means to advertise and communicate directly to their customers.
 They may be really interested in knowing what people are actually saying about them.
-With this information, they could adapt their business strategy to be in harmony with their customers, controlling as much as possible their image.
+With this information, they could adapt their business strategy to be in harmony with their customers, taking more control over their image.
 
-Twitter is the dreamed place to do such an analyze of people's opinions about a company. It is a social network where user post small text messages called tweets that everybody can read. A tweet has a maximal length of 140 characters. However, such a task would be too big for a human to process, regarding the number of tweets. The only way is then to automatize the analyze with a computer.
+Twitter is the ideal place for analyzing people's opinions of a brand. 
+It is a social network where user post small text messages called tweets that everybody can read. 
+A tweet has a maximal length of 140 characters. However, such a task would be too big for a human to process, considering the number of tweets.
+The only realistic way is then to automatize the analysis using a computer.
 
 In computer science the problem of extracting subjective information in source materials is called sentiment analysis or opinion mining. 
-One of the most basic task in this field is to simply classify the polarity of a text, i.e. if it is positive or negative. 
+One of the most basic tasks in this field is to simply classify the polarity of a text, i.e. determining whether it is positive or negative. 
 This is sometimes called semantic orientation \cite{SenWiki}. 
 
-The focus of the bulk of the research on automated text-analysis has rested on trying to classify separate texts.
-
+Most of the research done within the automated text-analysis field has focused on trying to classify texts without utilizing its meta-data.
 
 \section{Problem Description}
 
@@ -143,7 +144,7 @@ The lexicons from the University of Pavia had some support for a NLP approach wh
 But to ease the aggregation of the different lexicons we choose to keep it simple and just considered the probability of a word being adjective or adverb to be equal for example.
 
 The lexicons were used with a simple bag-of-words model of the text so each word was sent to every lexicon, they scored the word with a value between 0 and 1 in both negativity and positivity and then returned that value. 
-The score of a tweet was then created by summing up the score of all the words by all the lexicons.
+The score of a tweet was then created by summing up the positive and negative score of all the words by all the lexicons.
 
 We performed some pre-processing of the words by using the \textit{Natural Language Toolkit} python plugin \cite{NLTK}.
 Using this plugin we removed punctuations and then we used a stemmer and a lemmatizer. This transformed all variations of ``love'', such as ``loving'', ``loves'' and ``loved'' into simply ``love'' which made it easier for the lexicon to correctly score the words.
@@ -152,7 +153,7 @@ Using this plugin we removed punctuations and then we used a stemmer and a lemma
 
 We used a Support Vector Machine (SVM) to get the polarity of a tweet which is a supervised learning model that recognize patterns. We used the python plugin \textit{scikit-learn}\cite{Scikit} and its implementation of the SVM in our project.
 
-Our goal was to create a SVM specialized on one brand because we believed that a word which may be considered negative for one company may not be negative for another.
+Our goal was to create a SVM specialized on one brand because we believed that a word which may be considered negative for one brand may not be negative for another.
 For instance, the word \textit{sample} is very positive when talking about CostCo because they offer a lot of samples which people thoroughly enjoy. However, a \textit{sample} in a Disney context would probably be a sample of a movie, and then should be considered neutral.
 This is the kind of informations our SVM was supposed to extract.
 
@@ -200,7 +201,7 @@ When the user resumes the classification process the classification will also re
 \section{Poll}
 
 In order to compare our results to something that measured the actual opinion of the people we decided that we more or less needed some kind of poll. 
-Polls are far from perfect but should be accurate enough for our purposes. It was quite difficult to find a poll that measured the general opinion of a company. 
+Polls are far from perfect but should be accurate enough for our purposes. It was quite difficult to find a poll that measured the general opinion of a brand. 
 Most polling institutes are hesitant to disclose their raw data and instead they present their own trademarked metrics that are usually an aggregation of a wide array of different parameters.
 
 We did however find a poll by Harris Interactive tha was made quite recently (November 13-30 in 2012) and had quite a large numbers of interviews (14 000) \cite{Harris13}. 
@@ -214,7 +215,8 @@ We felt this would correspond to the opinion of the population accurate enough f
 
 These are the results of the manual classification of the first 100 tweets for each brand. Each member of the group individually classified the tweets, and these are the average polarities for the different brands.
 
-\centerline{\includegraphics[scale=0.6]{../img/man1.png}}
+\centerline{\includegraphics[scale=0.4]{../img/man1.png}}
+\vspace{-0.7cm}
 
 The fact that we classified them individually led to quite a few disagreements:
 
@@ -228,46 +230,35 @@ For example, this means that out of the 100 Coca cola tweets, there were 42 whic
 
 \section{Lexicon evaluation}
 
-Using the results of our manual classification on tweets about Coca Cola, Disney and CostCo, we were able to evaluate the results of our unsupervised classification with the lexicon score on these three companies.
+Using the results of our manual classification on tweets about Coca Cola, Disney and CostCo, we were able to evaluate the results of our unsupervised classification with the lexicon score on these three brands.
 To classify a tweet with the lexicon, we get the positive and the negative score of this tweet, subtract one to the other, and finally apply an arbitrary threshold to get the classification.
 This threshold was set to 2, so that if the score is greater than 2 the tweet is classified as positive, if the score is less than -2 the tweet is negative, and otherwise to tweet is classified neutral.
 
-Here are the results we got on the 100 tweets we classified manually for each company:
+Here are the results we got on the 100 tweets we classified manually for each brand:
 \begin{itemize}
         \item \textbf{Coca Cola}: the lexicon agrees on 53\% of the tweets.
         \item \textbf{CostCo}: the lexicon agrees on 58\% of the tweets.
         \item \textbf{Disney}: the lexicon agrees on 58\% of the tweets.
 \end{itemize}
-Looking more deeply on the results, we can see that our lexicon method doesn't take a lot of risks.
-Most of the mistakes consist in classifying as neutral a positive or negative tweet. That means it is unable to detect any sentimental parts in theses tweets, because they are too short, too ironic, or because the sentimental part is actually contained in the emoticons or hashtags.\\
-For instance, the following tweets are classified as neutrals, while they are actually positives:\\
-\centerline{\textit{Costco Sundays!!}}\\
-\centerline{\textit{Need to do a Costco run today... :) \#LoveThatStore}}
 
 \section{SVM classification}
 
-Using the results  of our manual classification once again, we have also evaluated our SVM classifier.
-We used 450 tweets to make the SVM learn, based on the method previously described.
+We evaluated our SVM classifier in much the same way as the lexicon, i e by using the results of our manual classification.
+We used 450 tweets to train the SVM, based on the method previously described.
 
-Here are the results we got on the 100 tweets we classified manually for each company:
+Here are the results we got on the 100 tweets we classified manually for each brand:
 \begin{itemize}
         \item \textbf{Coca Cola}: the SVM agrees on 48\% of the tweets.
         \item \textbf{CostCo}: the lexicon agrees on 50\% of the tweets.
         \item \textbf{Disney}: the lexicon agrees on 16\% of the tweets.
 \end{itemize}
-We can see that the results are below the ones we got with the lexicon method.
-That means that our SVM was not able to remove the noise in the learning data induced by the lexicon method.\\
-In the case of Coca Cola and CostCo, results are pretty close to the previous ones, with around 50\% of matching.
-For Disney however, results are really bad. Our guess is that as Disney has more diversified activities than the two other companies (movies, tv, amusement park, ...), the topics talked about are really different, thus the SVM would need a lot more learning datas to classify tweets correctly.
-
-Looking closer to the results, we can see that unlike with the lexicon method, this method doesn't tend to classify as neutral when it makes mistakes.
-It often classifies a negative tweet as positive and vice versa.
-That means that its mistakes are more serious.
 
 \section{Final scores}
 Here we can see the results achieved through the different methods by our program, compared to the poll:
 
-\centerline{\includegraphics[scale=0.6]{../img/full1.png}}
+\vspace{-0.6cm}
+\centerline{\includegraphics[scale=0.4]{../img/full1.png}}
+\vspace{-0.6cm}
 
 Note that these results only consider positive and negative tweets, hence the NE (neutral excluding) label prefix.
 
@@ -281,6 +272,12 @@ Six out of the seven lexicons we did use came from the same source. Those six we
 
 We may also improve our usage of the lexicons. At the moment we don't use a Part-Of-Speech tagging, so the polarity of a word is evaluated regardless of the context of the word. For example ``very good'' and ``not very good'' will more or less yield the same result. It would be good also to consider the position of the company name, so that we can see the difference between ``Costco is great but I dislike ice-cream'' and ``I dislike Costco but I think ice-cream is great''.
 
+Looking more deeply on the results, we can see that our lexicon method doesn't take a lot of risks.
+Most of the mistakes consist in classifying as neutral a positive or negative tweet. That means it is unable to detect any sentimental parts in theses tweets, because they are too short, too ironic, or because the sentimental part is actually contained in the emoticons or hashtags.\\
+For instance, the following tweets are classified as neutrals, while they are actually positives:\\
+\centerline{\textit{Costco Sundays!!}}\\
+\centerline{\textit{Need to do a Costco run today... :) \#LoveThatStore}}
+
 \section{Support Vector Machine}
 
 The results from using the SVM are pretty poor. We suspect two main reasons for this.
@@ -288,6 +285,15 @@ The results from using the SVM are pretty poor. We suspect two main reasons for 
 First, using unigrams and bigrams as features may not be enough. To get better results, we should add more relevant features, like for example information about the urls (number, domain name, …), about the emoticons (number of positives, negatives) or about the tweet as a whole (length, number of verbs, number of adjectives etc).
 
 Second, we trained our SVM with data that contains a lot of noise when we used the output of the lexicon to generate training data. The lexicon method offered a 50\% match on our manually classified, which doesn’t look good enough for learning purpose.
+
+We can see that the results are below the ones we got with the lexicon method.
+That means that our SVM was not able to remove the noise in the learning data induced by the lexicon method.\\
+In the case of Coca Cola and CostCo, results are pretty close to the previous ones, with around 50\% of matching.
+For Disney however, results are really bad. Our guess is that as Disney has more diversified activities than the two other companies (movies, tv, amusement park, ...), the topics talked about are really different, thus the SVM would need a lot more learning datas to classify tweets correctly.
+
+Looking closer to the results, we can see that unlike with the lexicon method, this method doesn't tend to classify as neutral when it makes mistakes.
+It often classifies a negative tweet as positive and vice versa.
+That means that its mistakes are more serious.
 
 \section{Poll}
 
