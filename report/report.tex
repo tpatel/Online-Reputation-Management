@@ -32,7 +32,7 @@
 \clearpage
 
 \abstract{
-In this report we explore the possibility of measuring the opinion of a group of people using messages from twitter. At first we give a short introduction to the rationale of trying to analyze communication in order to extract the opinion. Then we explain why communication over twitter was used as well as exactly how the analysis, and the evaluation of the analysis, would be made. We used lexicons, Support Vector Machines and our own ``influence'' algorithm in order to perform the analysis and then we manually classified some tweets and made use of a poll in order to evaluate it. We explain how these components were used to both construct and evaluate our analysis, then we present the result that we got. Finally we discuss the results, present some measures that could improve them and some conclusions that could be made. At best we got a 58\% accuracy when it comes to classifying the tweets, and the analysis yielded a value that was on average 74.67\% off the poll whereas simply counting tweets was on average 48.96\% off.
+In this report we explore the possibility of measuring the opinion of a group of people, using messages from twitter. At first we give a short introduction to the rationale of trying to analyze communication in order to extract the opinion. Then we explain why communication over twitter was used as well as exactly how the analysis, and the evaluation of the analysis, was made. We used lexicons, a Support Vector Machine and our own ``influence'' algorithm in order to perform the analysis and then we manually classified some tweets and made use of a poll in order to evaluate it. We explain how these components were used to both construct and evaluate our analysis, then we present the result that we got. Finally we discuss the results, present some measures that could improve them and some conclusions that could be made. The analysis with the influence algorithm yielded a value that was on average 74.67 units off the poll whereas simply counting tweets without the influence algorithm was on average 48.96 units off on a 0 to 100 scale.
 }
 
 \clearpage
@@ -45,9 +45,7 @@ In this report we explore the possibility of measuring the opinion of a group of
     \item Implemented 6/7 of the lexicons as well as the program that combines separate lexicons into one lexicon
     \item Implemented some of the program that uses all of the different components to yield a result
     \item Implemented the tool to perform the manual classification
-    \item Wrote the Introduction
-    \item Wrote the Method, Lexicon, Manual and Poll part in the Method section
-    \item Wrote about 1/3 of the Discussion and Conclusion section
+    \item Wrote the Introduction and the Method, Lexicon, Manual and Poll part in the Method section and a large part of the Discussion and Conclusion section
     \item Wrote the Introduction, Method and Discussion \& Conclusion sections of the Poster
 \end{itemize}
 \title{\large \textbf{Romain Pomier}}
@@ -82,7 +80,7 @@ In this report we explore the possibility of measuring the opinion of a group of
 
 \section{Background}
 
-With the development of social networks, people tend to share more and more what they think on internet.
+With the development of social networks, people tend to share more and more of their opinions on internet.
 A lot of companies are trying to use these means to advertise and communicate directly to their customers.
 They may be really interested in knowing what people are actually saying about them.
 With this information, they could adapt their business strategy to be in harmony with their customers, controlling as much as possible their image.
@@ -139,7 +137,7 @@ For the 3 brands chosen, Coca Cola, Costco and Disney, we got respectively 4592,
 
 \section{Lexicon}
 
-We used seven different lexicons one containing about 200 unique words and came from the University of Pavia \cite{WNOP}, as did another five that contained about 900 unique words and one lexicon contained about 7000 unique words. 
+We used seven different lexicons one containing about 200 unique words and came from the University of Pavia \cite{WNOP07}, as did another five that contained about 900 unique words and one lexicon contained about 7000 unique words from \cite{Liu04}. 
 The last lexicon consisted of simply two lists of negative and positive words where the rest listed words with a certain negative and positive score between 0 and 1. 
 The lexicons from the University of Pavia had some support for a NLP approach where some words had different scores if they were present in a text as an adjective or an adverb for example.  
 But to ease the aggregation of the different lexicons we choose to keep it simple and just considered the probability of a word being adjective or adverb to be equal for example.
@@ -169,11 +167,11 @@ Lastly to estimate the polarity of a random tweet about a brand we simply extrac
 Thanks to the previous classification we are now in possession of tweets associated with their polarity (positive, negative or neutral). Our goal is then to extract meta-data of the tweet and use this to improve the estimation of the opinion of a population.
 This is the novelty aspect of our work and we chose to use this meta-data to both create our algorithm and also provide some extra features, such as presenting the top most influential tweets.
 
-The purpose of the Algorithm is to estimate the opinion of a brand. 
+The purpose of the Algorithm is to improve an estimation of the opinion of a brand. 
 This was achieved by aggregating the polarity of every tweet, weighted by the influence of the tweet over the network.
 Thus the bulk of our work consists of finding the right way to measure the influence of a tweet.
 
-The relevant meta-data we had to estimate the influence was the amount of times the tweet had been re-tweeted, the amount of followers its author had and the number of favorites it had. So we simply chose to combine them in a way felt was relevant. To get a good result the important thing was to balance the importance of each metric to each other. Since we deemed that the number of re-tweets and favorites of a tweet was about equally indicative of a an influential tweet but far more indicative then the number of followers of the author our algorithm looked a like this:
+We assumed that a tweet which has more re-tweets, more favorites and whose author has more followers would better indicate the opinion of the whole population then one with less. Therefore we chose to combine these metrics and then use them as weights when evaluating the opinion of the people. Since we deemed that the number of re-tweets and favorites of a tweet to be about equally indicative of a an influential tweet but far more indicative then the number of followers of the author our algorithm looked as follows:
 
 $I_t = \text{Influence of a tweet t}$, $Fo_t = \text{The number of followers of the author of tweet t}$\\
 $R_t = \text{The number of re-tweets of the tweet t}$, $Fa_t = \text{The number of favorites of the tweet t}$\\
@@ -299,7 +297,7 @@ We do know that the survey we used was exclusively performed in America. Unfortu
 
 \section{Algorithm}
 
-Concerning the limitation of the influence computation, we couldn't find any existing result to compare the efficiency of our formula. However the resulting computation comes from tries and error when applying the function to our dataset, and seems to give good results. More research can be done in this part of our study in order to bring a deeper analysis of our results.
+The resulting computation comes from tries and error when applying the function to our dataset, and seems to give good results. More research can be done in this part of our study in order to bring a deeper analysis of our results.
 
 We are really interested in developing the actionability of our solution, that is to say that a company using our solution could take action according to the result of the program’s computation. There is several features that could have been applied to our solution in order to offer a wider range of tools for a company.
 
@@ -309,8 +307,7 @@ Another extension to the current solution would be to work with the links embedd
 
 \section{Conclusion}
 
-In the end we conclude that our results are far from perfect but that they hint at the fact that using parameters such as followers, retweets and favorites do improve the estimation of the opinion of a population over simply trying to calculate the opinion of separate tweets and then summing up the amount of tweets of each opinion.
-To get a definitive answer on this matter one would have to get much better results using the lexicons and SVM in a much more sophisticated way.
+In the end we conclude that our results are far from perfect and that more tests and a more sophisticated method is required to get a definitive answer. However the results hints at using our influence algorithm actually makes the results worse. If this is true then this means that at least one of our assumptions when creating the algorithm was incorrect. A tweet with either more re-tweets, favorites or followers of its author actually reflects the opinion of the population less accurate then a tweet with less. Perhaps people tend to re-tweet tweets they find interesting, yet in effect have an opposite opinion.
 
 \begin{thebibliography}{9}
 
@@ -336,11 +333,16 @@ To get a definitive answer on this matter one would have to get much better resu
   \emph{Lexicon-Based Methods for Sentiment Analysis} (2010)\\
   \url{http://cgi.sfu.ca/~mtaboada/docs/Taboada_etal_SO-CAL.pdf} (2013/05/15)
 
-\bibitem{WNOP}
+\bibitem{WNOP07}
   Università degli studi di Pavia\\
   \emph{The MICRO-WNOP Corpus} (2007)\\
   \url{http://www.unipv.it/micrownop} (2013/05/15)
   
+\bibitem{Liu04}
+  Bing Liu and and Minqing Hu\\
+  \emph{A list of positive and negative opinion words or sentiment words for English} (2004)
+  \url{http://www.cs.uic.edu/~liub/FBS/opinion-lexicon-English.rar} (2013/05/16)
+
 \bibitem{NLTK}
   Natural Language Toolkit, a python plugin. Website:\\
   \url{http://nltk.org/}
