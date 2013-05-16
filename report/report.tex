@@ -32,7 +32,7 @@
 \clearpage
 
 \abstract{
-In this report we explore the possibility of measuring the opinion of a group of people using messages from twitter. At first we give a short introduction to the rationale of trying to analyze communication in order to extract the opinion. Then we explain why communication over twitter was used as well as exactly how the analysis, and the evaluation of the analysis, would be made. We used lexicons, Support Vector Machines and our own ``influence algorithm'' in order to perform the analysis and then we manually classified some tweets and made use of polls in order to evaluate our analysis. We explain how these components was used to both construct and evaluate our analysis, then we present the result that we got. Finally we discuss the results, present ideas of measures that could be made to improve them and some conclusions that could be made. At best we got a 58\% accuracy when it comes to classifying the tweets, and the analysis yielded a value that was a x percents off the poll whereas simply counting tweets was y percents off.
+In this report we explore the possibility of measuring the opinion of a group of people using messages from twitter. At first we give a short introduction to the rationale of trying to analyze communication in order to extract the opinion. Then we explain why communication over twitter was used as well as exactly how the analysis, and the evaluation of the analysis, would be made. We used lexicons, Support Vector Machines and our own ``influence'' algorithm in order to perform the analysis and then we manually classified some tweets and made use of a poll in order to evaluate it. We explain how these components were used to both construct and evaluate our analysis, then we present the result that we got. Finally we discuss the results, present some measures that could improve them and some conclusions that could be made. At best we got a 58\% accuracy when it comes to classifying the tweets, and the analysis yielded a value that was on average 74.67\% off the poll whereas simply counting tweets was on average 48.96\% off.
 }
 
 \clearpage
@@ -272,9 +272,6 @@ Here we can see the results achieved through the different methods by our progra
 \centerline{\includegraphics[scale=0.6]{../img/full1.png}}
 
 Note that these results only consider positive and negative tweets, hence the NE (neutral excluding) label prefix.
-
-\centerline{\includegraphics[scale=0.5]{../img/chart.png}}
-
 
 \chapter{Discussion}
 
