@@ -84,7 +84,7 @@ A lot of companies are trying to use these means to advertise and communicate di
 They may be really interested in knowing people's opinion of their brand.
 With this information, they could adapt their business strategy to be in harmony with their customers, taking more control over their image.
 
-Twitter is the ideal place for analyzing people's opinions of a brand. 
+Twitter \cite{Twitter} is the ideal place for analyzing people's opinions of a brand. 
 It is a social network where user post small text messages called tweets that everybody can read. 
 A tweet has a maximal length of 140 characters. However, such a task would be too big for a human to process, considering the number of tweets.
 The only realistic way is then to automatize the analysis using a computer.
@@ -174,14 +174,17 @@ Thus the bulk of our work consists of finding the right way to measure the influ
 
 We assumed that a tweet which has more re-tweets, more favorites and whose author has more followers would better indicate the opinion of the whole population then one with less. Therefore we chose to combine these metrics and then use them as weights when evaluating the opinion of the people. Since we deemed that the number of re-tweets and favorites of a tweet to be about equally indicative of a an influential tweet but far more indicative then the number of followers of the author our algorithm looked as follows:
 
-$I_t = \text{Influence of a tweet t}$, $Fo_t = \text{The number of followers of the author of tweet t}$\\
-$R_t = \text{The number of re-tweets of the tweet t}$, $Fa_t = \text{The number of favorites of the tweet t}$\\
+$I_t = \text{Influence of a tweet t}$\\
+$Fo_t = \text{The number of followers of the author of tweet t}$\\
+$R_t = \text{The number of re-tweets of the tweet t}$\\
+$Fa_t = \text{The number of favorites of the tweet t}$\\
 \begin{equation}
 I_t = \log (Fo_t + 1) + R_t + Fa_t
 \end{equation}
 
-Once we have computed the polarity and the influence of every tweet we used the following formula to yield the final opinion position:
-
+Once we have computed the polarity and the influence of every tweet we used the following formula to yield the final opinion position:\\
+$T_{pos} = \text{The set of positive tweets}$\\
+$T_{neg} = \text{The set of negative tweets}$\\
 \begin{equation}
 Opinion = 100 \times \frac{\sum_{\substack{t \in T_{pos}}} I_t}{\sum_{\substack{t \in T_{pos}}} I_t + \sum_{\substack{t \in T_{neg}}} I_t}
 \end{equation}
@@ -292,7 +295,7 @@ Our guess is that as Disney is a much more diversified company than the two othe
 If one looks closer at how the SVM actually classified separate tweets then we can see that unlike the lexicon it doesn't have a bias toward classifiying a tweet as neutral, instead it often classifies a negative tweet as positive and vice versa.
 This in essence means that its mistakes are more serious.
 
-We believe there are two major reasons to the poor performance of the SVM.
+We believe there are two major reasons for the poor performance of the SVM.
 
 Firstly, using uni-grams and bi-grams as features to represent a tweet may not be enough. To get better results, one should probably add more relevant features, like for example information about the urls (number, domain name, etc), about the emoticons (number of positives, negatives) or about the tweet as a whole (length, number of verbs, number of adjectives etc).
 
@@ -325,6 +328,11 @@ In the end we conclude that our results are far from perfect and that more tests
 \begin{thebibliography}{9}
 
 %These references are very flexible to make however you want them, if you want them in a different format I'm open to suggestions
+
+\bibitem{Twitter}
+  Twitter
+  \emph{The fastest, simplest way to stay close to everything you care about} (2013)
+  \url{https://twitter.com/about} (2013/05/15)
 
 \bibitem{SenWiki}
   Wikipedia
