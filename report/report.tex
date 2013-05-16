@@ -81,7 +81,7 @@ In this report we explore the possibility of measuring the opinion of a group of
 \section{Background}
 With the development of social networks, people are sharing their opinions over the Internet more and more.
 A lot of companies are trying to use these means to advertise and communicate directly to their customers.
-They may be really interested in knowing what people are actually saying about them.
+They may be really interested in knowing people's opinion of their brand.
 With this information, they could adapt their business strategy to be in harmony with their customers, taking more control over their image.
 
 Twitter is the ideal place for analyzing people's opinions of a brand. 
@@ -101,8 +101,8 @@ In our project we were interested in examining how the classification of the tex
 
 \chapter{Method}
 
-To try to keep it simple we decided to estimate where in a range between negative and positive the opinion of the people would be of a particular brand.
-However in order to utilize the influence of a tweet we first need to at least determine if the message itself is negative or positive, or where in the range it is.
+To try to keep it simple, we decided to estimate the fraction of positive opinions for a particular brand.
+However in order to utilize the influence of a tweet we first need to at least determine if the message itself is negative or positive.
 This forces us to first perform a classification using only the text and then apply the algorithm afterwards on the result.
 
 To perform this text-based classification we chose to use a Support Vector Machine (SVM) because that approach appeared to get the best results when we compared the results of \cite{Pang02}, \cite{Turney02} and \cite{Taboada10}.
@@ -114,7 +114,7 @@ In order to do this we manually classified a number of tweets and then used the 
 
 To make sure the results from the manual classification also was reasonable we decided to make four different people classify the same tweets and then compare the results.
 
-Once the SVM had made the initial classification on the text we translated it to a position in a range between negative and positive, then we applied our algorithm and received another position. Finally to evaluate both of these positions we decided to use a poll on the subject that had yielded a position on a similar range (i e the two positions could be compared).
+Once the SVM had made the initial classification, we simply estimated the fraction of positive opinions for a particular brand by counting the tweets. After that we applied our algorithm to get a weighted fraction, and then to evaluate these we compared them to a poll result.
 
 To be able to use good polls, and get a lot of relevant tweets to process, we decided to evaluate our analysis on primarily three different well-known brands; Disney, Costco and Coca Cola.
 
@@ -188,7 +188,8 @@ Opinion = 100 \times \frac{\sum_{\substack{t \in T_{pos}}} I_t}{\sum_{\substack{
 
 We made the assumption here that the tweets that were classified as ``neutral'' was tweets about a brand that contained no opinion.
 
-With the influence measurement we can now also extract the top 10 most influencial tweets. This is an easy task once you have the influence value of every tweet but this increases the actionability (the ability to use the data to perform actions) of the result. For example a company using this feature can take action by contacting the author of one of tweets and offer them some kind of deal.
+With the influence measurement we can now also extract the top 10 most influencial tweets. This is an easy task once you have the influence value of every tweet but this increases the actionability (the ability to use the data to perform actual actions) of the result. For example a company using this feature can take action by contacting the author of one of tweets and offer them some kind of deal.
+
 
 \section{Manual}
 
@@ -215,7 +216,7 @@ We felt this would correspond to the opinion of the population accurate enough f
 
 These are the results of the manual classification of the first 100 tweets for each brand. Each member of the group individually classified the tweets, and these are the average polarities for the different brands.
 
-\centerline{\includegraphics[scale=0.4]{../img/man1.png}}
+\centerline{\includegraphics[scale=0.45]{../img/man1.png}}
 \vspace{-0.7cm}
 
 The fact that we classified them individually led to quite a few disagreements:
@@ -249,71 +250,77 @@ We used 450 tweets to train the SVM, based on the method previously described.
 Here are the results we got on the 100 tweets we classified manually for each brand:
 \begin{itemize}
         \item \textbf{Coca Cola}: the SVM agrees on 48\% of the tweets.
-        \item \textbf{CostCo}: the lexicon agrees on 50\% of the tweets.
-        \item \textbf{Disney}: the lexicon agrees on 16\% of the tweets.
+        \item \textbf{CostCo}: the SVM agrees on 50\% of the tweets.
+        \item \textbf{Disney}: the SVM agrees on 16\% of the tweets.
 \end{itemize}
 
 \section{Final scores}
 Here we can see the results achieved through the different methods by our program, compared to the poll:
 
 \vspace{-0.6cm}
-\centerline{\includegraphics[scale=0.4]{../img/full1.png}}
+\centerline{\includegraphics[scale=0.45]{../img/full1.png}}
 \vspace{-0.6cm}
 
-Note that these results only consider positive and negative tweets, hence the NE (neutral excluding) label prefix.
+The results of the SVM and lexicon were created by dividing the number of positive tweets with the number of all tweets excluding the neutral ones.
 
 \chapter{Discussion}
 
 \section{Lexicon}
 
-The results from our classification using only lexicons was is good but far from great. To improve this results one may simply acquire more lexicons and use more sophisticated POS tagging.
+The overall results from our classification using only the lexicons are far from great. 
 
-Six out of the seven lexicons we did use came from the same source. Those six were created by applying six different machine-learning techniques on the same initial corpus. That may have led to some issues such as giving too much importance to some words only because they were present in this initial dictionary.
-
-We may also improve our usage of the lexicons. At the moment we don't use a Part-Of-Speech tagging, so the polarity of a word is evaluated regardless of the context of the word. For example ``very good'' and ``not very good'' will more or less yield the same result. It would be good also to consider the position of the company name, so that we can see the difference between ``Costco is great but I dislike ice-cream'' and ``I dislike Costco but I think ice-cream is great''.
-
-Looking more deeply on the results, we can see that our lexicon method doesn't take a lot of risks.
-Most of the mistakes consist in classifying as neutral a positive or negative tweet. That means it is unable to detect any sentimental parts in theses tweets, because they are too short, too ironic, or because the sentimental part is actually contained in the emoticons or hashtags.\\
-For instance, the following tweets are classified as neutrals, while they are actually positives:\\
+From looking at how separate tweets were actually classified we noticed that the most common mistake the lexicons made was to classify a positive or negative tweet as neutral. 
+This means that it is unable to detect the parts in these tweets that signal opinions, because they are not present in the lexicon, because they are too short, too ironic, or because they are actually contained in an emoticons or hashtag.
+For instance, the following tweets are classified as neutral, even though they are actually positive:\\
 \centerline{\textit{Costco Sundays!!}}\\
 \centerline{\textit{Need to do a Costco run today... :) \#LoveThatStore}}
 
+To reduce this problem one may add more lexicons and use lexicons from more sources. Six out of the seven lexicons we did use came from the same source. Those six were created by applying six different machine-learning techniques on the same initial corpus. That may have led to some issues such as giving too much importance to some words only because they were present in this initial dictionary.
+
+Anoter measure to improve the result may be to make use of some Part-Of-Speech tagging, so the polarity of a word is evaluated using the context of the word. For example ``very good'' and ``not very good'' will more or less yield the same result. It would be good also to consider the position of the brand name, so that we can see the difference between ``Costco is great but I dislike ice-cream'' and ``I dislike Costco but I think ice-cream is great''.
+
+We did perform some lemmatization but to improve the results one may make use of even more sophisticated lemmatization.
+
 \section{Support Vector Machine}
 
-The results from using the SVM are pretty poor. We suspect two main reasons for this.
+Interestingly enough, we can see that the results from the SVM are below the ones from the lexicons.
+This probably means that our SVM was not able to remove the noise in the training data induced by the lexicon method.
+In the case of Coca Cola and CostCo, the results are pretty close to lexicon, with around 50\% of matching.
+For Disney however, results are really bad. 
+Our guess is that as Disney is a much more diversified company than the two others (they make movies, tv, run an amusement park, etc), the topics touched upon in those tweets are really different, thus the SVM would need a lot more learning datas to classify those tweets correctly.
 
-First, using unigrams and bigrams as features may not be enough. To get better results, we should add more relevant features, like for example information about the urls (number, domain name, …), about the emoticons (number of positives, negatives) or about the tweet as a whole (length, number of verbs, number of adjectives etc).
+If one looks closer at how the SVM actually classified separate tweets then we can see that unlike the lexicon it doesn't have a bias toward classifiying a tweet as neutral, instead it often classifies a negative tweet as positive and vice versa.
+This in essence means that its mistakes are more serious.
 
-Second, we trained our SVM with data that contains a lot of noise when we used the output of the lexicon to generate training data. The lexicon method offered a 50\% match on our manually classified, which doesn’t look good enough for learning purpose.
+We believe there are two major reasons to the poor performance of the SVM.
 
-We can see that the results are below the ones we got with the lexicon method.
-That means that our SVM was not able to remove the noise in the learning data induced by the lexicon method.\\
-In the case of Coca Cola and CostCo, results are pretty close to the previous ones, with around 50\% of matching.
-For Disney however, results are really bad. Our guess is that as Disney has more diversified activities than the two other companies (movies, tv, amusement park, ...), the topics talked about are really different, thus the SVM would need a lot more learning datas to classify tweets correctly.
+Firstly, using uni-grams and bi-grams as features to represent a tweet may not be enough. To get better results, one should probably add more relevant features, like for example information about the urls (number, domain name, etc), about the emoticons (number of positives, negatives) or about the tweet as a whole (length, number of verbs, number of adjectives etc).
 
-Looking closer to the results, we can see that unlike with the lexicon method, this method doesn't tend to classify as neutral when it makes mistakes.
-It often classifies a negative tweet as positive and vice versa.
-That means that its mistakes are more serious.
+Secondly, we trained our SVM with data that contained a lot of noise when we used the output of the lexicons to generate training data. The lexicons had a 50\% accuracy rate when classifying those tweets we manually classified, and this is probably way too noisy for training purpose.
 
 \section{Poll}
 
-The poll that was used was an aggregation of rankings done on three different subjects (“Feel good about”, “Admire and Respect” and “Trust”). The value for these should be quite strongly correlated among themselves and also to the fact that they people who were interviewed actually “like” or “dislike” a brand. But we have no real scientific way of knowing.
+The poll that was used was an aggregation of rankings done on three different subjects (“Feel good about”, “Admire and Respect” and “Trust”). The value of these should be quite strongly correlated among themselves and also correlated to whether the people who were interviewed actually “like” or “dislike” a brand. But we have no real scientific way of knowing.
 
 We do know that the survey we used was exclusively performed in America. Unfortunately there is no way to filter tweets on the origin but one could at least filter it on language. To filter on english unfortunately does not exclude all non-americans (since it is such a global language). To make sure that the poll used is made on the same people that make the tweets one could use a poll conducted on people with a very local language and then filter on that language. The poll was conducted quite recently however.
 
-\section{Algorithm}
+However if one compares the poll with the manual classification the difference is on average only 3.77\%. The data in the manual classification is way too small to make any definitive conclusions but atleast it hints at the fact that the poll was quite accurate.
 
-The resulting computation comes from tries and error when applying the function to our dataset, and seems to give good results. More research can be done in this part of our study in order to bring a deeper analysis of our results.
+\section{Algorithm and features}
 
-We are really interested in developing the actionability of our solution, that is to say that a company using our solution could take action according to the result of the program’s computation. There is several features that could have been applied to our solution in order to offer a wider range of tools for a company.
+The computation of our algorithm ultimately comes from assumptions made on how a twitter user act to a tweet depending on the opinion of the user and the opinion voiced in a tweet. Our assumptions were that if the user re-tweets the tweet, favorites the tweet or is the follower of someone who made the tweet then the probability is higher that the user supports the opinion then otherwise. Intuitively this seems to be correct but judging from our results this seems not to be the case. The results instead rather indicate that at least one of these assumptions must be wrong since applying the algorithm seems to make the result worse, or rather one of the parameters seems to have an adverse effect. 
 
-As we implemented the top 10 influential tweets, we wanted to continue in the same direction by implementing the top influential Twitter users. This features enable the company to get a better reach on its customers by using these influential intermediaries. We would have used a similar “influential weight” that what we use for the influential tweets, but aggregating this measure by author.
+If one looks at how the different values influences the final ``influence-weight'' of the algorithm of the tweet we see that it is the re-tweets value that dominate the others. Given that our algorithm actually seem to make the results worse one may guess that people in practice in general do not re-tweet tweets they agree with, but rather tweets they disagree with. For example an environmentalist may mostly re-tweet statements he or she disagrees with to inform his or her followers of them, like new Gazprom oil discoveries.
 
-Another extension to the current solution would be to work with the links embedded in tweets. The idea is use the content of the links that are shared on twitter about a company, and output the most important ones. We may also use the contents of these pages to detect the polarity of a tweet.
+Apart from the actual algorithm we were also really interested in developing the actionability of our analysis. There are several features that could have been applied to our solution in order to offer a wider range of tools for a company.
+
+As we implemented the top 10 influential tweets, we wanted to continue in the same direction and implement the top influential Twitter users as well. This features would enable a company to get a better reach on its customers by using these influential intermediaries. We would have used a similar “influential weight” that what used for the influential tweets, but aggregating this measure by author instead.
+
+Another extension to the current analysis would be to work with the links embedded in tweets. The idea is use the content of the links that are shared on twitter about a company, and output the most important ones. We may also use the contents of these pages to detect the polarity of a tweet.
 
 \section{Conclusion}
 
-In the end we conclude that our results are far from perfect and that more tests and a more sophisticated method is required to get a definitive answer. However the results hints at using our influence algorithm actually makes the results worse. If this is true then this means that at least one of our assumptions when creating the algorithm was incorrect. A tweet with either more re-tweets, favorites or followers of its author actually reflects the opinion of the population less accurate then a tweet with less. Perhaps people tend to re-tweet tweets they find interesting, yet in effect have an opposite opinion.
+In the end we conclude that our results are far from perfect and that more tests and a more sophisticated method is required to reach a definitive answer. However the results hints at using our influence algorithm actually makes the results worse. If this is true then this means that at least one of our assumptions when creating the algorithm was incorrect. A tweet with either more re-tweets, favorites or followers of its author actually reflects the opinion of the population less accurate then a tweet with less. Perhaps people tend to re-tweet tweets they find interesting, yet in effect have an opposite opinion.
 
 \begin{thebibliography}{9}
 
