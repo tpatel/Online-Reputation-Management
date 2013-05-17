@@ -214,7 +214,7 @@ We felt this would correspond to the opinion of the population accurately enough
 
 \section{Manual classification}
 
-These are the results of the manual classification of the first 100 tweets for each brand. Each member of the group individually classified the tweets as either positive, negative or neutral, and these are the average polarities for the different brands:
+These are the results of the manual classification of the first 100 tweets for each brand. Each member of the group individually classified the tweets as positive, negative or neutral, and these are the average polarities for the different brands:
 
 \centerline{\includegraphics[scale=0.55]{../img/man1.png}}
 
@@ -230,14 +230,14 @@ For example, this means that out of the 100 Coca cola tweets, there were 42 whic
 
 \section{Lexicon evaluation}
 
-Using the results of our manual classification on tweets about Coca Cola, Disney and CostCo, we were able to evaluate the results of our unsupervised classification with the lexicon score on these three brands.
+Using the results of our manual classification on tweets about Coca Cola, Disney and Costco, we were able to evaluate the results of our unsupervised classification with the lexicon score on these three brands.
 To classify a tweet with the lexicon method, we take the positive score of the tweet, subtract the negative score and finally apply an arbitrary threshold to determine the classification.
 This threshold was set to 2, which means that if the score is greater than 2 the tweet is classified as positive, if the score is less than -2 the tweet is negative, and otherwise the tweet is classified neutral.
 
 Here are the results we got on the 100 tweets we classified manually for each brand:
 \begin{itemize}
         \item \textbf{Coca Cola}: the lexicon agrees on 53\% of the tweets.
-        \item \textbf{CostCo}: the lexicon agrees on 58\% of the tweets.
+        \item \textbf{Costco}: the lexicon agrees on 58\% of the tweets.
         \item \textbf{Disney}: the lexicon agrees on 58\% of the tweets.
 \end{itemize}
 
@@ -249,7 +249,7 @@ We used 450 tweets to train the SVM, based on the method previously described.
 Here are the results we got for the 100 tweets we classified manually for each brand:
 \begin{itemize}
         \item \textbf{Coca Cola}: the SVM agrees on 48\% of the tweets.
-        \item \textbf{CostCo}: the SVM agrees on 50\% of the tweets.
+        \item \textbf{Costco}: the SVM agrees on 50\% of the tweets.
         \item \textbf{Disney}: the SVM agrees on 16\% of the tweets.
 \end{itemize}
 
@@ -264,12 +264,12 @@ The results from the SVM and lexicon were calculated by dividing the number of p
 
 \chapter{Discussion}
 
-\section{Lexicon}
+\section{Lexicons}
 
 The overall results from our classification using only the lexicons are far from great. 
 
 From looking at how separate tweets were actually classified we noticed that the most common mistake the lexicons made was to classify a positive or negative tweet as neutral. 
-This means that it is unable to detect the parts in these tweets that signal opinions, either because they are not present in the lexicon, because they are too short, too ironic, or because they are contained in an emoticon or hashtag.
+This means that it is unable to detect the parts in these tweets that signal opinions, either because they are not present in the lexicon, because they are too short, too ironic, or because they are contained in an emoticon or hash-tag.
 For instance, the following tweets are classified as neutral, even though they are arguably positive:
 \\
 \centerline{\textit{Costco Sundays!!}}\\
@@ -277,7 +277,7 @@ For instance, the following tweets are classified as neutral, even though they a
 
 To reduce this problem, one may add more lexicons and use lexicons from more sources. Six out of the seven lexicons we did use came from the same source. Those six were created by applying six different machine-learning techniques on the same initial corpus. That may have led to some issues such as giving too much significance to some words only because they were present in this initial dictionary.
 
-Anoter measure to improve the result may be to make use of some Part-Of-Speech tagging, so the polarity of a word is evaluated using the context of the word. For example \emph{``very good''} and \emph{``not very good''} will more or less yield the same result. It would be good also to consider the position of the brand name, so that we can see the difference between \emph{``Costco is great but I dislike ice-cream''} and \emph{``I dislike Costco but I think ice-cream is great''}.
+Another measure to improve the result may be to make use of some Part-Of-Speech tagging, so the polarity of a word is evaluated using the context of the word. For example \emph{``very good''} and \emph{``not very good''} will more or less yield the same result. It would be good also to consider the position of the brand name, so that we can see the difference between \emph{``Costco is great but I dislike ice-cream''} and \emph{``I dislike Costco but I think ice-cream is great''}.
 
 We did perform some lemmatization but to improve the results one would have to make use of even more sophisticated lemmatization.
 
@@ -285,9 +285,9 @@ We did perform some lemmatization but to improve the results one would have to m
 
 Interestingly enough, we can see that the results from the SVM worse than those from the lexicons.
 This probably means that our SVM was not able to remove the noise in the training data induced by the lexicon method.
-In the case of Coca Cola and CostCo, the results are pretty close to lexicon, with around 50\% of matching.
+In the case of Coca Cola and Costco, the results are pretty close to lexicon, with around 50\% of matching.
 For Disney however, results are really bad. 
-Our guess is that as Disney is a much more diversified company than the two others (they make movies, tv, run an amusement park, etc). The topics touched upon in those tweets are really different, indicating that the SVM would need a lot more training data to classify those tweets more accurately.
+Our guess is that as Disney is a much more diversified company than the two others (they make movies, TV, run an amusement park, etc). The topics touched upon in those tweets are really different, indicating that the SVM would need a lot more training data to classify those tweets more accurately.
 
 If one looks closer at how the SVM actually classified separate tweets, we can see that unlike the lexicon it doesn't have a bias toward classifying a tweet as neutral; instead it often classifies a negative tweet as positive and vice versa.
 In essence, this means that its mistakes are more serious.
@@ -297,7 +297,7 @@ We believe there are two major reasons for the poor performance of the SVM.
 Firstly, using unigrams and bigrams to represent a tweet may not be enough. To get better results, one should probably add more relevant features, like for example information about the URLs (number, domain name, etc), about the emoticons (number of positives, negatives) or about the tweet as a whole (length, number of verbs, number of adjectives etc).
 
 
-Secondly, we trained our SVM with data that contained a lot of noise when we used the output of the lexicons to generate training data. The lexicons had a 50\% accuracy rate when classifying the tweets we classified manually, and this is probably way too noisy for training purposes.
+Secondly, we trained our SVM with data that contained a lot of noise when we used the output of the lexicons to generate training data. The lexicons had a 50\% accuracy rate when classifying the tweets we classified manually and this is probably way too noisy for training purposes.
 
 \section{Poll}
 
@@ -321,20 +321,18 @@ Another extension to the current analysis would be to work with the links embedd
 
 \section{Conclusion}
 
-In the end we conclude that our results are far from perfect and that more tests and a more sophisticated method is required to reach a definitive answer. However the results hints at using our influence algorithm actually makes the results worse. If this is true then it means that at least one of our assumptions when creating the algorithm was incorrect. A tweet with either more re-tweets, favorites or followers of its author actually reflects the opinion of the population less accurately than a tweet with fewer of those. Perhaps people tend to re-tweet tweets they find interesting, yet in effect have an opposite opinion.
-
-\begin{thebibliography}{12}
+In the end we conclude that our results are far from perfect and that more tests and a more sophisticated method is required to reach a definitive answer. However the results hint at using our influence algorithm actually makes the results worse. If this is true then it means that at least one of our assumptions when creating the algorithm was incorrect. A tweet with more re-tweets, favorites or followers of its author actually reflects the opinion of the population less accurately than a tweet with fewer of those. Perhaps people tend to re-tweet tweets they find interesting, yet in effect have an opposite opinion.
+\begin{thebibliography}{200}
 
 %These references are very flexible to make however you want them, if you want them in a different format I'm open to suggestions
-\vspace{-1cm}
+\vspace{-1.5cm}
 \bibitem{TwitterAbout}
-  Twitter
-  \emph{The fastest, simplest way to stay close to everything you care about} (2013)
+  \emph{Twitter: The fastest, simplest way to stay close to everything you care about} (2013)\\
   \url{https://twitter.com/about} (2013/05/15)
 
 \bibitem{SenWiki}
-  Wikipedia
-  \emph{Sentiment analysis} (2013)
+  Wikipedia\\
+  \emph{Sentiment analysis} (2013)\\
   \url{http://en.wikipedia.org/wiki/Sentiment_analysis} (2013/05/15)
 
 \bibitem{Pang02}
@@ -353,8 +351,8 @@ In the end we conclude that our results are far from perfect and that more tests
   \url{http://cgi.sfu.ca/~mtaboada/docs/Taboada_etal_SO-CAL.pdf} (2013/05/15)
 
 \bibitem{Twitter}
-  Twitter Search API usage. Website:\\
-  \url{https://dev.twitter.com/docs/using-search}
+  \emph{Twitter Search API usage} (2013)\\
+  \url{https://dev.twitter.com/docs/using-search} (2013/05/15)
 
 \bibitem{WNOP07}
   Università degli studi di Pavia\\
@@ -363,16 +361,16 @@ In the end we conclude that our results are far from perfect and that more tests
   
 \bibitem{Liu04}
   Bing Liu and and Minqing Hu\\
-  \emph{A list of positive and negative opinion words or sentiment words for English} (2004)
+  \emph{A list of positive and negative opinion words or sentiment words for English} (2004)\\
   \url{http://www.cs.uic.edu/~liub/FBS/opinion-lexicon-English.rar} (2013/05/16)
 
 \bibitem{NLTK}
-  Natural Language Toolkit, a python plugin. Website:\\
-  \url{http://nltk.org/}
+  \emph{Natural Language Toolkit, a python plugin} (2013)\\ 
+  \url{http://nltk.org/} (2013/05/15)
   
 \bibitem{Scikit}
-  Scikit python plugin website:\\
-  \url{http://scikit-learn.org/stable/}
+  \emph{Scikit python plugin} (2013)\\
+  \url{http://scikit-learn.org/stable/} (2013/05/15)
 
 \bibitem{Harris13}
   Harris Interactive\\
